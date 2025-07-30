@@ -1,24 +1,8 @@
 import 'package:flutter/material.dart';
-import 'presentation/screens/home_screen.dart';
-import 'core/constants/app_constants.dart';
+import 'package:spool_coder_app/core/init/bootstrap.dart';
+import 'package:spool_coder_app/presentation/app.dart';
 
-void main() {
+Future<void> main() async {
+  await bootstrap();
   runApp(const SpoolCoderApp());
-}
-
-class SpoolCoderApp extends StatelessWidget {
-  const SpoolCoderApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: AppConstants.appName,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        useMaterial3: true,
-      ),
-      home: const HomeScreen(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
 }

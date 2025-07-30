@@ -26,7 +26,6 @@ abstract class NfcPlatformInterface {
 /// Platform-specific NFC implementation
 /// This would use platform channels or FFI to communicate with native code
 class NfcPlatformImpl implements NfcPlatformInterface {
-  bool _isInitialized = false;
   
   @override
   Future<bool> initialize() async {
@@ -34,7 +33,7 @@ class NfcPlatformImpl implements NfcPlatformInterface {
     // - Setup platform channels
     // - Initialize native NFC libraries
     // - Request necessary permissions
-    _isInitialized = true;
+    // NFC initialization complete
     return true;
   }
   
@@ -55,7 +54,7 @@ class NfcPlatformImpl implements NfcPlatformInterface {
     // In a real implementation, this would:
     // - Start native NFC scanning
     // - Return a stream of detected tag data
-    return Stream.empty();
+    return const Stream.empty();
   }
   
   @override
