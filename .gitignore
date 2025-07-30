@@ -117,3 +117,32 @@ app.*.symbols
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 !/dev/ci/**/Gemfile.lock
+
+# Additional ignore rules
+.dart_tool/
+.packages
+.pub/
+build/
+pubspec.lock
+
+# IDEs and editors
+.idea/
+.vscode/
+*.iml
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Flutter generated desktop builds
+windows/
+macos/
+linux/
+web/
+
+# Keep assets and docs
+!/assets/
+!/docs/
+
+# Test outputs
+coverage/
