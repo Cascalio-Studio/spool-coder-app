@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'presentation/screens/home_screen.dart';
+import 'core/constants/app_constants.dart';
 
 void main() {
   runApp(const SpoolCoderApp());
@@ -10,20 +12,12 @@ class SpoolCoderApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Spool Coder App',
-      home: const Scaffold(
-        backgroundColor: Colors.white,
-        body: Center(
-          child: Text(
-            'Spool Coder App',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
+      title: AppConstants.appName,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        useMaterial3: true,
       ),
+      home: const HomeScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
