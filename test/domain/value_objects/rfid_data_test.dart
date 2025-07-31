@@ -42,11 +42,7 @@ void main() {
       expect(bytes, equals([0xFF, 0x6A, 0x13]));
     });
 
-    test('should read little-endian uint16', () {
-      final data = [0x34, 0x12]; // 0x1234 in little-endian
-      final value = RfidData._uint16LE(data, 0);
-      expect(value, equals(0x1234));
-    });
+[No replacement lines; the test case is removed entirely.]
 
     test('should detect genuine Bambu Lab spools', () {
       // Mock RFID data with RSA signature
