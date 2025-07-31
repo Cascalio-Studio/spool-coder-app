@@ -33,10 +33,7 @@ void main() {
       expect(rfidData.filamentLength?.meters, equals(82.0)); // 0x52 = 82
     });
 
-    test('should extract UID from Block 0', () {
-      final uid = RfidData._extractUid('75886B1D8B080400034339DB5B5E0A90');
-      expect(uid, equals('75886B1D'));
-    });
+    // Test for UID extraction is covered indirectly via the public API in the 'fromBlockDump' test.
 
     test('should parse string blocks correctly', () {
       final filamentType = RfidData._parseStringBlock('504C4100000000000000000000000000');
