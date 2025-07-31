@@ -64,6 +64,71 @@ class MaterialType {
     bedTemperature: 80,
   );
 
+  // Bambu Lab specific material variants (based on RFID Tag Guide)
+  static const MaterialType plaBasic = MaterialType._(
+    value: 'PLA_BASIC',
+    displayName: 'PLA Basic',
+    defaultDensity: 1.24,
+    printTemperature: 220,
+    bedTemperature: 45,
+  );
+
+  static const MaterialType plaMatte = MaterialType._(
+    value: 'PLA_MATTE',
+    displayName: 'PLA Matte',
+    defaultDensity: 1.24,
+    printTemperature: 220,
+    bedTemperature: 45,
+  );
+
+  static const MaterialType plaSilk = MaterialType._(
+    value: 'PLA_SILK',
+    displayName: 'PLA Silk',
+    defaultDensity: 1.24,
+    printTemperature: 220,
+    bedTemperature: 45,
+  );
+
+  static const MaterialType plaGalaxy = MaterialType._(
+    value: 'PLA_GALAXY',
+    displayName: 'PLA Galaxy',
+    defaultDensity: 1.24,
+    printTemperature: 220,
+    bedTemperature: 45,
+  );
+
+  static const MaterialType plaSparkle = MaterialType._(
+    value: 'PLA_SPARKLE',
+    displayName: 'PLA Sparkle',
+    defaultDensity: 1.24,
+    printTemperature: 220,
+    bedTemperature: 45,
+  );
+
+  static const MaterialType plaCf = MaterialType._(
+    value: 'PLA_CF',
+    displayName: 'PLA-CF (Carbon Fiber)',
+    defaultDensity: 1.3,
+    printTemperature: 260,
+    bedTemperature: 60,
+  );
+
+  static const MaterialType supportPla = MaterialType._(
+    value: 'SUPPORT_PLA',
+    displayName: 'Support for PLA',
+    defaultDensity: 1.24,
+    printTemperature: 220,
+    bedTemperature: 45,
+  );
+
+  static const MaterialType petgBasic = MaterialType._(
+    value: 'PETG_BASIC',
+    displayName: 'PETG Basic',
+    defaultDensity: 1.27,
+    printTemperature: 250,
+    bedTemperature: 70,
+  );
+
   static const List<MaterialType> commonTypes = [
     pla,
     abs,
@@ -71,6 +136,24 @@ class MaterialType {
     tpu,
     wood,
     carbon,
+  ];
+
+  /// Bambu Lab specific material variants
+  static const List<MaterialType> bambuLabTypes = [
+    plaBasic,
+    plaMatte,
+    plaSilk,
+    plaGalaxy,
+    plaSparkle,
+    plaCf,
+    supportPla,
+    petgBasic,
+  ];
+
+  /// All material types including Bambu Lab variants
+  static const List<MaterialType> allTypes = [
+    ...commonTypes,
+    ...bambuLabTypes,
   ];
 
   /// Create a custom material type
@@ -93,15 +176,57 @@ class MaterialType {
     );
   }
 
-  /// Create from string value
+  /// Create from string value with Bambu Lab variant support
   factory MaterialType.fromString(String value) {
     final upperValue = value.toUpperCase();
-    for (final type in commonTypes) {
+    
+    // Check all types including Bambu Lab variants
+    for (final type in allTypes) {
       if (type.value == upperValue) {
         return type;
       }
     }
-    return MaterialType.custom(value: upperValue, displayName: value);
+    
+    // Check for RFID detailed type mapping
+    return _fromDetailedType(value) ?? 
+           MaterialType.custom(value: upperValue, displayName: value);
+  }
+
+  /// Create from RFID detailed filament type string
+  factory MaterialType.fromRfidDetailedType(String detailedType) {
+    return _fromDetailedType(detailedType) ?? 
+           MaterialType.custom(
+             value: detailedType.toUpperCase().replaceAll(' ', '_'),
+             displayName: detailedType,
+           );
+  }
+
+  /// Internal helper to map RFID detailed types to MaterialType instances
+  static MaterialType? _fromDetailedType(String detailedType) {
+    final normalized = detailedType.toLowerCase().trim();
+    
+    switch (normalized) {
+      case 'pla basic':
+        return plaBasic;
+      case 'pla matte':
+        return plaMatte;
+      case 'pla silk':
+        return plaSilk;
+      case 'pla galaxy':
+        return plaGalaxy;
+      case 'pla sparkle':
+        return plaSparkle;
+      case 'pla-cf':
+      case 'pla tough':
+        return plaCf;
+      case 'support for pla':
+      case 'support w':
+        return supportPla;
+      case 'petg basic':
+        return petgBasic;
+      default:
+        return null;
+    }
   }
 
   @override

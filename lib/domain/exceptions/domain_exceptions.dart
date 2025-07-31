@@ -121,3 +121,88 @@ class BusinessRuleViolationException extends DomainException {
   @override
   String toString() => 'BusinessRuleViolationException [$rule]: $message${details != null ? ' - $details' : ''}';
 }
+
+/// Exception thrown when RFID scanning operations fail
+class RfidScanException extends DomainException {
+  final String? tagId;
+  final String scanOperation;
+  
+  RfidScanException(
+    super.message, {
+    this.tagId,
+    required this.scanOperation,
+    super.details,
+    super.timestamp,
+  });
+
+  @override
+  String toString() => 'RfidScanException [$scanOperation${tagId != null ? ' - $tagId' : ''}]: $message${details != null ? ' - $details' : ''}';
+}
+
+/// Exception thrown when RFID data parsing fails
+class RfidDataParsingException extends DomainException {
+  final String dataSource;
+  final String? block;
+  
+  RfidDataParsingException(
+    super.message, {
+    required this.dataSource,
+    this.block,
+    super.details,
+    super.timestamp,
+  });
+
+  @override
+  String toString() => 'RfidDataParsingException [$dataSource${block != null ? ' - Block $block' : ''}]: $message${details != null ? ' - $details' : ''}';
+}
+
+/// Exception thrown when RFID hardware is not available
+class RfidHardwareException extends DomainException {
+  final String hardwareType;
+  final String operation;
+  
+  RfidHardwareException(
+    super.message, {
+    required this.hardwareType,
+    required this.operation,
+    super.details,
+    super.timestamp,
+  });
+
+  @override
+  String toString() => 'RfidHardwareException [$hardwareType - $operation]: $message${details != null ? ' - $details' : ''}';
+}
+
+/// Exception thrown when RFID tag validation fails
+class RfidValidationException extends DomainException {
+  final String uid;
+  final List<String> validationErrors;
+  
+  RfidValidationException(
+    super.message, {
+    required this.uid,
+    required this.validationErrors,
+    super.details,
+    super.timestamp,
+  });
+
+  @override
+  String toString() => 'RfidValidationException [$uid]: $message - ${validationErrors.join(', ')}${details != null ? ' - $details' : ''}';
+}
+
+/// Exception thrown when RFID signature verification fails
+class RfidSignatureException extends DomainException {
+  final String uid;
+  final String signatureType;
+  
+  RfidSignatureException(
+    super.message, {
+    required this.uid,
+    required this.signatureType,
+    super.details,
+    super.timestamp,
+  });
+
+  @override
+  String toString() => 'RfidSignatureException [$uid - $signatureType]: $message${details != null ? ' - $details' : ''}';
+}
