@@ -60,13 +60,14 @@ class RfidData {
         // RGBA color (4 bytes)
         final colorBytes = block5Data.sublist(0, 4);
         if (colorBytes.any((b) => b != 0)) {
-          color = SpoolColor.rgba(
+          color = SpoolColor.rgb(
             'RFID Color',
             colorBytes[0],
             colorBytes[1],
             colorBytes[2],
-            colorBytes[3],
           );
+          // Note: Alpha value (colorBytes[3]) is not handled by SpoolColor.rgb()
+          // If alpha is critical, consider extending SpoolColor to support RGBA.
         }
         
         // Spool weight (2 bytes, little-endian)
