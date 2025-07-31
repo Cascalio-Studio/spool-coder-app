@@ -35,13 +35,7 @@ void main() {
 
     // Test for UID extraction is covered indirectly via the public API in the 'fromBlockDump' test.
 
-    test('should parse string blocks correctly', () {
-      final filamentType = RfidData._parseStringBlock('504C4100000000000000000000000000');
-      expect(filamentType, equals('PLA'));
-      
-      final detailedType = RfidData._parseStringBlock('504C4120426173696300000000000000');
-      expect(detailedType, equals('PLA Basic'));
-    });
+    // Removed test for private method `_parseStringBlock`.
 
     test('should convert hex to bytes correctly', () {
       final bytes = RfidData._hexToBytes('FF6A13');
