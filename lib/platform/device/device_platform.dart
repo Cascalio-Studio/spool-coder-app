@@ -105,33 +105,88 @@ abstract class DevicePlatformInterface {
 /// Platform-specific device implementation
 /// This would use platform channels or device info plugins for device operations
 class DevicePlatformImpl implements DevicePlatformInterface {
-  final DeviceInfo _deviceInfo = const DeviceInfo(
-    name: 'Mock Device',
-    platform: DevicePlatform.android,
-    version: '13.0',
-    model: 'Mock Model',
-    manufacturer: 'Mock Inc',
-    identifier: 'mock-device-id',
-    isPhysicalDevice: true,
-  );
-  
-  BatteryInfo _batteryInfo = const BatteryInfo(
-    level: 85,
-    state: BatteryState.discharging,
-    isLowPowerMode: false,
-  );
-  
-  final DeviceCapabilities _capabilities = const DeviceCapabilities(
-    hasNfc: true,
-    hasBluetooth: true,
-    hasCamera: true,
-    hasFlashlight: true,
-    hasFingerprint: true,
-    hasFaceId: false,
-    hasAccelerometer: true,
-    hasGyroscope: true,
-    hasCompass: true,
-  );
+  final DeviceInfo _deviceInfo;
+  BatteryInfo _batteryInfo;
+  final DeviceCapabilities _capabilities;
+
+  DevicePlatformImpl({
+    DeviceInfo? deviceInfo,
+    BatteryInfo? batteryInfo,
+    DeviceCapabilities? capabilities,
+    bool randomize = false,
+  })  : _deviceInfo = deviceInfo ?? _generateMockDeviceInfo(randomize),
+        _batteryInfo = batteryInfo ?? _generateMockBatteryInfo(randomize),
+        _capabilities = capabilities ?? _generateMockDeviceCapabilities(randomize);
+
+  static DeviceInfo _generateMockDeviceInfo(bool randomize) {
+    if (!randomize) {
+      return const DeviceInfo(
+        name: 'Mock Device',
+        platform: DevicePlatform.android,
+        version: '13.0',
+        model: 'Mock Model',
+        manufacturer: 'Mock Inc',
+        identifier: 'mock-device-id',
+        isPhysicalDevice: true,
+      );
+    }
+    final platforms = DevicePlatform.values;
+    final rand = Random();
+    return DeviceInfo(
+      name: 'Device${rand.nextInt(1000)}',
+      platform: platforms[rand.nextInt(platforms.length)],
+      version: '${rand.nextInt(15) + 1}.${rand.nextInt(10)}',
+      model: 'Model${rand.nextInt(100)}',
+      manufacturer: 'Manufacturer${rand.nextInt(50)}',
+      identifier: 'id-${rand.nextInt(100000)}',
+      isPhysicalDevice: rand.nextBool(),
+    );
+  }
+
+  static BatteryInfo _generateMockBatteryInfo(bool randomize) {
+    if (!randomize) {
+      return const BatteryInfo(
+        level: 85,
+        state: BatteryState.discharging,
+        isLowPowerMode: false,
+      );
+    }
+    final rand = Random();
+    final states = BatteryState.values;
+    return BatteryInfo(
+      level: rand.nextInt(101),
+      state: states[rand.nextInt(states.length)],
+      isLowPowerMode: rand.nextBool(),
+    );
+  }
+
+  static DeviceCapabilities _generateMockDeviceCapabilities(bool randomize) {
+    if (!randomize) {
+      return const DeviceCapabilities(
+        hasNfc: true,
+        hasBluetooth: true,
+        hasCamera: true,
+        hasFlashlight: true,
+        hasFingerprint: true,
+        hasFaceId: false,
+        hasAccelerometer: true,
+        hasGyroscope: true,
+        hasCompass: true,
+      );
+    }
+    final rand = Random();
+    return DeviceCapabilities(
+      hasNfc: rand.nextBool(),
+      hasBluetooth: rand.nextBool(),
+      hasCamera: rand.nextBool(),
+      hasFlashlight: rand.nextBool(),
+      hasFingerprint: rand.nextBool(),
+      hasFaceId: rand.nextBool(),
+      hasAccelerometer: rand.nextBool(),
+      hasGyroscope: rand.nextBool(),
+      hasCompass: rand.nextBool(),
+    );
+  }
   
   @override
   Future<bool> initialize() async {
