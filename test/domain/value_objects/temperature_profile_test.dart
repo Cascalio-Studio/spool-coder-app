@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import '../../../lib/domain/value_objects/temperature_profile.dart';
+import 'package:spool_coder_app/domain/value_objects/temperature_profile.dart';
 
 void main() {
   group('TemperatureProfile', () {

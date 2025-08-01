@@ -1,4 +1,8 @@
 import '../../domain/entities/spool.dart';
+import '../../domain/value_objects/spool_uid.dart';
+import '../../domain/value_objects/material_type.dart';
+import '../../domain/value_objects/spool_color.dart';
+import '../../domain/value_objects/filament_length.dart';
 
 /// NFC data source for reading/writing spool data
 /// Part of the Data Layer: handles specific data source operations
@@ -36,13 +40,16 @@ class MockNfcDataSource implements NfcDataSource {
     // Mock scan delay
     await Future.delayed(const Duration(seconds: 2));
     
-    return const Spool(
-      uid: 'NFC_MOCK_123',
-      materialType: 'PETG',
+    return Spool(
+      uid: SpoolUid('NFC_MOCK_123'),
+      materialType: MaterialType.petg,
       manufacturer: 'BambuLab',
-      color: 'Blue',
-      netLength: 1000.0,
-      remainingLength: 650.0,
+      color: SpoolColor.named('Blue'),
+      netLength: FilamentLength.meters(1000.0),
+      remainingLength: FilamentLength.meters(650.0),
+      filamentDiameter: 1.75,
+      spoolWeight: 250.0,
+      createdAt: DateTime.now(),
     );
   }
   

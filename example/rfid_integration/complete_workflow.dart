@@ -1,9 +1,10 @@
-import '../../lib/domain/domain.dart';
+import 'package:spool_coder_app/domain/domain.dart';
 
 /// Comprehensive RFID workflow example
 /// Demonstrates complete integration from scan to usage
 void main() async {
-  print('=== Complete Bambu Lab RFID Workflow ===\n');
+  // ignore: avoid_print
+  // ignore: avoid_print`n  print('=== Complete Bambu Lab RFID Workflow ===\n');
 
   // Simulate a complete RFID workflow
   await demonstrateRfidWorkflow();
@@ -11,8 +12,10 @@ void main() async {
 
 Future<void> demonstrateRfidWorkflow() async {
   // Step 1: Simulate RFID scanning
-  print('Step 1: RFID Tag Scanning');
-  print('==========================');
+  // ignore: avoid_print
+  // ignore: avoid_print`n  print('Step 1: RFID Tag Scanning');
+  // ignore: avoid_print
+  // ignore: avoid_print`n  print('==========================');
   
   // Real Bambu Lab PLA Basic RFID data
   final rfidBlocks = {
@@ -32,90 +35,105 @@ Future<void> demonstrateRfidWorkflow() async {
 
   // Parse the RFID data
   final rfidData = RfidData.fromBlockDump(rfidBlocks);
-  print('✓ RFID tag scanned successfully');
-  print('  UID: ${rfidData.uid}');
-  print('  Material: ${rfidData.detailedFilamentType}');
-  print('  Production: ${rfidData.productionInfo?.productionDateTime}');
-  print('');
+  // ignore: avoid_print
+  // ignore: avoid_print`n  print('✓ RFID tag scanned successfully');
+  // ignore: avoid_print
+  // ignore: avoid_print`n  print('  UID: ${rfidData.uid}');
+  // ignore: avoid_print
+  // ignore: avoid_print`n  print('  Material: ${rfidData.detailedFilamentType}');
+  // ignore: avoid_print
+  // ignore: avoid_print`n  print('  Production: ${rfidData.productionInfo?.productionDateTime}');
+  // ignore: avoid_print
+  // ignore: avoid_print`n  print('');
 
   // Step 2: Validate RFID data
-  print('Step 2: RFID Data Validation');
-  print('=============================');
+  // ignore: avoid_print
+  // ignore: avoid_print`n  print('Step 2: RFID Data Validation');
+  // ignore: avoid_print
+  // ignore: avoid_print`n  print('=============================');
   
   final rfidService = SpoolRfidService();
   final validationIssues = rfidService.validateRfidData(rfidData);
   
   if (validationIssues.isEmpty) {
-    print('✓ RFID data validation passed');
+    // ignore: avoid_print
+    // ignore: avoid_print`n    print('✓ RFID data validation passed');
   } else {
-    print('⚠ Validation issues found:');
+    // ignore: avoid_print
+    // ignore: avoid_print`n    print('⚠ Validation issues found:');
     for (final issue in validationIssues) {
-      print('  - $issue');
+      // ignore: avoid_print
+      // ignore: avoid_print`n      print('  - $issue');
     }
   }
   
   // Check for warnings
   final warnings = rfidService.analyzeForWarnings(rfidData);
   if (warnings.isNotEmpty) {
-    print('⚠ Warnings:');
+    // ignore: avoid_print
+    // ignore: avoid_print`n    print('⚠ Warnings:');
     for (final warning in warnings) {
-      print('  - $warning');
+      // ignore: avoid_print
+      // ignore: avoid_print`n      print('  - $warning');
     }
   }
-  print('');
+  // ignore: avoid_print
+  // ignore: avoid_print`n  print('');
 
   // Step 3: Create Spool from RFID data
-  print('Step 3: Spool Entity Creation');
-  print('==============================');
+  // ignore: avoid_print
+  // ignore: avoid_print`n  print('Step 3: Spool Entity Creation');
+  // ignore: avoid_print
+  // ignore: avoid_print`n  print('==============================');
   
   final spool = Spool.fromRfidData(rfidData);
-  print('✓ Spool created from RFID data');
-  print('  Spool UID: ${spool.uid}');
-  print('  Material: ${spool.materialType.displayName}');
-  print('  Manufacturer: ${spool.manufacturer}');
-  print('  Color: ${spool.color}');
-  print('  Net Length: ${spool.netLength.format()}');
-  print('  Is RFID Scanned: ${spool.isRfidScanned}');
-  print('  Production Age: ${spool.productionAge}');
-  print('');
+  // ignore: avoid_print`n  print('✓ Spool created from RFID data');
+  // ignore: avoid_print`n  print('  Spool UID: ${spool.uid}');
+  // ignore: avoid_print`n  print('  Material: ${spool.materialType.displayName}');
+  // ignore: avoid_print`n  print('  Manufacturer: ${spool.manufacturer}');
+  // ignore: avoid_print`n  print('  Color: ${spool.color}');
+  // ignore: avoid_print`n  print('  Net Length: ${spool.netLength.format()}');
+  // ignore: avoid_print`n  print('  Is RFID Scanned: ${spool.isRfidScanned}');
+  // ignore: avoid_print`n  print('  Production Age: ${spool.productionAge}');
+  // ignore: avoid_print`n  print('');
 
   // Step 4: Generate printing recommendations
-  print('Step 4: Printing Recommendations');
-  print('=================================');
+  // ignore: avoid_print`n  print('Step 4: Printing Recommendations');
+  // ignore: avoid_print`n  print('=================================');
   
   final recommendations = rfidService.generatePrintingRecommendations(rfidData);
-  print('✓ Recommendations generated:');
+  // ignore: avoid_print`n  print('✓ Recommendations generated:');
   
   // Temperature settings
   if (recommendations.containsKey('hotend_temperature')) {
-    print('  🌡️  Hotend Temperature: ${recommendations['hotend_temperature']}°C');
+    // ignore: avoid_print`n    print('  🌡️  Hotend Temperature: ${recommendations['hotend_temperature']}°C');
   }
   if (recommendations.containsKey('bed_temperature')) {
-    print('  🛏️  Bed Temperature: ${recommendations['bed_temperature']}°C');
+    // ignore: avoid_print`n    print('  🛏️  Bed Temperature: ${recommendations['bed_temperature']}°C');
   }
   
   // Drying requirements
   if (recommendations['drying_required'] == true) {
-    print('  🔥 Drying Required: ${recommendations['drying_temperature']}°C for ${recommendations['drying_hours']} hours');
+    // ignore: avoid_print`n    print('  🔥 Drying Required: ${recommendations['drying_temperature']}°C for ${recommendations['drying_hours']} hours');
   }
   
   // Material-specific info
   if (recommendations.containsKey('material_type')) {
-    print('  🧵 Material: ${recommendations['material_type']}');
+    // ignore: avoid_print`n    print('  🧵 Material: ${recommendations['material_type']}');
   }
   if (recommendations.containsKey('recommended_nozzle')) {
-    print('  🔧 Nozzle: ${recommendations['recommended_nozzle']}');
+    // ignore: avoid_print`n    print('  🔧 Nozzle: ${recommendations['recommended_nozzle']}');
   }
   
   // Freshness status
   if (recommendations.containsKey('freshness_status')) {
-    print('  📅 Freshness: ${recommendations['freshness_status']}');
+    // ignore: avoid_print`n    print('  📅 Freshness: ${recommendations['freshness_status']}');
   }
-  print('');
+  // ignore: avoid_print`n  print('');
 
   // Step 5: Usage tracking simulation
-  print('Step 5: Usage Tracking');
-  print('======================');
+  // ignore: avoid_print`n  print('Step 5: Usage Tracking');
+  // ignore: avoid_print`n  print('======================');
   
   // Simulate printing usage
   final usedAmount = FilamentLength.meters(22.0); // Used 22 meters
@@ -126,49 +144,49 @@ Future<void> demonstrateRfidWorkflow() async {
     updatedAt: DateTime.now(),
   );
   
-  print('✓ Usage updated');
-  print('  Original Length: ${spool.netLength.format()}');
-  print('  Used Amount: ${usedAmount.format()}');
-  print('  Remaining: ${updatedSpool.remainingLength.format()}');
-  print('  Usage Percentage: ${updatedSpool.usagePercentage.toStringAsFixed(1)}%');
-  print('  Is Nearly Empty: ${updatedSpool.isNearlyEmpty}');
-  print('');
+  // ignore: avoid_print`n  print('✓ Usage updated');
+  // ignore: avoid_print`n  print('  Original Length: ${spool.netLength.format()}');
+  // ignore: avoid_print`n  print('  Used Amount: ${usedAmount.format()}');
+  // ignore: avoid_print`n  print('  Remaining: ${updatedSpool.remainingLength.format()}');
+  // ignore: avoid_print`n  print('  Usage Percentage: ${updatedSpool.usagePercentage.toStringAsFixed(1)}%');
+  // ignore: avoid_print`n  print('  Is Nearly Empty: ${updatedSpool.isNearlyEmpty}');
+  // ignore: avoid_print`n  print('');
 
   // Step 6: Material compatibility check
-  print('Step 6: Material Compatibility');
-  print('===============================');
+  // ignore: avoid_print`n  print('Step 6: Material Compatibility');
+  // ignore: avoid_print`n  print('===============================');
   
   // Check compatibility with expected material
   final expectedMaterial = MaterialType.plaBasic;
   final isCompatible = rfidService.isMaterialCompatible(rfidData, expectedMaterial);
   
-  print('✓ Compatibility check completed');
-  print('  Expected: ${expectedMaterial.displayName}');
-  print('  RFID Material: ${rfidData.detailedFilamentType}');
-  print('  Compatible: ${isCompatible ? '✅ Yes' : '❌ No'}');
-  print('');
+  // ignore: avoid_print`n  print('✓ Compatibility check completed');
+  // ignore: avoid_print`n  print('  Expected: ${expectedMaterial.displayName}');
+  // ignore: avoid_print`n  print('  RFID Material: ${rfidData.detailedFilamentType}');
+  // ignore: avoid_print`n  print('  Compatible: ${isCompatible ? '✅ Yes' : '❌ No'}');
+  // ignore: avoid_print`n  print('');
 
   // Step 7: Cost estimation (if available)
-  print('Step 7: Cost Analysis');
-  print('=====================');
+  // ignore: avoid_print`n  print('Step 7: Cost Analysis');
+  // ignore: avoid_print`n  print('=====================');
   
   final spoolCost = 25.99; // Example cost
   final costPerGram = rfidService.estimateCostPerGram(rfidData, totalSpoolCost: spoolCost);
   
   if (costPerGram != null) {
     final usedCost = (usedAmount.meters * rfidData.spoolWeight! / spool.netLength.meters) * costPerGram;
-    print('✓ Cost analysis completed');
-    print('  Total Spool Cost: \$${spoolCost.toStringAsFixed(2)}');
-    print('  Cost per Gram: \$${costPerGram.toStringAsFixed(3)}');
-    print('  Used Material Cost: \$${usedCost.toStringAsFixed(2)}');
+    // ignore: avoid_print`n    print('✓ Cost analysis completed');
+    // ignore: avoid_print`n    print('  Total Spool Cost: \$${spoolCost.toStringAsFixed(2)}');
+    // ignore: avoid_print`n    print('  Cost per Gram: \$${costPerGram.toStringAsFixed(3)}');
+    // ignore: avoid_print`n    print('  Used Material Cost: \$${usedCost.toStringAsFixed(2)}');
   } else {
-    print('❌ Cost analysis unavailable (missing weight data)');
+    // ignore: avoid_print`n    print('❌ Cost analysis unavailable (missing weight data)');
   }
-  print('');
+  // ignore: avoid_print`n  print('');
 
   // Step 8: Maintenance recommendations
-  print('Step 8: Maintenance Recommendations');
-  print('====================================');
+  // ignore: avoid_print`n  print('Step 8: Maintenance Recommendations');
+  // ignore: avoid_print`n  print('====================================');
   
   final maintenanceRecommendations = <String>[];
   
@@ -190,37 +208,37 @@ Future<void> demonstrateRfidWorkflow() async {
   }
   
   if (maintenanceRecommendations.isNotEmpty) {
-    print('🔧 Maintenance recommendations:');
+    // ignore: avoid_print`n    print('🔧 Maintenance recommendations:');
     for (final recommendation in maintenanceRecommendations) {
-      print('  - $recommendation');
+      // ignore: avoid_print`n      print('  - $recommendation');
     }
   } else {
-    print('✓ No special maintenance required');
+    // ignore: avoid_print`n    print('✓ No special maintenance required');
   }
-  print('');
+  // ignore: avoid_print`n  print('');
 
   // Step 9: Summary and next steps
-  print('Step 9: Workflow Summary');
-  print('========================');
+  // ignore: avoid_print`n  print('Step 9: Workflow Summary');
+  // ignore: avoid_print`n  print('========================');
   
-  print('✅ RFID workflow completed successfully');
-  print('');
-  print('Summary:');
-  print('  • Material: ${spool.materialType.displayName}');
-  print('  • Status: ${updatedSpool.usagePercentage.toStringAsFixed(1)}% used');
-  print('  • Quality: ${spool.isFreshProduction ? 'Fresh' : spool.isOldProduction ? 'Aged' : 'Standard'}');
-  print('  • Compatibility: ${isCompatible ? 'Verified' : 'Mismatch'}');
-  print('  • Recommendations: ${recommendations.length} generated');
-  print('  • Maintenance: ${maintenanceRecommendations.length} items');
-  print('');
+  // ignore: avoid_print`n  print('✅ RFID workflow completed successfully');
+  // ignore: avoid_print`n  print('');
+  // ignore: avoid_print`n  print('Summary:');
+  // ignore: avoid_print`n  print('  • Material: ${spool.materialType.displayName}');
+  // ignore: avoid_print`n  print('  • Status: ${updatedSpool.usagePercentage.toStringAsFixed(1)}% used');
+  // ignore: avoid_print`n  print('  • Quality: ${spool.isFreshProduction ? 'Fresh' : spool.isOldProduction ? 'Aged' : 'Standard'}');
+  // ignore: avoid_print`n  print('  • Compatibility: ${isCompatible ? 'Verified' : 'Mismatch'}');
+  // ignore: avoid_print`n  print('  • Recommendations: ${recommendations.length} generated');
+  // ignore: avoid_print`n  print('  • Maintenance: ${maintenanceRecommendations.length} items');
+  // ignore: avoid_print`n  print('');
   
-  print('Next Steps:');
-  print('  1. Store spool data in repository');
-  print('  2. Set up automatic usage tracking');
-  print('  3. Configure printer with recommended settings');
-  print('  4. Schedule maintenance as needed');
-  print('  5. Monitor filament quality over time');
-  print('');
+  // ignore: avoid_print`n  print('Next Steps:');
+  // ignore: avoid_print`n  print('  1. Store spool data in repository');
+  // ignore: avoid_print`n  print('  2. Set up automatic usage tracking');
+  // ignore: avoid_print`n  print('  3. Configure printer with recommended settings');
+  // ignore: avoid_print`n  print('  4. Schedule maintenance as needed');
+  // ignore: avoid_print`n  print('  5. Monitor filament quality over time');
+  // ignore: avoid_print`n  print('');
   
-  print('=== RFID Workflow Complete ===');
+  // ignore: avoid_print`n  print('=== RFID Workflow Complete ===');
 }

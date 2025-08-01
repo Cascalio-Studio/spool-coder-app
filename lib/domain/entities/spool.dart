@@ -76,7 +76,7 @@ class Spool {
     final manufacturer = rfidData.isGenuineBambuLab ? 'Bambu Lab' : 'Unknown';
 
     // Use color from RFID or create default
-    final color = rfidData.color ?? SpoolColor.unknown();
+    final color = rfidData.color ?? SpoolColor.named('Unknown');
 
     // Use filament length from RFID or create default
     final netLength = rfidData.filamentLength ?? FilamentLength.meters(250.0);
@@ -218,7 +218,7 @@ class Spool {
     final temp = temperatureProfile?.dryingTemperature;
     final hours = temperatureProfile?.dryingTimeHours;
     if (temp != null && hours != null) {
-      return 'Dry at ${temp}°C for ${hours} hours';
+      return 'Dry at $temp°C for $hours hours';
     }
     return null;
   }

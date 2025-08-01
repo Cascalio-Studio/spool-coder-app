@@ -1,5 +1,4 @@
 import '../entities/spool.dart';
-import '../entities/spool_profile.dart';
 import '../repositories/spool_repository.dart';
 
 /// Domain service for orchestrating complex spool operations

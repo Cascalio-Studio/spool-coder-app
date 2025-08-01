@@ -1,7 +1,5 @@
 import '../value_objects/rfid_data.dart';
 import '../value_objects/material_type.dart';
-import '../value_objects/temperature_profile.dart';
-import '../entities/spool.dart';
 
 /// Domain service for RFID-related business operations
 /// Part of the Domain Layer: encapsulates complex RFID business logic

@@ -1,9 +1,8 @@
 import 'package:test/test.dart';
-import '../../../lib/domain/value_objects/rfid_data.dart';
-import '../../../lib/domain/value_objects/spool_color.dart';
-import '../../../lib/domain/value_objects/filament_length.dart';
-import '../../../lib/domain/value_objects/production_info.dart';
-import '../../../lib/domain/value_objects/temperature_profile.dart';
+import 'package:spool_coder_app/domain/value_objects/rfid_data.dart';
+import 'package:spool_coder_app/domain/value_objects/spool_color.dart';
+import 'package:spool_coder_app/domain/value_objects/production_info.dart';
+import 'package:spool_coder_app/domain/value_objects/temperature_profile.dart';
 
 void main() {
   group('RfidData', () {
@@ -36,13 +35,6 @@ void main() {
     // Test for UID extraction is covered indirectly via the public API in the 'fromBlockDump' test.
 
     // Removed test for private method `_parseStringBlock`.
-
-    test('should convert hex to bytes correctly', () {
-      final bytes = RfidData._hexToBytes('FF6A13');
-      expect(bytes, equals([0xFF, 0x6A, 0x13]));
-    });
-
-[No replacement lines; the test case is removed entirely.]
 
     test('should detect genuine Bambu Lab spools', () {
       // Mock RFID data with RSA signature

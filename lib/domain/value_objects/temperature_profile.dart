@@ -123,13 +123,13 @@ class TemperatureProfile {
   String toString() {
     final parts = <String>[];
     if (recommendedHotendTemperature != null) {
-      parts.add('Hotend: ${recommendedHotendTemperature}°C');
+      parts.add('Hotend: $recommendedHotendTemperature°C');
     }
     if (bedTemperature != null) {
-      parts.add('Bed: ${bedTemperature}°C');
+      parts.add('Bed: $bedTemperature°C');
     }
     if (needsDrying) {
-      parts.add('Dry: ${dryingTemperature}°C/${dryingTimeHours}h');
+      parts.add('Dry: $dryingTemperature°C/$dryingTimeHours h');
     }
     return parts.isEmpty ? 'No temperature profile' : parts.join(', ');
   }

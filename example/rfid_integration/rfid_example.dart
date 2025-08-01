@@ -1,9 +1,10 @@
-import '../../lib/domain/domain.dart';
+import 'package:spool_coder_app/domain/domain.dart';
 
 /// Example demonstrating Bambu Lab RFID integration
 /// Based on real RFID data from Bambu-Research-Group/RFID-Tag-Guide
 void main() {
-  print('=== Bambu Lab RFID Integration Example ===\n');
+  // ignore: avoid_print
+  // ignore: avoid_print`n  print('=== Bambu Lab RFID Integration Example ===\n');
 
   // Real RFID data from Bambu Lab PLA Basic spool
   final realRfidBlocks = {
@@ -23,109 +24,109 @@ void main() {
   };
 
   // Parse RFID data from block dump
-  print('1. Parsing RFID Data from Block Dump');
-  print('=====================================');
+  // ignore: avoid_print`n  print('1. Parsing RFID Data from Block Dump');
+  // ignore: avoid_print`n  print('=====================================');
   final rfidData = RfidData.fromBlockDump(realRfidBlocks);
   
-  print('UID: ${rfidData.uid}');
-  print('Material Type: ${rfidData.filamentType}');
-  print('Detailed Type: ${rfidData.detailedFilamentType}');
-  print('Description: ${rfidData.description}');
-  print('Is Genuine Bambu Lab: ${rfidData.isGenuineBambuLab}');
-  print('Is Complete: ${rfidData.isComplete}');
-  print('');
+  // ignore: avoid_print`n  print('UID: ${rfidData.uid}');
+  // ignore: avoid_print`n  print('Material Type: ${rfidData.filamentType}');
+  // ignore: avoid_print`n  print('Detailed Type: ${rfidData.detailedFilamentType}');
+  // ignore: avoid_print`n  print('Description: ${rfidData.description}');
+  // ignore: avoid_print`n  print('Is Genuine Bambu Lab: ${rfidData.isGenuineBambuLab}');
+  // ignore: avoid_print`n  print('Is Complete: ${rfidData.isComplete}');
+  // ignore: avoid_print`n  print('');
 
   // Create Spool from RFID data
-  print('2. Creating Spool Entity from RFID Data');
-  print('========================================');
+  // ignore: avoid_print`n  print('2. Creating Spool Entity from RFID Data');
+  // ignore: avoid_print`n  print('========================================');
   final spool = Spool.fromRfidData(rfidData);
   
-  print('Spool UID: ${spool.uid}');
-  print('Material: ${spool.materialType.displayName}');
-  print('Manufacturer: ${spool.manufacturer}');
-  print('Color: ${spool.color}');
-  print('Net Length: ${spool.netLength.format()}');
-  print('Is RFID Scanned: ${spool.isRfidScanned}');
-  print('');
+  // ignore: avoid_print`n  print('Spool UID: ${spool.uid}');
+  // ignore: avoid_print`n  print('Material: ${spool.materialType.displayName}');
+  // ignore: avoid_print`n  print('Manufacturer: ${spool.manufacturer}');
+  // ignore: avoid_print`n  print('Color: ${spool.color}');
+  // ignore: avoid_print`n  print('Net Length: ${spool.netLength.format()}');
+  // ignore: avoid_print`n  print('Is RFID Scanned: ${spool.isRfidScanned}');
+  // ignore: avoid_print`n  print('');
 
   // Temperature and printing recommendations
-  print('3. Temperature Profile and Recommendations');
-  print('==========================================');
+  // ignore: avoid_print`n  print('3. Temperature Profile and Recommendations');
+  // ignore: avoid_print`n  print('==========================================');
   if (spool.temperatureProfile != null) {
     final tempProfile = spool.temperatureProfile!;
-    print('Temperature Profile: $tempProfile');
-    print('Recommended Print Temp: ${spool.recommendedPrintTemperature}°C');
-    print('Recommended Bed Temp: ${spool.recommendedBedTemperature}°C');
-    print('Needs Drying: ${spool.needsDrying}');
+    // ignore: avoid_print`n    print('Temperature Profile: $tempProfile');
+    // ignore: avoid_print`n    print('Recommended Print Temp: ${spool.recommendedPrintTemperature}°C');
+    // ignore: avoid_print`n    print('Recommended Bed Temp: ${spool.recommendedBedTemperature}°C');
+    // ignore: avoid_print`n    print('Needs Drying: ${spool.needsDrying}');
     if (spool.needsDrying) {
-      print('Drying Instructions: ${spool.dryingInstructions}');
+      // ignore: avoid_print`n      print('Drying Instructions: ${spool.dryingInstructions}');
     }
   }
-  print('');
+  // ignore: avoid_print`n  print('');
 
   // Production information
-  print('4. Production Information');
-  print('=========================');
+  // ignore: avoid_print`n  print('4. Production Information');
+  // ignore: avoid_print`n  print('=========================');
   if (spool.productionInfo != null) {
     final prodInfo = spool.productionInfo!;
-    print('Production Info: $prodInfo');
-    print('Production Age: ${spool.productionAge}');
-    print('Is Fresh Production: ${spool.isFreshProduction}');
-    print('Is Old Production: ${spool.isOldProduction}');
+    // ignore: avoid_print`n    print('Production Info: $prodInfo');
+    // ignore: avoid_print`n    print('Production Age: ${spool.productionAge}');
+    // ignore: avoid_print`n    print('Is Fresh Production: ${spool.isFreshProduction}');
+    // ignore: avoid_print`n    print('Is Old Production: ${spool.isOldProduction}');
   }
-  print('');
+  // ignore: avoid_print`n  print('');
 
   // Business logic examples
-  print('5. Spool Business Logic');
-  print('=======================');
-  print('Usage Percentage: ${spool.usagePercentage.toStringAsFixed(1)}%');
-  print('Is Nearly Empty: ${spool.isNearlyEmpty}');
-  print('Is Empty: ${spool.isEmpty}');
-  print('Used Length: ${spool.usedLength.format()}');
-  print('Nozzle Compatibility: ${spool.nozzleCompatibility}');
-  print('');
+  // ignore: avoid_print`n  print('5. Spool Business Logic');
+  // ignore: avoid_print`n  print('=======================');
+  // ignore: avoid_print`n  print('Usage Percentage: ${spool.usagePercentage.toStringAsFixed(1)}%');
+  // ignore: avoid_print`n  print('Is Nearly Empty: ${spool.isNearlyEmpty}');
+  // ignore: avoid_print`n  print('Is Empty: ${spool.isEmpty}');
+  // ignore: avoid_print`n  print('Used Length: ${spool.usedLength.format()}');
+  // ignore: avoid_print`n  print('Nozzle Compatibility: ${spool.nozzleCompatibility}');
+  // ignore: avoid_print`n  print('');
 
   // RFID Service validation and recommendations
-  print('6. RFID Service Analysis');
-  print('========================');
+  // ignore: avoid_print`n  print('6. RFID Service Analysis');
+  // ignore: avoid_print`n  print('========================');
   final rfidService = SpoolRfidService();
   
   final validationIssues = rfidService.validateRfidData(rfidData);
-  print('Validation Issues: ${validationIssues.isEmpty ? 'None' : validationIssues.join(', ')}');
+  // ignore: avoid_print`n  print('Validation Issues: ${validationIssues.isEmpty ? 'None' : validationIssues.join(', ')}');
   
   final warnings = rfidService.analyzeForWarnings(rfidData);
-  print('Warnings: ${warnings.isEmpty ? 'None' : warnings.join(', ')}');
+  // ignore: avoid_print`n  print('Warnings: ${warnings.isEmpty ? 'None' : warnings.join(', ')}');
   
   final recommendations = rfidService.generatePrintingRecommendations(rfidData);
-  print('Printing Recommendations:');
+  // ignore: avoid_print`n  print('Printing Recommendations:');
   recommendations.forEach((key, value) {
-    print('  $key: $value');
+    // ignore: avoid_print`n    print('  $key: $value');
   });
-  print('');
+  // ignore: avoid_print`n  print('');
 
   // Material type variations
-  print('7. Bambu Lab Material Types');
-  print('===========================');
-  print('All Bambu Lab Material Types:');
+  // ignore: avoid_print`n  print('7. Bambu Lab Material Types');
+  // ignore: avoid_print`n  print('===========================');
+  // ignore: avoid_print`n  print('All Bambu Lab Material Types:');
   for (final material in MaterialType.bambuLabTypes) {
-    print('  ${material.value}: ${material.displayName}');
+    // ignore: avoid_print`n    print('  ${material.value}: ${material.displayName}');
   }
-  print('');
+  // ignore: avoid_print`n  print('');
 
   // RFID-specific material identification
-  print('8. Material Identification from RFID');
-  print('====================================');
+  // ignore: avoid_print`n  print('8. Material Identification from RFID');
+  // ignore: avoid_print`n  print('====================================');
   final identifiedMaterial = MaterialType.fromRfidDetailedType('PLA Basic');
-  print('Identified Material: ${identifiedMaterial.displayName}');
-  print('Material Value: ${identifiedMaterial.value}');
-  print('Default Density: ${identifiedMaterial.defaultDensity}g/cm³');
-  print('Print Temperature: ${identifiedMaterial.printTemperature}°C');
-  print('Bed Temperature: ${identifiedMaterial.bedTemperature}°C');
-  print('');
+  // ignore: avoid_print`n  print('Identified Material: ${identifiedMaterial.displayName}');
+  // ignore: avoid_print`n  print('Material Value: ${identifiedMaterial.value}');
+  // ignore: avoid_print`n  print('Default Density: ${identifiedMaterial.defaultDensity}g/cm³');
+  // ignore: avoid_print`n  print('Print Temperature: ${identifiedMaterial.printTemperature}°C');
+  // ignore: avoid_print`n  print('Bed Temperature: ${identifiedMaterial.bedTemperature}°C');
+  // ignore: avoid_print`n  print('');
 
   // Spool updates with RFID data
-  print('9. Updating Spool with New RFID Scan');
-  print('====================================');
+  // ignore: avoid_print`n  print('9. Updating Spool with New RFID Scan');
+  // ignore: avoid_print`n  print('====================================');
   final updatedRfidData = rfidData.copyWith(
     scanTime: DateTime.now(),
   );
@@ -136,10 +137,10 @@ void main() {
     updatedAt: DateTime.now(),
   );
   
-  print('Original Usage: ${spool.usagePercentage.toStringAsFixed(1)}%');
-  print('Updated Usage: ${updatedSpool.usagePercentage.toStringAsFixed(1)}%');
-  print('Change in Usage: ${(updatedSpool.usagePercentage - spool.usagePercentage).toStringAsFixed(1)}%');
-  print('');
+  // ignore: avoid_print`n  print('Original Usage: ${spool.usagePercentage.toStringAsFixed(1)}%');
+  // ignore: avoid_print`n  print('Updated Usage: ${updatedSpool.usagePercentage.toStringAsFixed(1)}%');
+  // ignore: avoid_print`n  print('Change in Usage: ${(updatedSpool.usagePercentage - spool.usagePercentage).toStringAsFixed(1)}%');
+  // ignore: avoid_print`n  print('');
 
-  print('=== RFID Integration Example Complete ===');
+  // ignore: avoid_print`n  print('=== RFID Integration Example Complete ===');
 }

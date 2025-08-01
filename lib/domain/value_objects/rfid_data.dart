@@ -301,6 +301,6 @@ class RfidData {
 
   @override
   String toString() {
-    return 'RfidData(uid: $uid, ${description}, scanned: ${scanTime.toIso8601String().substring(0, 19)})';
+    return 'RfidData(uid: $uid, $description, scanned: ${scanTime.toIso8601String().substring(0, 19)})';
   }
 }
