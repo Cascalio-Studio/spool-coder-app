@@ -59,7 +59,7 @@ abstract class PermissionsPlatformInterface {
 /// Platform-specific permissions implementation
 /// This would use platform channels or permission plugins for permission operations
 class PermissionsPlatformImpl implements PermissionsPlatformInterface {
-  final Map<PermissionType, PermissionStatus> _permissions = {
+  final Map<PermissionType, PermissionStatus> _permissionStatusMap = {
     PermissionType.camera: PermissionStatus.unknown,
     PermissionType.microphone: PermissionStatus.unknown,
     PermissionType.location: PermissionStatus.unknown,
