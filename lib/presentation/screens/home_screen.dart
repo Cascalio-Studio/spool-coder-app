@@ -219,29 +219,40 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildNavItem(int index, IconData icon, String label) {
     final isActive = _currentBottomNavIndex == index;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          _currentBottomNavIndex = index;
-        });
-      },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            icon,
-            size: 24,
-            color: isActive ? AppColors.accentGreen : AppColors.mutedBlack,
+    return Expanded(
+      child: InkWell(
+        borderRadius: BorderRadius.circular(20),
+        splashColor: isDark ? AppColors.accentGreen.withOpacity(0.2) : AppColors.backgroundGray.withOpacity(0.4),
+        highlightColor: isDark ? AppColors.accentGreen.withOpacity(0.1) : AppColors.backgroundGray.withOpacity(0.2),
+        hoverColor: isDark ? AppColors.accentGreen.withOpacity(0.1) : AppColors.backgroundGray.withOpacity(0.2),
+        onTap: () {
+          setState(() {
+            _currentBottomNavIndex = index;
+          });
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                icon,
+                size: 24,
+                color: isActive ? AppColors.accentGreen : AppColors.mutedBlack,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                label,
+                style: AppTextStyles.navigationLabel.copyWith(
+                  color: isActive ? AppColors.accentGreen : AppColors.mutedBlack,
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 8),
-          Text(
-            label,
-            style: AppTextStyles.navigationLabel.copyWith(
-              color: isActive ? AppColors.accentGreen : AppColors.mutedBlack,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'package:spool_coder_app/theme/theme.dart';
 
 /// Home screen widgets - Components for the main home screen
@@ -121,6 +122,13 @@ class SpoolSelectionSection extends StatefulWidget {
 
 class _SpoolSelectionSectionState extends State<SpoolSelectionSection> {
   int _selectedSpoolIndex = 0;
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -135,22 +143,45 @@ class _SpoolSelectionSectionState extends State<SpoolSelectionSection> {
           ),
         ),
         SizedBox(
-          height: 160,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            itemCount: _spoolData.length,
-            itemBuilder: (context, index) {
-              return SpoolCard(
-                spoolData: _spoolData[index],
-                isSelected: _selectedSpoolIndex == index,
-                onTap: () {
-                  setState(() {
-                    _selectedSpoolIndex = index;
-                  });
-                },
-              );
-            },
+          height: 180,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Scrollbar(
+              controller: _scrollController,
+              thumbVisibility: true,
+              trackVisibility: true,
+              radius: const Radius.circular(8),
+              thickness: 6,
+              child: ScrollConfiguration(
+                behavior: ScrollConfiguration.of(context).copyWith(
+                  dragDevices: {
+                    PointerDeviceKind.touch,
+                    PointerDeviceKind.mouse,
+                  },
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: ListView.builder(
+                    controller: _scrollController,
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    itemCount: _spoolData.length,
+                    itemBuilder: (context, index) {
+                    return SpoolCard(
+                      spoolData: _spoolData[index],
+                      isSelected: _selectedSpoolIndex == index,
+                      onTap: () {
+                        setState(() {
+                          _selectedSpoolIndex = index;
+                        });
+                      },
+                    );
+                  },
+                ),
+                ),
+              ),
+            ),
           ),
         ),
       ],
@@ -173,10 +204,15 @@ class SpoolCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    // Responsive card width: fit 2.5 cards on screen, fallback to 280px for small screens
+    final cardWidth = screenWidth > 700
+        ? (screenWidth - 32 - 24) / 2.5
+        : 280.0;
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 280,
+        width: cardWidth,
         margin: const EdgeInsets.only(right: 12),
         decoration: BoxDecoration(
           color: AppColors.pureWhite,
@@ -195,46 +231,44 @@ class SpoolCard extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 12,
-                      height: 12,
-                      decoration: BoxDecoration(
-                        color: spoolData.color,
-                        shape: BoxShape.circle,
-                      ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    width: 12,
+                    height: 12,
+                    decoration: BoxDecoration(
+                      color: spoolData.color,
+                      shape: BoxShape.circle,
                     ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        spoolData.type,
-                        style: AppTextStyles.spoolCardTitle,
-                      ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      spoolData.type,
+                      style: AppTextStyles.spoolCardTitle,
                     ),
-                  ],
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  spoolData.brand,
-                  style: AppTextStyles.spoolCardBrand,
-                ),
-                const Divider(height: 20),
-                Text(
-                  '${spoolData.remaining.toStringAsFixed(1)} kg remaining',
-                  style: AppTextStyles.spoolCardAmount,
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  'Last used: ${spoolData.lastUsed}',
-                  style: AppTextStyles.spoolCardLastUsed,
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 4),
+              Text(
+                spoolData.brand,
+                style: AppTextStyles.spoolCardBrand,
+              ),
+              const Divider(height: 20),
+              Text(
+                '${spoolData.remaining.toStringAsFixed(1)} kg remaining',
+                style: AppTextStyles.spoolCardAmount,
+              ),
+              const SizedBox(height: 4),
+              Text(
+                'Last used: ${spoolData.lastUsed}',
+                style: AppTextStyles.spoolCardLastUsed,
+              ),
+            ],
           ),
         ),
       ),
