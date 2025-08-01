@@ -1,70 +1,99 @@
 import '../../domain/entities/spool.dart';
+import '../../domain/repositories/spool_repository.dart';
+import '../../domain/value_objects/spool_uid.dart';
+import '../datasources/spool_data_source.dart';
 
 /// Repository interface for spool data operations
 /// Part of the Data Layer: defines contracts for data access
-abstract class SpoolRepository {
-  /// Scan a spool using NFC
-  Future<Spool> scanSpoolNfc();
-  
-  /// Scan a spool using USB
-  Future<Spool> scanSpoolUsb();
-  
-  /// Scan a spool using Bluetooth
-  Future<Spool> scanSpoolBluetooth();
-  
-  /// Program/write data to a spool
-  Future<void> programSpool(Spool spool, ScanMethod method);
-  
-  /// Get scan history
-  Future<List<Spool>> getScanHistory();
-  
-  /// Save scan to history
-  Future<void> saveScanToHistory(Spool spool);
-}
-
-enum ScanMethod {
-  nfc,
-  usb,
-  bluetooth,
-}
-
-/// Implementation of the spool repository
-/// Coordinates between different data sources
+/// 
+/// Note: This is the concrete implementation that bridges the domain repository
+/// interface with the data source abstraction layer.
 class SpoolRepositoryImpl implements SpoolRepository {
-  // Data sources would be injected here
+  final SpoolDataSource _dataSource;
   
+  const SpoolRepositoryImpl({
+    required SpoolDataSource dataSource,
+  }) : _dataSource = dataSource;
+
   @override
-  Future<Spool> scanSpoolNfc() async {
-    // Delegate to NFC data source
-    throw UnimplementedError('NFC scanning not yet implemented');
+  Future<Spool> scanSpool(ScanMethod method) async {
+    // Scanning is handled by platform-specific implementations
+    // This would delegate to NFC, USB, or Bluetooth data sources
+    throw UnimplementedError('Scanning not yet implemented - use platform-specific services');
   }
-  
+
   @override
-  Future<Spool> scanSpoolUsb() async {
-    // Delegate to USB data source
-    throw UnimplementedError('USB scanning not yet implemented');
+  Future<Spool?> getSpoolById(SpoolUid uid) async {
+    return await _dataSource.getSpoolById(uid);
   }
-  
+
   @override
-  Future<Spool> scanSpoolBluetooth() async {
-    // Delegate to Bluetooth data source
-    throw UnimplementedError('Bluetooth scanning not yet implemented');
+  Future<List<Spool>> getAllSpools() async {
+    return await _dataSource.getAllSpools();
   }
-  
+
   @override
-  Future<void> programSpool(Spool spool, ScanMethod method) async {
-    // Delegate to appropriate data source based on method
-    throw UnimplementedError('Spool programming not yet implemented');
+  Future<void> saveSpool(Spool spool) async {
+    await _dataSource.saveSpool(spool);
   }
-  
+
   @override
-  Future<List<Spool>> getScanHistory() async {
-    // Delegate to local storage data source
-    return [];
+  Future<void> updateSpool(Spool spool) async {
+    await _dataSource.updateSpool(spool);
   }
-  
+
   @override
-  Future<void> saveScanToHistory(Spool spool) async {
-    // Delegate to local storage data source
+  Future<void> deleteSpool(SpoolUid uid) async {
+    await _dataSource.deleteSpool(uid);
+  }
+
+  @override
+  Future<void> writeSpool(Spool spool, ScanMethod method) async {
+    // Writing to physical spool is handled by platform-specific implementations
+    // This would delegate to NFC, USB, or Bluetooth data sources
+    throw UnimplementedError('Writing to physical spool not yet implemented - use platform-specific services');
+  }
+
+  @override
+  Future<bool> validateSpoolData(SpoolUid uid) async {
+    final spool = await _dataSource.getSpoolById(uid);
+    if (spool == null) return false;
+    
+    // Basic validation
+    return spool.uid.value.isNotEmpty &&
+           spool.manufacturer.isNotEmpty &&
+           spool.netLength.meters > 0 &&
+           spool.remainingLength.meters >= 0 &&
+           spool.remainingLength.meters <= spool.netLength.meters;
+  }
+
+  @override
+  Future<List<Spool>> searchSpools({
+    String? materialType,
+    String? manufacturer,
+    String? color,
+    bool? isNearlyEmpty,
+  }) async {
+    return await _dataSource.searchSpools(
+      materialType: materialType,
+      manufacturer: manufacturer,
+      color: color,
+      isNearlyEmpty: isNearlyEmpty,
+    );
+  }
+
+  @override
+  Future<List<Spool>> getNearlyEmptySpools() async {
+    return await _dataSource.getNearlyEmptySpools();
+  }
+
+  @override
+  Future<String> exportSpoolData() async {
+    return await _dataSource.exportSpoolData();
+  }
+
+  @override
+  Future<void> importSpoolData(String backupData) async {
+    await _dataSource.importSpoolData(backupData);
   }
 }
