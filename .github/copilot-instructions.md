@@ -84,7 +84,7 @@
 - **Refactor as Needed**:  
   - Improve Copilot code for efficiency, clarity, and conformity to standards.
 - **Flag Unclear Code**:  
-  - Request clarification if Copilot code is ambiguous or deviates from project norms.
+  - Request clarification from the PR author or team lead if Copilot code is ambiguous or deviates from project norms. Use the team's designated communication channel if necessary.
 
 ---
 
