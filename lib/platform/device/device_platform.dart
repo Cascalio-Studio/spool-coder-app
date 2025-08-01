@@ -1,5 +1,6 @@
 /// Device platform integration
 /// Part of the Platform Layer: handles device/platform-specific device information and capabilities
+import 'dart:math';
 enum DevicePlatform {
   android,
   ios,

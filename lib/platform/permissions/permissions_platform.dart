@@ -84,15 +84,14 @@ class PermissionsPlatformImpl implements PermissionsPlatformInterface {
   @override
   Future<PermissionStatus> checkPermission(PermissionType permission) async {
     // In a real implementation, this would check actual permission status
-    return _permissions[permission] ?? PermissionStatus.unknown;
+    return _permissionStatusMap[permission] ?? PermissionStatus.unknown;
   }
   
   @override
   Future<PermissionResult> requestPermission(PermissionType permission) async {
     // In a real implementation, this would request permission from OS
     // For stub, we'll simulate granting the permission
-    _permissions[permission] = PermissionStatus.granted;
-    
+    _permissionStatusMap[permission] = PermissionStatus.granted;
     return PermissionResult(
       type: permission,
       status: PermissionStatus.granted,
@@ -116,7 +115,7 @@ class PermissionsPlatformImpl implements PermissionsPlatformInterface {
   @override
   Future<bool> shouldShowRequestRationale(PermissionType permission) async {
     // In a real implementation, this would check if rationale should be shown
-    return _permissions[permission] == PermissionStatus.denied;
+    return _permissionStatusMap[permission] == PermissionStatus.denied;
   }
   
   @override
@@ -128,6 +127,6 @@ class PermissionsPlatformImpl implements PermissionsPlatformInterface {
   @override
   Future<Map<PermissionType, PermissionStatus>> getAllPermissionsStatus() async {
     // In a real implementation, this would get all permission statuses
-    return Map.from(_permissions);
+    return Map.from(_permissionStatusMap);
   }
 }
