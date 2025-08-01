@@ -3,7 +3,7 @@
 ## Purpose
 
 - Ensure submitted code meets project standards for quality, security, and maintainability.
-- Provide actionable feedback to contributors leveraging Copilot suggestions.
+- Provide actionable feedback to contributors who use Copilot suggestions in their code.
 
 ---
 
