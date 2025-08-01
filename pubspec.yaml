@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   get_it: ^7.2.0
-  go_router: ^6.5.0
+  go_router: ^16.0.0
 
   # Add other dependencies here as needed
 
