@@ -18,6 +18,11 @@ class WelcomeSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
+            'Spool Coder',
+            style: AppTextStyles.displayLarge,
+          ),
+          const SizedBox(height: 12),
+          Text(
             'Good morning, Alex',
             style: AppTextStyles.welcomeGreeting,
           ),
@@ -25,6 +30,11 @@ class WelcomeSection extends StatelessWidget {
           Text(
             'Last read: PLA Blue (Prusament) • 3 spools managed',
             style: AppTextStyles.welcomeSubtitle,
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'Ready to scan and program filament spools',
+            style: AppTextStyles.bodyLargeSecondary,
           ),
         ],
       ),
@@ -185,44 +195,46 @@ class SpoolCard extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    width: 12,
-                    height: 12,
-                    decoration: BoxDecoration(
-                      color: spoolData.color,
-                      shape: BoxShape.circle,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: 12,
+                      height: 12,
+                      decoration: BoxDecoration(
+                        color: spoolData.color,
+                        shape: BoxShape.circle,
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      spoolData.type,
-                      style: AppTextStyles.spoolCardTitle,
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        spoolData.type,
+                        style: AppTextStyles.spoolCardTitle,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 4),
-              Text(
-                spoolData.brand,
-                style: AppTextStyles.spoolCardBrand,
-              ),
-              const Divider(height: 20),
-              Text(
-                '${spoolData.remaining.toStringAsFixed(1)} kg remaining',
-                style: AppTextStyles.spoolCardAmount,
-              ),
-              const SizedBox(height: 4),
-              Text(
-                'Last used: ${spoolData.lastUsed}',
-                style: AppTextStyles.spoolCardLastUsed,
-              ),
-            ],
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  spoolData.brand,
+                  style: AppTextStyles.spoolCardBrand,
+                ),
+                const Divider(height: 20),
+                Text(
+                  '${spoolData.remaining.toStringAsFixed(1)} kg remaining',
+                  style: AppTextStyles.spoolCardAmount,
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'Last used: ${spoolData.lastUsed}',
+                  style: AppTextStyles.spoolCardLastUsed,
+                ),
+              ],
+            ),
           ),
         ),
       ),
