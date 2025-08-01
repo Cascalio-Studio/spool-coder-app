@@ -94,8 +94,8 @@ class NetworkPlatformImpl implements NetworkPlatformInterface {
   @override
   Future<bool> isHostReachable(String host, {int port = 80, Duration timeout = const Duration(seconds: 5)}) async {
     // Validate input parameters
-    if (host == null || host.trim().isEmpty) {
-      throw ArgumentError('Host must be a non-null, non-empty string.');
+    if (host.trim().isEmpty) {
+      throw ArgumentError('Host must be a non-empty string.');
     }
     if (port < 1 || port > 65535) {
       throw ArgumentError('Port must be in the range 1-65535.');
