@@ -129,7 +129,7 @@ class TemperatureProfile {
       parts.add('Bed: $bedTemperature°C');
     }
     if (needsDrying) {
-      parts.add('Dry: $dryingTemperature°C/$dryingTimeHours h');
+      parts.add('Dry: $dryingTemperature°C/${dryingTimeHours}h');
     }
     return parts.isEmpty ? 'No temperature profile' : parts.join(', ');
   }
