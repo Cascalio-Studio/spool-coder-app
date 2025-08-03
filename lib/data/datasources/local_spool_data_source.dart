@@ -241,7 +241,7 @@ class LocalSpoolDataSourceImpl extends LocalSpoolDataSource {
   dynamic _parseColor(dynamic value) {
     // In a real implementation, this would use the actual SpoolColor class
     // For now, return a mock object
-    return MockSpoolColor(value?.toString() ?? 'Unknown');
+    return LocalMockSpoolColor(value?.toString() ?? 'Unknown');
   }
 
   /// Parse filament length from stored data
@@ -258,9 +258,9 @@ class MockMaterialType {
   MockMaterialType(this.value);
 }
 
-class MockSpoolColor {
+class LocalMockSpoolColor {
   final String name;
-  MockSpoolColor(this.name);
+  LocalMockSpoolColor(this.name);
 }
 
 class MockFilamentLength {

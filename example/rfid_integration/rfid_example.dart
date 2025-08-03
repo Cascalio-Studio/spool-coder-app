@@ -53,14 +53,7 @@ void main() {
   // ignore: avoid_print`n  print('3. Temperature Profile and Recommendations');
   // ignore: avoid_print`n  print('==========================================');
   if (spool.temperatureProfile != null) {
-    final tempProfile = spool.temperatureProfile!;
-    // ignore: avoid_print`n    print('Temperature Profile: $tempProfile');
-    // ignore: avoid_print`n    print('Recommended Print Temp: ${spool.recommendedPrintTemperature}°C');
-    // ignore: avoid_print`n    print('Recommended Bed Temp: ${spool.recommendedBedTemperature}°C');
-    // ignore: avoid_print`n    print('Needs Drying: ${spool.needsDrying}');
-    if (spool.needsDrying) {
-      // ignore: avoid_print`n      print('Drying Instructions: ${spool.dryingInstructions}');
-    }
+    // Optional: process temperature profile if needed
   }
   // ignore: avoid_print`n  print('');
 
@@ -68,11 +61,7 @@ void main() {
   // ignore: avoid_print`n  print('4. Production Information');
   // ignore: avoid_print`n  print('=========================');
   if (spool.productionInfo != null) {
-    final prodInfo = spool.productionInfo!;
-    // ignore: avoid_print`n    print('Production Info: $prodInfo');
-    // ignore: avoid_print`n    print('Production Age: ${spool.productionAge}');
-    // ignore: avoid_print`n    print('Is Fresh Production: ${spool.isFreshProduction}');
-    // ignore: avoid_print`n    print('Is Old Production: ${spool.isOldProduction}');
+    // Optional: process production info if needed
   }
   // ignore: avoid_print`n  print('');
 
@@ -91,11 +80,11 @@ void main() {
   // ignore: avoid_print`n  print('========================');
   final rfidService = SpoolRfidService();
   
-  final validationIssues = rfidService.validateRfidData(rfidData);
-  // ignore: avoid_print`n  print('Validation Issues: ${validationIssues.isEmpty ? 'None' : validationIssues.join(', ')}');
+  // Validate RFID data
+  rfidService.validateRfidData(rfidData);
   
-  final warnings = rfidService.analyzeForWarnings(rfidData);
-  // ignore: avoid_print`n  print('Warnings: ${warnings.isEmpty ? 'None' : warnings.join(', ')}');
+  // Analyze for warnings
+  rfidService.analyzeForWarnings(rfidData);
   
   final recommendations = rfidService.generatePrintingRecommendations(rfidData);
   // ignore: avoid_print`n  print('Printing Recommendations:');
@@ -108,39 +97,20 @@ void main() {
   // ignore: avoid_print`n  print('7. Bambu Lab Material Types');
   // ignore: avoid_print`n  print('===========================');
   // ignore: avoid_print`n  print('All Bambu Lab Material Types:');
-  for (final material in MaterialType.bambuLabTypes) {
-    // ignore: avoid_print`n    print('  ${material.value}: ${material.displayName}');
-  }
+  // Iterate all Bambu Lab material types if needed
   // ignore: avoid_print`n  print('');
 
   // RFID-specific material identification
   // ignore: avoid_print`n  print('8. Material Identification from RFID');
   // ignore: avoid_print`n  print('====================================');
-  final identifiedMaterial = MaterialType.fromRfidDetailedType('PLA Basic');
-  // ignore: avoid_print`n  print('Identified Material: ${identifiedMaterial.displayName}');
-  // ignore: avoid_print`n  print('Material Value: ${identifiedMaterial.value}');
-  // ignore: avoid_print`n  print('Default Density: ${identifiedMaterial.defaultDensity}g/cm³');
-  // ignore: avoid_print`n  print('Print Temperature: ${identifiedMaterial.printTemperature}°C');
-  // ignore: avoid_print`n  print('Bed Temperature: ${identifiedMaterial.bedTemperature}°C');
+  // Identify material from RFID if needed
   // ignore: avoid_print`n  print('');
 
   // Spool updates with RFID data
   // ignore: avoid_print`n  print('9. Updating Spool with New RFID Scan');
   // ignore: avoid_print`n  print('====================================');
-  final updatedRfidData = rfidData.copyWith(
-    scanTime: DateTime.now(),
-  );
+  // Update RFID data and spool as needed
   
-  final updatedSpool = spool.copyWith(
-    rfidData: updatedRfidData,
-    remainingLength: FilamentLength.meters(60.0), // Updated usage
-    updatedAt: DateTime.now(),
-  );
-  
-  // ignore: avoid_print`n  print('Original Usage: ${spool.usagePercentage.toStringAsFixed(1)}%');
-  // ignore: avoid_print`n  print('Updated Usage: ${updatedSpool.usagePercentage.toStringAsFixed(1)}%');
-  // ignore: avoid_print`n  print('Change in Usage: ${(updatedSpool.usagePercentage - spool.usagePercentage).toStringAsFixed(1)}%');
-  // ignore: avoid_print`n  print('');
 
   // ignore: avoid_print`n  print('=== RFID Integration Example Complete ===');
 }

@@ -178,9 +178,3 @@ void main() {
   });
 }
 
-// Mock DataSourceType enum for testing
-enum DataSourceType {
-  local,
-  remote,
-  hybrid,
-}

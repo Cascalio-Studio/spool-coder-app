@@ -1,6 +1,7 @@
 import 'package:test/test.dart';
 import '../../lib/data/models/data_models.dart';
 import '../../lib/data/mappers/entity_mappers.dart';
+import '../../lib/domain/value_objects/material_type.dart';
 
 void main() {
   group('Data Models Tests', () {
@@ -140,8 +141,8 @@ void main() {
       expect(MaterialTypeMapper.fromString('unknown'), equals(MaterialType.pla)); // Fallback
 
       // Test MaterialType to string
-      expect(MaterialTypeMapper.toString(MaterialType.pla), equals('PLA'));
-      expect(MaterialTypeMapper.toString(MaterialType.petg), equals('PETG'));
+      expect(MaterialTypeMapper.toStringValue(MaterialType.pla), equals('PLA'));
+      expect(MaterialTypeMapper.toStringValue(MaterialType.petg), equals('PETG'));
     });
 
     test('MapperUtils parseDateTime works correctly', () {
@@ -175,24 +176,4 @@ void main() {
       expect(MapperUtils.parseBool(null, defaultValue: true), isTrue);
     });
   });
-}
-
-// Mock classes for testing
-class MaterialType {
-  final String value;
-  const MaterialType._(this.value);
-  
-  static const MaterialType pla = MaterialType._('PLA');
-  static const MaterialType petg = MaterialType._('PETG');
-  static const MaterialType abs = MaterialType._('ABS');
-  static const MaterialType tpu = MaterialType._('TPU');
-  
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    return other is MaterialType && other.value == value;
-  }
-  
-  @override
-  int get hashCode => value.hashCode;
 }

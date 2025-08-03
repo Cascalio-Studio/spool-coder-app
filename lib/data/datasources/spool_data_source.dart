@@ -420,7 +420,7 @@ class _HybridDataSourceImpl extends HybridSpoolDataSource {
   }
 
   @override
-  Future<SyncResult> getSyncStatus() async {
+  Future<SyncStatus> getSyncStatus() async {
     // Implementation would check sync status
     throw UnimplementedError();
   }
@@ -431,7 +431,6 @@ class _HybridDataSourceImpl extends HybridSpoolDataSource {
     throw UnimplementedError();
   }
 
-  @override
   Future<SyncResult> sync() async {
     final startTime = DateTime.now();
     final errors = <SyncError>[];
@@ -442,7 +441,7 @@ class _HybridDataSourceImpl extends HybridSpoolDataSource {
       
       if (await remoteDataSource.isAvailable()) {
         // Get all remote spools
-        final remoteSpools = await remoteDataSource.getAllSpools();
+        await remoteDataSource.getAllSpools();
         
         // TODO: Implement actual sync logic based on conflict resolution strategy
         // This is a simplified implementation

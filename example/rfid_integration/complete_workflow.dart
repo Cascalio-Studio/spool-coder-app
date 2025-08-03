@@ -63,7 +63,7 @@ Future<void> demonstrateRfidWorkflow() async {
     // ignore: avoid_print`n    print('⚠ Validation issues found:');
     for (final issue in validationIssues) {
       // ignore: avoid_print
-      // ignore: avoid_print`n      print('  - $issue');
+      print('  - $issue');
     }
   }
   
@@ -74,7 +74,7 @@ Future<void> demonstrateRfidWorkflow() async {
     // ignore: avoid_print`n    print('⚠ Warnings:');
     for (final warning in warnings) {
       // ignore: avoid_print
-      // ignore: avoid_print`n      print('  - $warning');
+      print('  - $warning');
     }
   }
   // ignore: avoid_print
@@ -160,9 +160,14 @@ Future<void> demonstrateRfidWorkflow() async {
   final expectedMaterial = MaterialType.plaBasic;
   final isCompatible = rfidService.isMaterialCompatible(rfidData, expectedMaterial);
   
-  // ignore: avoid_print`n  print('✓ Compatibility check completed');
-  // ignore: avoid_print`n  print('  Expected: ${expectedMaterial.displayName}');
-  // ignore: avoid_print`n  print('  RFID Material: ${rfidData.detailedFilamentType}');
+  // ignore: avoid_print
+  print('✓ Compatibility check completed');
+  // ignore: avoid_print
+  print('  Expected: ${expectedMaterial.displayName}');
+  // ignore: avoid_print
+  print('  RFID Material: ${rfidData.detailedFilamentType}');
+  // ignore: avoid_print
+  print('  Compatible: $isCompatible');
   // ignore: avoid_print`n  print('  Compatible: ${isCompatible ? '✅ Yes' : '❌ No'}');
   // ignore: avoid_print`n  print('');
 
@@ -175,12 +180,17 @@ Future<void> demonstrateRfidWorkflow() async {
   
   if (costPerGram != null) {
     final usedCost = (usedAmount.meters * rfidData.spoolWeight! / spool.netLength.meters) * costPerGram;
-    // ignore: avoid_print`n    print('✓ Cost analysis completed');
-    // ignore: avoid_print`n    print('  Total Spool Cost: \$${spoolCost.toStringAsFixed(2)}');
-    // ignore: avoid_print`n    print('  Cost per Gram: \$${costPerGram.toStringAsFixed(3)}');
-    // ignore: avoid_print`n    print('  Used Material Cost: \$${usedCost.toStringAsFixed(2)}');
+    // ignore: avoid_print
+    print('✓ Cost analysis completed');
+    // ignore: avoid_print
+    print('  Total Spool Cost: \$${spoolCost.toStringAsFixed(2)}');
+    // ignore: avoid_print
+    print('  Cost per Gram: \$${costPerGram.toStringAsFixed(3)}');
+    // ignore: avoid_print
+    print('  Used Material Cost: \$${usedCost.toStringAsFixed(2)}');
   } else {
-    // ignore: avoid_print`n    print('❌ Cost analysis unavailable (missing weight data)');
+    // ignore: avoid_print
+    print('❌ Cost analysis unavailable (missing weight data)');
   }
   // ignore: avoid_print`n  print('');
 
@@ -208,12 +218,15 @@ Future<void> demonstrateRfidWorkflow() async {
   }
   
   if (maintenanceRecommendations.isNotEmpty) {
-    // ignore: avoid_print`n    print('🔧 Maintenance recommendations:');
+    // ignore: avoid_print
+    print('🔧 Maintenance recommendations:');
     for (final recommendation in maintenanceRecommendations) {
-      // ignore: avoid_print`n      print('  - $recommendation');
+      // ignore: avoid_print
+      print('  - $recommendation');
     }
   } else {
-    // ignore: avoid_print`n    print('✓ No special maintenance required');
+    // ignore: avoid_print
+    print('✓ No special maintenance required');
   }
   // ignore: avoid_print`n  print('');
 

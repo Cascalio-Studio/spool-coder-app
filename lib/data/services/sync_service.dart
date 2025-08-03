@@ -34,7 +34,7 @@ abstract class SyncService {
   Future<SyncResult> forceFullSync();
 
   /// Resolve sync conflicts
-  Future<void> resolveConflicts(List<ConflictResolution> resolutions);
+  Future<void> resolveConflicts(List<BatchConflictResolution> resolutions);
 
   /// Get pending conflicts
   Future<List<SyncConflict>> getPendingConflicts();
@@ -182,7 +182,7 @@ class SyncServiceImpl implements SyncService {
   }
 
   @override
-  Future<void> resolveConflicts(List<ConflictResolution> resolutions) async {
+  Future<void> resolveConflicts(List<BatchConflictResolution> resolutions) async {
     for (final resolution in resolutions) {
       final conflictIndex = _pendingConflicts.indexWhere(
         (c) => c.spoolUid == resolution.spoolUid,
@@ -474,11 +474,11 @@ class _SyncResults {
 }
 
 /// Conflict resolution for batch operations
-class ConflictResolution {
+class BatchConflictResolution {
   final String spoolUid;
   final ConflictResolutionStrategy strategy;
 
-  const ConflictResolution({
+  const BatchConflictResolution({
     required this.spoolUid,
     required this.strategy,
   });

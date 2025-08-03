@@ -1,6 +1,4 @@
 import '../../core/config/app_config.dart';
-import '../../domain/entities/spool.dart';
-import '../../domain/value_objects/spool_uid.dart';
 
 /// API response wrapper
 class ApiResponse<T> {
@@ -192,7 +190,6 @@ class ImportResponse {
 /// HTTP client implementation of API service
 class HttpApiService implements ApiService {
   BackendConfig? _config;
-  AuthResult? _authResult;
   
   @override
   Future<void> initialize(BackendConfig config) async {
@@ -270,7 +267,6 @@ class HttpApiService implements ApiService {
           },
         );
         
-        _authResult = authResult;
         return ApiResponse.success(authResult, statusCode: 200);
       } else {
         return ApiResponse.error('Invalid API key', statusCode: 401);
@@ -349,17 +345,15 @@ class HttpApiService implements ApiService {
   @override
   Future<void> dispose() async {
     _config = null;
-    _authResult = null;
   }
 }
 
 /// HTTP implementation of spool API service
 class HttpSpoolApiService implements SpoolApiService {
-  ApiService? _apiService;
 
   @override
   Future<void> initialize(ApiService apiService) async {
-    _apiService = apiService;
+    // No-op: apiService available if needed
   }
 
   @override

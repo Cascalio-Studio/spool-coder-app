@@ -1,5 +1,5 @@
 import 'dart:async';
-import '../../domain/value_objects/rfid_data.dart';
+import '../../domain/value_objects/filament_length.dart';
 
 /// Abstract data source for RFID reader hardware operations
 /// Part of the Data Layer: defines contract for RFID hardware access
@@ -234,42 +234,42 @@ class MockRfidReaderDataSource implements RfidReaderDataSource {
     }
   }
 
-  SpoolColor _getMockColor(String tagId) {
+  RfidSpoolColor _getMockColor(String tagId) {
     switch (tagId) {
       case 'TAG_001':
-        return SpoolColor.named('Blue');
+        return RfidSpoolColor.named('Blue');
       case 'TAG_002':  
-        return SpoolColor.named('Red');
+        return RfidSpoolColor.named('Red');
       case 'TAG_003':
-        return SpoolColor.named('Black');
+        return RfidSpoolColor.named('Black');
       default:
-        return SpoolColor.named('White');
+        return RfidSpoolColor.named('White');
     }
   }
 
-  TemperatureProfile _getMockTemperatureProfile(String tagId) {
+  RfidTemperatureProfile _getMockTemperatureProfile(String tagId) {
     final material = _getMockMaterialType(tagId);
     switch (material.value) {
       case 'PLA':
-        return TemperatureProfile(
+        return RfidTemperatureProfile(
           minHotendTemperature: 190,
           maxHotendTemperature: 220,
           bedTemperature: 35,
         );
       case 'PETG':
-        return TemperatureProfile(
+        return RfidTemperatureProfile(
           minHotendTemperature: 230,
           maxHotendTemperature: 260,
           bedTemperature: 70,
         );
       case 'ABS':
-        return TemperatureProfile(
+        return RfidTemperatureProfile(
           minHotendTemperature: 250,
           maxHotendTemperature: 280,
           bedTemperature: 90,
         );
       default:
-        return TemperatureProfile(
+        return RfidTemperatureProfile(
           minHotendTemperature: 200,
           maxHotendTemperature: 230,
           bedTemperature: 60,
@@ -491,9 +491,9 @@ class LocalRfidDataStorage implements RfidDataStorage {
     return RfidData(
       uid: data['uid'],
       materialType: _parseMaterialType(data['materialType']),
-      color: SpoolColor.named(data['color']),
+      color: RfidSpoolColor.named(data['color']),
       netLength: FilamentLength.meters(data['netLength']),
-      temperature: TemperatureProfile(
+      temperature: RfidTemperatureProfile(
         minHotendTemperature: data['temperatureProfile']['minHotendTemp'],
         maxHotendTemperature: data['temperatureProfile']['maxHotendTemp'],
         bedTemperature: data['temperatureProfile']['bedTemp'],
@@ -697,26 +697,21 @@ class MaterialType {
   static const MaterialType tpu = MaterialType._('TPU', 'TPU');
 }
 
-class SpoolColor {
+class RfidSpoolColor {
   final String name;
-  const SpoolColor._(this.name);
+  const RfidSpoolColor._(this.name);
   
-  static SpoolColor named(String name) => SpoolColor._(name);
+  static RfidSpoolColor named(String name) => RfidSpoolColor._(name);
 }
 
-class FilamentLength {
-  final double meters;
-  const FilamentLength._(this.meters);
-  
-  static FilamentLength meters(double meters) => FilamentLength._(meters);
-}
 
-class TemperatureProfile {
+
+class RfidTemperatureProfile {
   final int? minHotendTemperature;
   final int? maxHotendTemperature;
   final int? bedTemperature;
   
-  const TemperatureProfile({
+  const RfidTemperatureProfile({
     this.minHotendTemperature,
     this.maxHotendTemperature,
     this.bedTemperature,
@@ -740,9 +735,9 @@ class ProductionInfo {
 class RfidData {
   final String uid;
   final MaterialType materialType;
-  final SpoolColor color;
+  final RfidSpoolColor color;
   final FilamentLength netLength;
-  final TemperatureProfile temperature;
+  final RfidTemperatureProfile temperature;
   final ProductionInfo productionInfo;
   
   const RfidData({

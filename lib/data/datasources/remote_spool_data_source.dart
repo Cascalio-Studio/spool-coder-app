@@ -349,7 +349,7 @@ class RemoteSpoolDataSourceImpl extends RemoteSpoolDataSource {
   /// Parse material type from API data
   dynamic _parseMaterialType(dynamic value) {
     // In a real implementation, this would use the actual MaterialType class
-    return MockMaterialType(value?.toString() ?? 'PLA');
+    return RemoteMockMaterialType(value?.toString() ?? 'PLA');
   }
 
   /// Parse color from API data  
@@ -361,14 +361,14 @@ class RemoteSpoolDataSourceImpl extends RemoteSpoolDataSource {
   /// Parse filament length from API data
   dynamic _parseFilamentLength(dynamic value) {
     // In a real implementation, this would use the actual FilamentLength class
-    return MockFilamentLength((value ?? 0.0).toDouble());
+    return RemoteMockFilamentLength((value ?? 0.0).toDouble());
   }
 }
 
 // Mock classes for compilation - these would be imported from actual value objects
-class MockMaterialType {
+class RemoteMockMaterialType {
   final String value;
-  MockMaterialType(this.value);
+  RemoteMockMaterialType(this.value);
   
   @override
   String toString() => value;
@@ -382,12 +382,12 @@ class MockSpoolColor {
   String toString() => name;
 }
 
-class MockFilamentLength {
+class RemoteMockFilamentLength {
   final double meters;
-  MockFilamentLength(this.meters);
-  
-  MockFilamentLength operator -(MockFilamentLength other) {
-    return MockFilamentLength(meters - other.meters);
+  RemoteMockFilamentLength(this.meters);
+
+  RemoteMockFilamentLength operator -(RemoteMockFilamentLength other) {
+    return RemoteMockFilamentLength(meters - other.meters);
   }
   
   bool get isEmpty => meters <= 0;

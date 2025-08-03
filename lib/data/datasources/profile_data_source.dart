@@ -1,4 +1,4 @@
-import '../../domain/entities/spool_profile.dart';
+import '../../domain/value_objects/filament_length.dart';
 import '../../domain/value_objects/material_type.dart';
 
 /// Abstract data source for spool profile operations
@@ -143,7 +143,7 @@ class LocalProfileDataSource extends ProfileDataSource {
       name: 'Default ${materialType.displayName}',
       manufacturer: 'Generic',
       materialType: materialType,
-      color: SpoolColor.named('Unknown'),
+      color: ProfileSpoolColor.named('Unknown'),
       netLength: FilamentLength.meters(1000.0),
       filamentDiameter: 1.75,
       spoolWeight: 250.0,
@@ -271,25 +271,19 @@ class LocalProfileDataSource extends ProfileDataSource {
   }
 
   /// Parse color from string
-  SpoolColor _parseColor(String value) {
-    return SpoolColor.named(value);
+  ProfileSpoolColor _parseColor(String value) {
+    return ProfileSpoolColor.named(value);
   }
 }
 
 // Import statements for domain objects - these would be actual imports in real implementation
-class SpoolColor {
+class ProfileSpoolColor {
   final String name;
-  const SpoolColor._(this.name);
+  const ProfileSpoolColor._(this.name);
   
-  static SpoolColor named(String name) => SpoolColor._(name);
+  static ProfileSpoolColor named(String name) => ProfileSpoolColor._(name);
 }
 
-class FilamentLength {
-  final double meters;
-  const FilamentLength._(this.meters);
-  
-  static FilamentLength meters(double meters) => FilamentLength._(meters);
-}
 
 class TemperatureProfile {
   final int? minHotendTemperature;
@@ -308,7 +302,7 @@ class SpoolProfile {
   final String name;
   final String manufacturer;
   final MaterialType materialType;
-  final SpoolColor color;
+  final ProfileSpoolColor color;
   final FilamentLength netLength;
   final double filamentDiameter;
   final double? spoolWeight;
@@ -316,7 +310,7 @@ class SpoolProfile {
   final DateTime createdAt;
   final DateTime? updatedAt;
 
-  const SpoolProfile({
+  SpoolProfile({
     required this.id,
     required this.name,
     required this.manufacturer,

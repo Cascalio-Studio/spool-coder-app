@@ -100,12 +100,16 @@ class SpoolProfileMapper {
       name: profile.name,
       manufacturer: profile.manufacturer,
       materialType: profile.materialType.value,
-      color: profile.color.name,
-      netLength: profile.netLength.meters,
-      filamentDiameter: profile.filamentDiameter,
+      color: profile.defaultColor?.name ?? 'Unknown',
+      netLength: profile.standardLength?.meters ?? 0.0,
+      filamentDiameter: profile.filamentDiameter ?? 1.75,
       spoolWeight: profile.spoolWeight,
-      temperatureProfile: profile.temperatureProfile != null
-          ? TemperatureProfileMapper.toDto(profile.temperatureProfile!)
+      temperatureProfile: profile.printTemperature != null
+          ? TemperatureProfileDto(
+              minHotendTemperature: profile.printTemperature,
+              maxHotendTemperature: profile.printTemperature,
+              bedTemperature: profile.bedTemperature,
+            )
           : null,
       createdAt: profile.createdAt.toIso8601String(),
       updatedAt: profile.updatedAt?.toIso8601String(),
@@ -119,13 +123,12 @@ class SpoolProfileMapper {
       name: dto.name,
       manufacturer: dto.manufacturer,
       materialType: MaterialTypeMapper.fromString(dto.materialType),
-      color: SpoolColorMapper.fromString(dto.color),
-      netLength: FilamentLength.meters(dto.netLength),
+      defaultColor: SpoolColorMapper.fromString(dto.color),
+      standardLength: FilamentLength.meters(dto.netLength),
       filamentDiameter: dto.filamentDiameter,
       spoolWeight: dto.spoolWeight,
-      temperatureProfile: dto.temperatureProfile != null
-          ? TemperatureProfileMapper.fromDto(dto.temperatureProfile!)
-          : null,
+      printTemperature: dto.temperatureProfile?.minHotendTemperature,
+      bedTemperature: dto.temperatureProfile?.bedTemperature,
       createdAt: DateTime.parse(dto.createdAt),
       updatedAt: dto.updatedAt != null
           ? DateTime.parse(dto.updatedAt!)
@@ -202,11 +205,28 @@ class RfidDataMapper {
   static RfidDataDto toDto(RfidData data) {
     return RfidDataDto(
       uid: data.uid,
-      materialType: data.materialType.value,
-      color: data.color.name,
-      netLength: data.netLength.meters,
-      temperatureProfile: TemperatureProfileMapper.toDto(data.temperature),
-      productionInfo: ProductionInfoMapper.toDto(data.productionInfo),
+      materialType: data.filamentType ?? 'Unknown',
+      color: data.color?.name ?? 'Unknown',
+      netLength: data.filamentLength?.meters ?? 0.0,
+      temperatureProfile: data.temperatureProfile != null
+          ? TemperatureProfileDto(
+              minHotendTemperature: data.temperatureProfile!.minHotendTemperature,
+              maxHotendTemperature: data.temperatureProfile!.maxHotendTemperature,
+              bedTemperature: data.temperatureProfile!.bedTemperature,
+            )
+          : TemperatureProfileDto(
+              minHotendTemperature: 180,
+              maxHotendTemperature: 220,
+              bedTemperature: 60,
+            ),
+      productionInfo: data.productionInfo != null
+          ? ProductionInfoMapper.toDto(data.productionInfo!)
+          : ProductionInfoDto(
+              productionDateTime: DateTime.now().toIso8601String(),
+              batchId: 'Unknown',
+              trayInfoIndex: '0',
+              materialId: 'Unknown',
+            ),
     );
   }
 
@@ -214,10 +234,15 @@ class RfidDataMapper {
   static RfidData fromDto(RfidDataDto dto) {
     return RfidData(
       uid: dto.uid,
-      materialType: MaterialTypeMapper.fromString(dto.materialType),
+      scanTime: DateTime.now(), // Required parameter
+      filamentType: dto.materialType,
       color: SpoolColorMapper.fromString(dto.color),
-      netLength: FilamentLength.meters(dto.netLength),
-      temperature: TemperatureProfileMapper.fromDto(dto.temperatureProfile),
+      filamentLength: FilamentLength.meters(dto.netLength),
+      temperatureProfile: TemperatureProfile(
+        minHotendTemperature: dto.temperatureProfile.minHotendTemperature,
+        maxHotendTemperature: dto.temperatureProfile.maxHotendTemperature,
+        bedTemperature: dto.temperatureProfile.bedTemperature,
+      ),
       productionInfo: ProductionInfoMapper.fromDto(dto.productionInfo),
     );
   }
@@ -226,7 +251,7 @@ class RfidDataMapper {
 /// Mapper for MaterialType value object
 class MaterialTypeMapper {
   /// Convert MaterialType to string
-  static String toString(MaterialType materialType) {
+  static String toStringValue(MaterialType materialType) {
     return materialType.value;
   }
 
@@ -243,20 +268,15 @@ class MaterialTypeMapper {
         return MaterialType.tpu;
       case 'WOOD':
         return MaterialType.wood;
+      case 'CARBON':
       case 'CARBON_FIBER':
-        return MaterialType.carbonFiber;
-      case 'PC':
-        return MaterialType.pc;
-      case 'ASA':
-        return MaterialType.asa;
-      case 'PVA':
-        return MaterialType.pva;
-      case 'HIPS':
-        return MaterialType.hips;
-      case 'PA':
-        return MaterialType.pa;
-      case 'SUPPORT':
-        return MaterialType.support;
+        return MaterialType.carbon;
+      case 'PLA_BASIC':
+        return MaterialType.plaBasic;
+      case 'PLA_MATTE':
+        return MaterialType.plaMatte;
+      case 'PLA_SILK':
+        return MaterialType.plaSilk;
       default:
         return MaterialType.pla; // Default fallback
     }
@@ -266,7 +286,7 @@ class MaterialTypeMapper {
 /// Mapper for SpoolColor value object
 class SpoolColorMapper {
   /// Convert SpoolColor to string
-  static String toString(SpoolColor color) {
+  static String toStringValue(SpoolColor color) {
     return color.name;
   }
 
@@ -327,12 +347,22 @@ class FilamentLengthMapper {
 
   /// Convert FilamentLength to grams (double) with density
   static double toGrams(FilamentLength length, double density) {
-    return length.toGrams(density);
+    // Simple approximation: assume 1.75mm diameter filament
+    // Volume = π * (diameter/2)² * length
+    const diameter = 1.75; // mm
+    final radius = diameter / 2;
+    final volumeCm3 = 3.14159 * radius * radius * length.meters / 10; // Convert to cm³
+    return volumeCm3 * density;
   }
 
   /// Convert grams to FilamentLength with density
   static FilamentLength fromGrams(double grams, double density) {
-    return FilamentLength.fromGrams(grams, density);
+    // Reverse calculation
+    const diameter = 1.75; // mm
+    final radius = diameter / 2;
+    final volumeCm3 = grams / density;
+    final lengthMeters = volumeCm3 * 10 / (3.14159 * radius * radius);
+    return FilamentLength.meters(lengthMeters);
   }
 }
 
