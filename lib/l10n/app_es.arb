@@ -65,7 +65,6 @@
   "applicationInfo": "Información de la aplicación",
   "licenseInformation": "Información de licencia",
   "privacyPolicy": "Política de privacidad",
-  "about": "Acerca de",
   "aboutAppDescription": "Una aplicación Flutter para leer y programar bobinas de filamento BambuLab.",
   "advanced": "Avanzado",
   "resetToDefaults": "Restablecer predeterminados",
