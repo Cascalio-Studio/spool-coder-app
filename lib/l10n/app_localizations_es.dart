@@ -258,7 +258,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get weekAgo => '1 week ago';
+  String get weekAgo => 'hace 1 semana';
 
   @override
   String get failedToUpdateSetting => 'Error al actualizar configuración';
