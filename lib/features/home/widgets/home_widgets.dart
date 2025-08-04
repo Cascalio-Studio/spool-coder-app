@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:spool_coder_app/theme/theme.dart';
+import 'package:spool_coder_app/l10n/app_localizations.dart';
 
 /// Home screen widgets - Components for the main home screen
 /// Implements design concept components: welcome section, action cards, spool selection
@@ -11,6 +12,8 @@ class WelcomeSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
@@ -19,22 +22,22 @@ class WelcomeSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Spool Coder',
+            l10n.appTitle,
             style: AppTextStyles.displayLarge,
           ),
           const SizedBox(height: 12),
           Text(
-            'Good morning, Alex',
+            l10n.goodMorning,
             style: AppTextStyles.welcomeGreeting,
           ),
           const SizedBox(height: 8),
           Text(
-            'Last read: PLA Blue (Prusament) • 3 spools managed',
+            l10n.lastReadStatus,
             style: AppTextStyles.welcomeSubtitle,
           ),
           const SizedBox(height: 16),
           Text(
-            'Ready to scan and program filament spools',
+            l10n.readyToScan,
             style: AppTextStyles.bodyLargeSecondary,
           ),
         ],
@@ -132,13 +135,15 @@ class _SpoolSelectionSectionState extends State<SpoolSelectionSection> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           child: Text(
-            'Your Spools',
+            l10n.recentSpools,
             style: AppTextStyles.sectionHeader,
           ),
         ),

@@ -7,6 +7,7 @@ import '../../data/datasources/settings_local_data_source_impl.dart';
 import '../../data/repositories/settings_repository_impl.dart';
 import '../../domain/repositories/settings_repository.dart';
 import '../../domain/use_cases/settings_use_case.dart';
+import '../providers/app_locale_provider.dart';
 
 /// Global service locator
 final GetIt locator = GetIt.instance;
@@ -29,6 +30,9 @@ Future<void> setupLocator({dynamic config}) async {
   locator.registerLazySingleton<SettingsUseCase>(
     () => SettingsUseCase(locator<SettingsRepository>()),
   );
+  
+  // Register app locale provider
+  locator.registerSingleton<AppLocaleProvider>(AppLocaleProvider());
   
   // TODO: Register other services as needed
 }

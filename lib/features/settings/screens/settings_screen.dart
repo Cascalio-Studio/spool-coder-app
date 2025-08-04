@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import '../../../core/constants/app_constants.dart';
+import '../../../core/providers/app_locale_provider.dart';
 import '../../../domain/entities/user_settings.dart';
 import '../../../domain/use_cases/settings_use_case.dart';
 import '../../../theme/theme.dart';
+import '../../../l10n/app_localizations.dart';
 import '../widgets/settings_widgets.dart';
 
 /// Main settings screen with all user preferences
@@ -17,6 +19,7 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   late final SettingsUseCase _settingsUseCase;
+  late final AppLocaleProvider _localeProvider;
   UserSettings? _settings;
   bool _isLoading = true;
 
@@ -24,6 +27,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void initState() {
     super.initState();
     _settingsUseCase = GetIt.instance<SettingsUseCase>();
+    _localeProvider = GetIt.instance<AppLocaleProvider>();
     _loadSettings();
   }
 
@@ -385,26 +389,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   // Helper methods for display names
   String _getLanguageDisplayName(String language) {
-    switch (language) {
-      case 'en':
-        return 'English';
-      case 'de':
-        return 'Deutsch';
-      case 'fr':
-        return 'Français';
-      case 'es':
-        return 'Español';
-      case 'it':
-        return 'Italiano';
-      case 'ja':
-        return '日本語';
-      case 'ko':
-        return '한국어';
-      case 'zh':
-        return '中文';
-      default:
-        return language;
-    }
+    // Convert language name to code if needed
+    final languageCode = AppLocaleProvider.getLanguageCodeFromName(language);
+    return AppLocaleProvider.languageNames[languageCode] ?? language;
   }
 
   String _getThemeModeDisplayName(AppThemeMode mode) {
@@ -453,11 +440,43 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
-  // Selector dialogs (simplified implementations)
+  // Selector dialogs
   void _showLanguageSelector() {
-    // TODO: Implement language selector
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Language selector coming soon')),
+    final l10n = AppLocalizations.of(context)!;
+    
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(l10n.selectLanguage),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: AppLocaleProvider.supportedLocales.map((locale) {
+              final languageName = AppLocaleProvider.languageNames[locale.languageCode] ?? 'Unknown';
+              final isSelected = _localeProvider.currentLocale.languageCode == locale.languageCode;
+              
+              return ListTile(
+                title: Text(languageName),
+                leading: isSelected 
+                  ? const Icon(Icons.check_circle, color: AppColors.accentGreen)
+                  : const Icon(Icons.radio_button_unchecked),
+                onTap: () async {
+                  await _localeProvider.changeLanguage(languageName);
+                  Navigator.of(context).pop();
+                  // Reload settings to reflect the change
+                  _loadSettings();
+                },
+              );
+            }).toList(),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
+            ),
+          ],
+        );
+      },
     );
   }
 

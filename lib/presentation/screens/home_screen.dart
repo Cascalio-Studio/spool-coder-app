@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spool_coder_app/theme/theme.dart';
 import 'package:spool_coder_app/features/home/widgets/home_widgets.dart';
+import 'package:spool_coder_app/l10n/app_localizations.dart';
 
 /// Home screen - main entry point for the app
 /// Implements the design concept with welcome section, action cards, spool selection, and bottom navigation
@@ -45,6 +46,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildHomeContent() {
+    final l10n = AppLocalizations.of(context)!;
+    
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,9 +57,9 @@ class _HomeScreenState extends State<HomeScreen> {
           
           // Read Card Section
           ActionCard(
-            title: 'Read RFID Card',
-            description: 'Scan your filament spool to read data',
-            buttonText: 'READ',
+            title: l10n.readRfidCard,
+            description: l10n.scanFilamentSpool,
+            buttonText: l10n.readButtonLabel,
             icon: Icons.nfc,
             onPressed: () {
               setState(() {
@@ -70,9 +73,9 @@ class _HomeScreenState extends State<HomeScreen> {
           
           // Write Card Section
           ActionCard(
-            title: 'Write RFID Card',
-            description: 'Program new data to your spool',
-            buttonText: 'WRITE',
+            title: l10n.writeRfidCard,
+            description: l10n.programSpoolData,
+            buttonText: l10n.writeButtonLabel,
             icon: Icons.edit,
             onPressed: () {
               setState(() {
@@ -88,6 +91,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildReadContent() {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -98,13 +103,13 @@ class _HomeScreenState extends State<HomeScreen> {
             color: AppColors.accentGreen,
           ),
           const SizedBox(height: 24),
-          const Text(
-            'Read RFID Card',
+          Text(
+            l10n.readRfidCard,
             style: AppTextStyles.displayMedium,
           ),
           const SizedBox(height: 16),
           Text(
-            'Hold your RFID card near the reader',
+            l10n.holdCardNearReader,
             style: AppTextStyles.bodyLargeSecondary,
             textAlign: TextAlign.center,
           ),
@@ -114,6 +119,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildWriteContent() {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -124,13 +131,13 @@ class _HomeScreenState extends State<HomeScreen> {
             color: AppColors.accentGreen,
           ),
           const SizedBox(height: 24),
-          const Text(
-            'Write RFID Card',
+          Text(
+            l10n.writeRfidCard,
             style: AppTextStyles.displayMedium,
           ),
           const SizedBox(height: 16),
           Text(
-            'Program new data to your filament spool',
+            l10n.writeDataToCard,
             style: AppTextStyles.bodyLargeSecondary,
             textAlign: TextAlign.center,
           ),
@@ -140,6 +147,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildProfileContent() {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -150,13 +159,13 @@ class _HomeScreenState extends State<HomeScreen> {
             color: AppColors.accentGreen,
           ),
           const SizedBox(height: 24),
-          const Text(
-            'Profile',
+          Text(
+            l10n.profile,
             style: AppTextStyles.displayMedium,
           ),
           const SizedBox(height: 16),
           Text(
-            'Manage your account and preferences',
+            l10n.manageAccount,
             style: AppTextStyles.bodyLargeSecondary,
             textAlign: TextAlign.center,
           ),
@@ -181,11 +190,11 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            _buildNavItem(0, Icons.home, 'Home'),
-            _buildNavItem(1, Icons.nfc, 'Read'),
-            _buildNavItem(2, Icons.edit, 'Write'),
-            _buildNavItem(3, Icons.settings, 'Settings'),
-            _buildNavItem(4, Icons.person, 'Profile'),
+            _buildNavItem(0, Icons.home, AppLocalizations.of(context)!.home),
+            _buildNavItem(1, Icons.nfc, AppLocalizations.of(context)!.read),
+            _buildNavItem(2, Icons.edit, AppLocalizations.of(context)!.write),
+            _buildNavItem(3, Icons.settings, AppLocalizations.of(context)!.settings),
+            _buildNavItem(4, Icons.person, AppLocalizations.of(context)!.profile),
           ],
         ),
       ),

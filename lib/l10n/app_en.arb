@@ -1,0 +1,257 @@
+{
+  "@@locale": "en",
+  "appTitle": "Spool Coder",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  
+  "home": "Home",
+  "@home": {
+    "description": "Home tab label"
+  },
+  
+  "read": "Read",
+  "@read": {
+    "description": "Read tab label"
+  },
+  
+  "write": "Write",
+  "@write": {
+    "description": "Write tab label"
+  },
+  
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings tab label"
+  },
+  
+  "profile": "Profile",
+  "@profile": {
+    "description": "Profile tab label"
+  },
+  
+  "readRfidCard": "Read RFID Card",
+  "@readRfidCard": {
+    "description": "Title for RFID reading screen"
+  },
+  
+  "holdCardNearReader": "Hold your RFID card near the reader",
+  "@holdCardNearReader": {
+    "description": "Instruction for RFID reading"
+  },
+  
+  "writeRfidCard": "Write RFID Card",
+  "@writeRfidCard": {
+    "description": "Title for RFID writing screen"
+  },
+  
+  "writeDataToCard": "Write data to your RFID card",
+  "@writeDataToCard": {
+    "description": "Instruction for RFID writing"
+  },
+  
+  "general": "General",
+  "@general": {
+    "description": "General settings section"
+  },
+  
+  "appearance": "Appearance",
+  "@appearance": {
+    "description": "Appearance settings section"
+  },
+  
+  "notifications": "Notifications",
+  "@notifications": {
+    "description": "Notifications settings section"
+  },
+  
+  "security": "Security",
+  "@security": {
+    "description": "Security settings section"
+  },
+  
+  "backup": "Backup & Sync",
+  "@backup": {
+    "description": "Backup settings section"
+  },
+  
+  "about": "About",
+  "@about": {
+    "description": "About settings section"
+  },
+  
+  "language": "Language",
+  "@language": {
+    "description": "Language setting"
+  },
+  
+  "selectLanguage": "Select Language",
+  "@selectLanguage": {
+    "description": "Language selection dialog title"
+  },
+  
+  "theme": "Theme",
+  "@theme": {
+    "description": "Theme setting"
+  },
+  
+  "system": "System",
+  "@system": {
+    "description": "System theme option"
+  },
+  
+  "light": "Light",
+  "@light": {
+    "description": "Light theme option"
+  },
+  
+  "dark": "Dark",
+  "@dark": {
+    "description": "Dark theme option"
+  },
+  
+  "fontSize": "Font Size",
+  "@fontSize": {
+    "description": "Font size setting"
+  },
+  
+  "small": "Small",
+  "@small": {
+    "description": "Small font size option"
+  },
+  
+  "medium": "Medium",
+  "@medium": {
+    "description": "Medium font size option"
+  },
+  
+  "large": "Large",
+  "@large": {
+    "description": "Large font size option"
+  },
+  
+  "pushNotifications": "Push Notifications",
+  "@pushNotifications": {
+    "description": "Push notifications setting"
+  },
+  
+  "emailNotifications": "Email Notifications",
+  "@emailNotifications": {
+    "description": "Email notifications setting"
+  },
+  
+  "soundEnabled": "Sound",
+  "@soundEnabled": {
+    "description": "Sound setting"
+  },
+  
+  "vibrationEnabled": "Vibration",
+  "@vibrationEnabled": {
+    "description": "Vibration setting"
+  },
+  
+  "biometricAuth": "Biometric Authentication",
+  "@biometricAuth": {
+    "description": "Biometric authentication setting"
+  },
+  
+  "appLock": "App Lock",
+  "@appLock": {
+    "description": "App lock setting"
+  },
+  
+  "autoBackup": "Auto Backup",
+  "@autoBackup": {
+    "description": "Auto backup setting"
+  },
+  
+  "cloudSync": "Cloud Sync",
+  "@cloudSync": {
+    "description": "Cloud sync setting"
+  },
+  
+  "version": "Version",
+  "@version": {
+    "description": "App version label"
+  },
+  
+  "buildNumber": "Build Number",
+  "@buildNumber": {
+    "description": "App build number label"
+  },
+  
+  "english": "English",
+  "@english": {
+    "description": "English language option"
+  },
+  
+  "german": "German",
+  "@german": {
+    "description": "German language option"
+  },
+  
+  "french": "French",
+  "@french": {
+    "description": "French language option"
+  },
+  
+  "spanish": "Spanish",
+  "@spanish": {
+    "description": "Spanish language option"
+  },
+  
+  "italian": "Italian",
+  "@italian": {
+    "description": "Italian language option"
+  },
+  
+  "scanFilamentSpool": "Scan your filament spool to read data",
+  "@scanFilamentSpool": {
+    "description": "Description for read card action"
+  },
+  
+  "programSpoolData": "Program new data to your spool",
+  "@programSpoolData": {
+    "description": "Description for write card action"
+  },
+  
+  "manageAccount": "Manage your account and preferences",
+  "@manageAccount": {
+    "description": "Profile section description"
+  },
+  
+  "readButtonLabel": "READ",
+  "@readButtonLabel": {
+    "description": "Read button label"
+  },
+  
+  "writeButtonLabel": "WRITE",
+  "@writeButtonLabel": {
+    "description": "Write button label"
+  },
+  
+  "goodMorning": "Good morning, Alex",
+  "@goodMorning": {
+    "description": "Morning greeting message"
+  },
+  
+  "lastReadStatus": "Last read: PLA Blue (Prusament) • 3 spools managed",
+  "@lastReadStatus": {
+    "description": "Status showing last read information"
+  },
+  
+  "readyToScan": "Ready to scan and program filament spools",
+  "@readyToScan": {
+    "description": "Ready message for scanning"
+  },
+  
+  "spoolSelection": "Spool Selection",
+  "@spoolSelection": {
+    "description": "Spool selection section title"
+  },
+  
+  "recentSpools": "Recent Spools",
+  "@recentSpools": {
+    "description": "Recent spools section title"
+  }
+}
