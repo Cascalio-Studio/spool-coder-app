@@ -136,6 +136,7 @@ class _SpoolSelectionSectionState extends State<SpoolSelectionSection> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final spoolData = _getSpoolData(l10n);
     
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -171,10 +172,10 @@ class _SpoolSelectionSectionState extends State<SpoolSelectionSection> {
                     scrollDirection: Axis.horizontal,
                     physics: const BouncingScrollPhysics(),
                     padding: const EdgeInsets.symmetric(horizontal: 16),
-                    itemCount: _spoolData.length,
+                    itemCount: spoolData.length,
                     itemBuilder: (context, index) {
                     return SpoolCard(
-                      spoolData: _spoolData[index],
+                      spoolData: spoolData[index],
                       isSelected: _selectedSpoolIndex == index,
                       onTap: () {
                         setState(() {
@@ -209,6 +210,7 @@ class SpoolCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final screenWidth = MediaQuery.of(context).size.width;
     // Responsive card width: fit 2.5 cards on screen, fallback to 280px for small screens
     final cardWidth = screenWidth > 700
@@ -265,12 +267,12 @@ class SpoolCard extends StatelessWidget {
               ),
               const Divider(height: 20),
               Text(
-                '${spoolData.remaining.toStringAsFixed(1)} kg remaining',
+                l10n.kgRemaining(spoolData.remaining.toStringAsFixed(1)),
                 style: AppTextStyles.spoolCardAmount,
               ),
               const SizedBox(height: 4),
               Text(
-                'Last used: ${spoolData.lastUsed}',
+                l10n.lastUsed(spoolData.lastUsed),
                 style: AppTextStyles.spoolCardLastUsed,
               ),
             ],
@@ -298,41 +300,43 @@ class SpoolData {
   });
 }
 
-/// Sample spool data
-final List<SpoolData> _spoolData = [
-  const SpoolData(
-    type: 'PLA Matte Black',
-    brand: 'Prusament',
-    remaining: 1.8,
-    lastUsed: 'Today',
-    color: AppColors.primaryBlack,
-  ),
-  const SpoolData(
-    type: 'PETG Clear',
-    brand: 'Overture',
-    remaining: 0.5,
-    lastUsed: '5 days ago',
-    color: AppColors.backgroundGray,
-  ),
-  const SpoolData(
-    type: 'PLA Green',
-    brand: 'eSUN',
-    remaining: 2.3,
-    lastUsed: '1 week ago',
-    color: AppColors.accentGreen,
-  ),
-  const SpoolData(
-    type: 'ABS Red',
-    brand: 'SUNLU',
-    remaining: 0.8,
-    lastUsed: '2 weeks ago',
-    color: Color(0xFFFF3B30),
-  ),
-  const SpoolData(
-    type: 'PLA+ White',
-    brand: 'eSUN',
-    remaining: 1.2,
-    lastUsed: '3 days ago',
-    color: AppColors.pureWhite,
-  ),
-];
+/// Get sample spool data with localized strings
+List<SpoolData> _getSpoolData(AppLocalizations l10n) {
+  return [
+    SpoolData(
+      type: 'PLA Matte Black',
+      brand: 'Prusament',
+      remaining: 1.8,
+      lastUsed: l10n.today,
+      color: AppColors.primaryBlack,
+    ),
+    SpoolData(
+      type: 'PETG Clear',
+      brand: 'Overture',
+      remaining: 0.5,
+      lastUsed: l10n.daysAgo('5'),
+      color: AppColors.backgroundGray,
+    ),
+    SpoolData(
+      type: 'PLA Green',
+      brand: 'eSUN',
+      remaining: 2.3,
+      lastUsed: l10n.daysAgo('7'),
+      color: AppColors.accentGreen,
+    ),
+    SpoolData(
+      type: 'ABS Red',
+      brand: 'SUNLU',
+      remaining: 0.8,
+      lastUsed: l10n.daysAgo('14'),
+      color: const Color(0xFFFF3B30),
+    ),
+    SpoolData(
+      type: 'PLA+ White',
+      brand: 'eSUN',
+      remaining: 1.2,
+      lastUsed: l10n.daysAgo('3'),
+      color: AppColors.pureWhite,
+    ),
+  ];
+}

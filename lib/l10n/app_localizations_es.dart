@@ -163,4 +163,110 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get recentSpools => 'Carretes recientes';
+
+  @override
+  String get dateTimeFormat => 'Formato de fecha y hora';
+
+  @override
+  String get region => 'Región';
+
+  @override
+  String get highContrastMode => 'Modo alto contraste';
+
+  @override
+  String get improvesTextVisibility => 'Mejora la visibilidad del texto';
+
+  @override
+  String get enableNotifications => 'Habilitar notificaciones';
+
+  @override
+  String get receiveAppNotifications => 'Recibir notificaciones de la app';
+
+  @override
+  String get notificationSound => 'Sonido de notificación';
+
+  @override
+  String get vibrateOnAlerts => 'Vibrar en alertas';
+
+  @override
+  String get twoFactorAuth => 'Autenticación de dos factores';
+
+  @override
+  String get addExtraSecurity => 'Agregar seguridad extra a su cuenta';
+
+  @override
+  String get useFingerprintFaceId => 'Usar huella digital o Face ID';
+
+  @override
+  String get applicationInfo => 'Información de la aplicación';
+
+  @override
+  String get licenseInformation => 'Información de licencia';
+
+  @override
+  String get privacyPolicy => 'Política de privacidad';
+
+  @override
+  String get aboutAppDescription =>
+      'Una aplicación Flutter para leer y programar bobinas de filamento BambuLab.';
+
+  @override
+  String get advanced => 'Avanzado';
+
+  @override
+  String get resetToDefaults => 'Restablecer predeterminados';
+
+  @override
+  String get resetAllSettingsToDefault =>
+      'Restablecer todas las configuraciones a valores predeterminados';
+
+  @override
+  String get exportDiagnostics => 'Exportar diagnósticos';
+
+  @override
+  String get exportSettingsForDebugging =>
+      'Exportar configuraciones para depuración';
+
+  @override
+  String get account => 'Cuenta';
+
+  @override
+  String get signOut => 'Cerrar sesión';
+
+  @override
+  String get privacyPolicyComingSoon => 'Política de privacidad próximamente';
+
+  @override
+  String get signOutComingSoon => 'Funcionalidad de cerrar sesión próximamente';
+
+  @override
+  String kgRemaining(String amount) {
+    return '$amount kg restante';
+  }
+
+  @override
+  String lastUsed(String date) {
+    return 'Última vez usado: $date';
+  }
+
+  @override
+  String get today => 'Hoy';
+
+  @override
+  String daysAgo(String days) {
+    return 'hace $days días';
+  }
+
+  @override
+  String get weekAgo => '1 week ago';
+
+  @override
+  String get failedToUpdateSetting => 'Error al actualizar configuración';
+
+  @override
+  String get settingsResetToDefaults =>
+      'Configuraciones restablecidas por defecto';
+
+  @override
+  String get cancel => 'Cancelar';
 }

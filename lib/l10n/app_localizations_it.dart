@@ -163,4 +163,111 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get recentSpools => 'Bobine recenti';
+
+  @override
+  String get dateTimeFormat => 'Formato data e ora';
+
+  @override
+  String get region => 'Regione';
+
+  @override
+  String get highContrastMode => 'Modalità alto contrasto';
+
+  @override
+  String get improvesTextVisibility => 'Migliora la visibilità del testo';
+
+  @override
+  String get enableNotifications => 'Abilita notifiche';
+
+  @override
+  String get receiveAppNotifications => 'Ricevi notifiche dell\'app';
+
+  @override
+  String get notificationSound => 'Suono notifica';
+
+  @override
+  String get vibrateOnAlerts => 'Vibra agli avvisi';
+
+  @override
+  String get twoFactorAuth => 'Autenticazione a due fattori';
+
+  @override
+  String get addExtraSecurity => 'Aggiungi sicurezza extra al tuo account';
+
+  @override
+  String get useFingerprintFaceId => 'Usa impronta digitale o Face ID';
+
+  @override
+  String get applicationInfo => 'Informazioni sull\'applicazione';
+
+  @override
+  String get licenseInformation => 'Informazioni sulla licenza';
+
+  @override
+  String get privacyPolicy => 'Informativa sulla privacy';
+
+  @override
+  String get aboutAppDescription =>
+      'Un\'app Flutter per leggere e programmare le bobine di filamento BambuLab.';
+
+  @override
+  String get advanced => 'Avanzate';
+
+  @override
+  String get resetToDefaults => 'Ripristina predefiniti';
+
+  @override
+  String get resetAllSettingsToDefault =>
+      'Ripristina tutte le impostazioni ai valori predefiniti';
+
+  @override
+  String get exportDiagnostics => 'Esporta diagnostiche';
+
+  @override
+  String get exportSettingsForDebugging => 'Esporta impostazioni per il debug';
+
+  @override
+  String get account => 'Account';
+
+  @override
+  String get signOut => 'Disconnetti';
+
+  @override
+  String get privacyPolicyComingSoon =>
+      'Informativa sulla privacy prossimamente';
+
+  @override
+  String get signOutComingSoon =>
+      'Funzionalità di disconnessione prossimamente';
+
+  @override
+  String kgRemaining(String amount) {
+    return '$amount kg rimanenti';
+  }
+
+  @override
+  String lastUsed(String date) {
+    return 'Ultima volta usato: $date';
+  }
+
+  @override
+  String get today => 'Oggi';
+
+  @override
+  String daysAgo(String days) {
+    return '$days giorni fa';
+  }
+
+  @override
+  String get weekAgo => '1 week ago';
+
+  @override
+  String get failedToUpdateSetting => 'Impossibile aggiornare l\'impostazione';
+
+  @override
+  String get settingsResetToDefaults =>
+      'Impostazioni ripristinate ai valori predefiniti';
+
+  @override
+  String get cancel => 'Annulla';
 }

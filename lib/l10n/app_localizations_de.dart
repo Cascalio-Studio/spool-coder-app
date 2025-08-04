@@ -164,4 +164,111 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get recentSpools => 'Kürzlich verwendete Spulen';
+
+  @override
+  String get dateTimeFormat => 'Datums- & Zeitformat';
+
+  @override
+  String get region => 'Region';
+
+  @override
+  String get highContrastMode => 'Hoher Kontrast Modus';
+
+  @override
+  String get improvesTextVisibility => 'Verbessert die Textsichtbarkeit';
+
+  @override
+  String get enableNotifications => 'Benachrichtigungen aktivieren';
+
+  @override
+  String get receiveAppNotifications => 'App-Benachrichtigungen erhalten';
+
+  @override
+  String get notificationSound => 'Benachrichtigungston';
+
+  @override
+  String get vibrateOnAlerts => 'Bei Warnungen vibrieren';
+
+  @override
+  String get twoFactorAuth => 'Zwei-Faktor-Authentifizierung';
+
+  @override
+  String get addExtraSecurity => 'Zusätzliche Sicherheit für Ihr Konto';
+
+  @override
+  String get useFingerprintFaceId => 'Fingerabdruck oder Face ID verwenden';
+
+  @override
+  String get applicationInfo => 'Anwendungsinformationen';
+
+  @override
+  String get licenseInformation => 'Lizenzinformationen';
+
+  @override
+  String get privacyPolicy => 'Datenschutzrichtlinie';
+
+  @override
+  String get aboutAppDescription =>
+      'Eine Flutter-App zum Lesen und Programmieren von BambuLab-Filamentspulen.';
+
+  @override
+  String get advanced => 'Erweitert';
+
+  @override
+  String get resetToDefaults => 'Auf Standard zurücksetzen';
+
+  @override
+  String get resetAllSettingsToDefault =>
+      'Alle Einstellungen auf Standardwerte zurücksetzen';
+
+  @override
+  String get exportDiagnostics => 'Diagnose exportieren';
+
+  @override
+  String get exportSettingsForDebugging =>
+      'Einstellungen für Debugging exportieren';
+
+  @override
+  String get account => 'Konto';
+
+  @override
+  String get signOut => 'Abmelden';
+
+  @override
+  String get privacyPolicyComingSoon => 'Datenschutzrichtlinie kommt bald';
+
+  @override
+  String get signOutComingSoon => 'Abmeldefunktion kommt bald';
+
+  @override
+  String kgRemaining(String amount) {
+    return '$amount kg verbleibend';
+  }
+
+  @override
+  String lastUsed(String date) {
+    return 'Zuletzt verwendet: $date';
+  }
+
+  @override
+  String get today => 'Heute';
+
+  @override
+  String daysAgo(String days) {
+    return 'vor $days Tagen';
+  }
+
+  @override
+  String get weekAgo => '1 week ago';
+
+  @override
+  String get failedToUpdateSetting =>
+      'Einstellung konnte nicht aktualisiert werden';
+
+  @override
+  String get settingsResetToDefaults =>
+      'Einstellungen auf Standard zurückgesetzt';
+
+  @override
+  String get cancel => 'Abbrechen';
 }

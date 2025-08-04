@@ -194,7 +194,7 @@ abstract class AppLocalizations {
   /// **'Backup & Sync'**
   String get backup;
 
-  /// About settings section
+  /// About setting
   ///
   /// In en, this message translates to:
   /// **'About'**
@@ -308,7 +308,7 @@ abstract class AppLocalizations {
   /// **'Cloud Sync'**
   String get cloudSync;
 
-  /// App version label
+  /// App version setting
   ///
   /// In en, this message translates to:
   /// **'Version'**
@@ -409,6 +409,198 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Recent Spools'**
   String get recentSpools;
+
+  /// Date and time format setting
+  ///
+  /// In en, this message translates to:
+  /// **'Date & Time Format'**
+  String get dateTimeFormat;
+
+  /// Region setting
+  ///
+  /// In en, this message translates to:
+  /// **'Region'**
+  String get region;
+
+  /// High contrast mode setting
+  ///
+  /// In en, this message translates to:
+  /// **'High Contrast Mode'**
+  String get highContrastMode;
+
+  /// High contrast mode description
+  ///
+  /// In en, this message translates to:
+  /// **'Improves text visibility'**
+  String get improvesTextVisibility;
+
+  /// Enable notifications setting
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Notifications'**
+  String get enableNotifications;
+
+  /// Enable notifications description
+  ///
+  /// In en, this message translates to:
+  /// **'Receive app notifications'**
+  String get receiveAppNotifications;
+
+  /// Notification sound setting
+  ///
+  /// In en, this message translates to:
+  /// **'Notification Sound'**
+  String get notificationSound;
+
+  /// Vibration setting description
+  ///
+  /// In en, this message translates to:
+  /// **'Vibrate on alerts'**
+  String get vibrateOnAlerts;
+
+  /// Two-factor authentication setting
+  ///
+  /// In en, this message translates to:
+  /// **'Two-Factor Authentication'**
+  String get twoFactorAuth;
+
+  /// Two-factor authentication description
+  ///
+  /// In en, this message translates to:
+  /// **'Add extra security to your account'**
+  String get addExtraSecurity;
+
+  /// Biometric authentication description
+  ///
+  /// In en, this message translates to:
+  /// **'Use fingerprint or face ID'**
+  String get useFingerprintFaceId;
+
+  /// Application info section header
+  ///
+  /// In en, this message translates to:
+  /// **'Application Info'**
+  String get applicationInfo;
+
+  /// License information setting
+  ///
+  /// In en, this message translates to:
+  /// **'License Information'**
+  String get licenseInformation;
+
+  /// Privacy policy setting
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacyPolicy;
+
+  /// App description in about dialog
+  ///
+  /// In en, this message translates to:
+  /// **'A Flutter app for reading and programming BambuLab filament spools.'**
+  String get aboutAppDescription;
+
+  /// Advanced settings section header
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced'**
+  String get advanced;
+
+  /// Reset settings title
+  ///
+  /// In en, this message translates to:
+  /// **'Reset to Defaults'**
+  String get resetToDefaults;
+
+  /// Reset settings description
+  ///
+  /// In en, this message translates to:
+  /// **'Reset all settings to default values'**
+  String get resetAllSettingsToDefault;
+
+  /// Export diagnostics title
+  ///
+  /// In en, this message translates to:
+  /// **'Export Diagnostics'**
+  String get exportDiagnostics;
+
+  /// Export diagnostics description
+  ///
+  /// In en, this message translates to:
+  /// **'Export settings for debugging'**
+  String get exportSettingsForDebugging;
+
+  /// Account section header
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get account;
+
+  /// Sign out setting
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Out'**
+  String get signOut;
+
+  /// Privacy policy placeholder message
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy coming soon'**
+  String get privacyPolicyComingSoon;
+
+  /// Sign out placeholder message
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out functionality coming soon'**
+  String get signOutComingSoon;
+
+  /// Amount of filament remaining on spool
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} kg remaining'**
+  String kgRemaining(String amount);
+
+  /// When the spool was last used
+  ///
+  /// In en, this message translates to:
+  /// **'Last used: {date}'**
+  String lastUsed(String date);
+
+  /// Today date label
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get today;
+
+  /// Days ago label
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days ago'**
+  String daysAgo(String days);
+
+  /// One week ago label
+  ///
+  /// In en, this message translates to:
+  /// **'1 week ago'**
+  String get weekAgo;
+
+  /// Error message for failed setting update
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update setting'**
+  String get failedToUpdateSetting;
+
+  /// Success message for settings reset
+  ///
+  /// In en, this message translates to:
+  /// **'Settings reset to defaults'**
+  String get settingsResetToDefaults;
+
+  /// Cancel button text
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
 }
 
 class _AppLocalizationsDelegate

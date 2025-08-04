@@ -253,5 +253,170 @@
   "recentSpools": "Recent Spools",
   "@recentSpools": {
     "description": "Recent spools section title"
+  },
+  
+  "dateTimeFormat": "Date & Time Format",
+  "@dateTimeFormat": {
+    "description": "Date and time format setting"
+  },
+  
+  "region": "Region",
+  "@region": {
+    "description": "Region setting"
+  },
+  
+  "highContrastMode": "High Contrast Mode",
+  "@highContrastMode": {
+    "description": "High contrast mode setting"
+  },
+  
+  "improvesTextVisibility": "Improves text visibility",
+  "@improvesTextVisibility": {
+    "description": "High contrast mode description"
+  },
+  
+  "enableNotifications": "Enable Notifications",
+  "@enableNotifications": {
+    "description": "Enable notifications setting"
+  },
+  
+  "receiveAppNotifications": "Receive app notifications",
+  "@receiveAppNotifications": {
+    "description": "Enable notifications description"
+  },
+  
+  "notificationSound": "Notification Sound",
+  "@notificationSound": {
+    "description": "Notification sound setting"
+  },
+  
+  "vibrateOnAlerts": "Vibrate on alerts",
+  "@vibrateOnAlerts": {
+    "description": "Vibration setting description"
+  },
+  
+  "twoFactorAuth": "Two-Factor Authentication",
+  "@twoFactorAuth": {
+    "description": "Two-factor authentication setting"
+  },
+  
+  "addExtraSecurity": "Add extra security to your account",
+  "@addExtraSecurity": {
+    "description": "Two-factor authentication description"
+  },
+  
+  "useFingerprintFaceId": "Use fingerprint or face ID",
+  "@useFingerprintFaceId": {
+    "description": "Biometric authentication description"
+  },
+  "applicationInfo": "Application Info",
+  "@applicationInfo": {
+    "description": "Application info section header"
+  },
+  "version": "Version",
+  "@version": {
+    "description": "App version setting"
+  },
+  "licenseInformation": "License Information",
+  "@licenseInformation": {
+    "description": "License information setting"
+  },
+  "privacyPolicy": "Privacy Policy",
+  "@privacyPolicy": {
+    "description": "Privacy policy setting"
+  },
+  "about": "About",
+  "@about": {
+    "description": "About setting"
+  },
+  "aboutAppDescription": "A Flutter app for reading and programming BambuLab filament spools.",
+  "@aboutAppDescription": {
+    "description": "App description in about dialog"
+  },
+  "advanced": "Advanced",
+  "@advanced": {
+    "description": "Advanced settings section header"
+  },
+  "resetToDefaults": "Reset to Defaults",
+  "@resetToDefaults": {
+    "description": "Reset settings title"
+  },
+  "resetAllSettingsToDefault": "Reset all settings to default values",
+  "@resetAllSettingsToDefault": {
+    "description": "Reset settings description"
+  },
+  "exportDiagnostics": "Export Diagnostics",
+  "@exportDiagnostics": {
+    "description": "Export diagnostics title"
+  },
+  "exportSettingsForDebugging": "Export settings for debugging",
+  "@exportSettingsForDebugging": {
+    "description": "Export diagnostics description"
+  },
+  "account": "Account",
+  "@account": {
+    "description": "Account section header"
+  },
+  "signOut": "Sign Out",
+  "@signOut": {
+    "description": "Sign out setting"
+  },
+  "privacyPolicyComingSoon": "Privacy Policy coming soon",
+  "@privacyPolicyComingSoon": {
+    "description": "Privacy policy placeholder message"
+  },
+  "signOutComingSoon": "Sign out functionality coming soon",
+  "@signOutComingSoon": {
+    "description": "Sign out placeholder message"
+  },
+  "kgRemaining": "{amount} kg remaining",
+  "@kgRemaining": {
+    "description": "Amount of filament remaining on spool",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "lastUsed": "Last used: {date}",
+  "@lastUsed": {
+    "description": "When the spool was last used",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "today": "Today",
+  "@today": {
+    "description": "Today date label"
+  },
+  "daysAgo": "{days} days ago",
+  "@daysAgo": {
+    "description": "Days ago label",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "weekAgo": "1 week ago",
+  "@weekAgo": {
+    "description": "One week ago label"
+  },
+  
+  "failedToUpdateSetting": "Failed to update setting",
+  "@failedToUpdateSetting": {
+    "description": "Error message for failed setting update"
+  },
+  
+  "settingsResetToDefaults": "Settings reset to defaults",
+  "@settingsResetToDefaults": {
+    "description": "Success message for settings reset"
+  },
+  
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button text"
   }
 }

@@ -164,4 +164,113 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get recentSpools => 'Bobines récentes';
+
+  @override
+  String get dateTimeFormat => 'Format de date et heure';
+
+  @override
+  String get region => 'Région';
+
+  @override
+  String get highContrastMode => 'Mode haut contraste';
+
+  @override
+  String get improvesTextVisibility => 'Améliore la visibilité du texte';
+
+  @override
+  String get enableNotifications => 'Activer les notifications';
+
+  @override
+  String get receiveAppNotifications => 'Recevoir les notifications de l\'app';
+
+  @override
+  String get notificationSound => 'Son de notification';
+
+  @override
+  String get vibrateOnAlerts => 'Vibrer lors des alertes';
+
+  @override
+  String get twoFactorAuth => 'Authentification à deux facteurs';
+
+  @override
+  String get addExtraSecurity =>
+      'Ajouter une sécurité supplémentaire à votre compte';
+
+  @override
+  String get useFingerprintFaceId =>
+      'Utiliser l\'empreinte digitale ou Face ID';
+
+  @override
+  String get applicationInfo => 'Informations sur l\'application';
+
+  @override
+  String get licenseInformation => 'Informations de licence';
+
+  @override
+  String get privacyPolicy => 'Politique de confidentialité';
+
+  @override
+  String get aboutAppDescription =>
+      'Une application Flutter pour lire et programmer les bobines de filament BambuLab.';
+
+  @override
+  String get advanced => 'Avancé';
+
+  @override
+  String get resetToDefaults => 'Remettre par défaut';
+
+  @override
+  String get resetAllSettingsToDefault =>
+      'Remettre tous les paramètres aux valeurs par défaut';
+
+  @override
+  String get exportDiagnostics => 'Exporter les diagnostics';
+
+  @override
+  String get exportSettingsForDebugging =>
+      'Exporter les paramètres pour le débogage';
+
+  @override
+  String get account => 'Compte';
+
+  @override
+  String get signOut => 'Se déconnecter';
+
+  @override
+  String get privacyPolicyComingSoon =>
+      'Politique de confidentialité bientôt disponible';
+
+  @override
+  String get signOutComingSoon =>
+      'Fonctionnalité de déconnexion bientôt disponible';
+
+  @override
+  String kgRemaining(String amount) {
+    return '$amount kg restant';
+  }
+
+  @override
+  String lastUsed(String date) {
+    return 'Dernière utilisation : $date';
+  }
+
+  @override
+  String get today => 'Aujourd\'hui';
+
+  @override
+  String daysAgo(String days) {
+    return 'il y a $days jours';
+  }
+
+  @override
+  String get weekAgo => '1 week ago';
+
+  @override
+  String get failedToUpdateSetting => 'Échec de la mise à jour du paramètre';
+
+  @override
+  String get settingsResetToDefaults => 'Paramètres remis par défaut';
+
+  @override
+  String get cancel => 'Annuler';
 }

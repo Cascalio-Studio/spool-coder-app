@@ -161,4 +161,108 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get recentSpools => 'Recent Spools';
+
+  @override
+  String get dateTimeFormat => 'Date & Time Format';
+
+  @override
+  String get region => 'Region';
+
+  @override
+  String get highContrastMode => 'High Contrast Mode';
+
+  @override
+  String get improvesTextVisibility => 'Improves text visibility';
+
+  @override
+  String get enableNotifications => 'Enable Notifications';
+
+  @override
+  String get receiveAppNotifications => 'Receive app notifications';
+
+  @override
+  String get notificationSound => 'Notification Sound';
+
+  @override
+  String get vibrateOnAlerts => 'Vibrate on alerts';
+
+  @override
+  String get twoFactorAuth => 'Two-Factor Authentication';
+
+  @override
+  String get addExtraSecurity => 'Add extra security to your account';
+
+  @override
+  String get useFingerprintFaceId => 'Use fingerprint or face ID';
+
+  @override
+  String get applicationInfo => 'Application Info';
+
+  @override
+  String get licenseInformation => 'License Information';
+
+  @override
+  String get privacyPolicy => 'Privacy Policy';
+
+  @override
+  String get aboutAppDescription =>
+      'A Flutter app for reading and programming BambuLab filament spools.';
+
+  @override
+  String get advanced => 'Advanced';
+
+  @override
+  String get resetToDefaults => 'Reset to Defaults';
+
+  @override
+  String get resetAllSettingsToDefault =>
+      'Reset all settings to default values';
+
+  @override
+  String get exportDiagnostics => 'Export Diagnostics';
+
+  @override
+  String get exportSettingsForDebugging => 'Export settings for debugging';
+
+  @override
+  String get account => 'Account';
+
+  @override
+  String get signOut => 'Sign Out';
+
+  @override
+  String get privacyPolicyComingSoon => 'Privacy Policy coming soon';
+
+  @override
+  String get signOutComingSoon => 'Sign out functionality coming soon';
+
+  @override
+  String kgRemaining(String amount) {
+    return '$amount kg remaining';
+  }
+
+  @override
+  String lastUsed(String date) {
+    return 'Last used: $date';
+  }
+
+  @override
+  String get today => 'Today';
+
+  @override
+  String daysAgo(String days) {
+    return '$days days ago';
+  }
+
+  @override
+  String get weekAgo => '1 week ago';
+
+  @override
+  String get failedToUpdateSetting => 'Failed to update setting';
+
+  @override
+  String get settingsResetToDefaults => 'Settings reset to defaults';
+
+  @override
+  String get cancel => 'Cancel';
 }

@@ -158,10 +158,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Scaffold(
       backgroundColor: AppColors.pureWhite,
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: Text(l10n.settings),
         backgroundColor: AppColors.pureWhite,
         foregroundColor: AppColors.primaryBlack,
         elevation: 0,
@@ -174,6 +176,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Widget _buildSettingsContent() {
+    final l10n = AppLocalizations.of(context)!;
+    
     if (_settings == null) {
       return const Center(
         child: Text('Failed to load settings'),
@@ -197,24 +201,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
 
           // General Settings
-          const SettingsSectionHeader(title: 'General'),
+          SettingsSectionHeader(title: l10n.general),
           SettingsSection(
             children: [
               SettingsNavigationTile(
                 leading: Icons.language,
-                title: 'Language',
+                title: l10n.language,
                 subtitle: _getLanguageDisplayName(_settings!.language),
                 onTap: () => _showLanguageSelector(),
               ),
               SettingsNavigationTile(
                 leading: Icons.schedule,
-                title: 'Date & Time Format',
+                title: l10n.dateTimeFormat,
                 subtitle: _settings!.dateTimeFormat,
                 onTap: () => _showDateTimeFormatSelector(),
               ),
               SettingsNavigationTile(
                 leading: Icons.location_on,
-                title: 'Region',
+                title: l10n.region,
                 subtitle: _settings!.regionSettings,
                 onTap: () => _showRegionSelector(),
               ),
@@ -222,25 +226,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
 
           // Appearance Settings
-          const SettingsSectionHeader(title: 'Appearance'),
+          SettingsSectionHeader(title: l10n.appearance),
           SettingsSection(
             children: [
               SettingsNavigationTile(
                 leading: Icons.palette,
-                title: 'Theme',
+                title: l10n.theme,
                 subtitle: _getThemeModeDisplayName(_settings!.themeMode),
                 onTap: () => _showThemeSelector(),
               ),
               SettingsNavigationTile(
                 leading: Icons.text_fields,
-                title: 'Font Size',
+                title: l10n.fontSize,
                 subtitle: _getFontSizeDisplayName(_settings!.fontSize),
                 onTap: () => _showFontSizeSelector(),
               ),
               SettingsSwitch(
                 leading: Icons.contrast,
-                title: 'High Contrast Mode',
-                subtitle: 'Improves text visibility',
+                title: l10n.highContrastMode,
+                subtitle: l10n.improvesTextVisibility,
                 value: _settings!.highContrastMode,
                 onChanged: (value) => _updateSetting('highContrastMode', value),
               ),
@@ -248,26 +252,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
 
           // Notification Settings
-          const SettingsSectionHeader(title: 'Notifications'),
+          SettingsSectionHeader(title: l10n.notifications),
           SettingsSection(
             children: [
               SettingsSwitch(
                 leading: Icons.notifications,
-                title: 'Enable Notifications',
-                subtitle: 'Receive app notifications',
+                title: l10n.enableNotifications,
+                subtitle: l10n.receiveAppNotifications,
                 value: _settings!.notificationsEnabled,
                 onChanged: (value) => _updateSetting('notificationsEnabled', value),
               ),
               SettingsNavigationTile(
                 leading: Icons.volume_up,
-                title: 'Notification Sound',
+                title: l10n.notificationSound,
                 subtitle: _getNotificationSoundDisplayName(_settings!.notificationSound),
                 onTap: () => _showNotificationSoundSelector(),
               ),
               SettingsSwitch(
                 leading: Icons.vibration,
-                title: 'Vibration',
-                subtitle: 'Vibrate on alerts',
+                title: l10n.vibrationEnabled,
+                subtitle: l10n.vibrateOnAlerts,
                 value: _settings!.vibrationOnAlert,
                 onChanged: (value) => _updateSetting('vibrationOnAlert', value),
               ),
@@ -275,26 +279,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
 
           // Security Settings
-          const SettingsSectionHeader(title: 'Security'),
+          SettingsSectionHeader(title: l10n.security),
           SettingsSection(
             children: [
               SettingsSwitch(
                 leading: Icons.security,
-                title: 'Two-Factor Authentication',
-                subtitle: 'Add extra security to your account',
+                title: l10n.twoFactorAuth,
+                subtitle: l10n.addExtraSecurity,
                 value: _settings!.twoFactorAuthEnabled,
                 onChanged: (value) => _updateSetting('twoFactorAuthEnabled', value),
               ),
               SettingsNavigationTile(
                 leading: Icons.lock,
-                title: 'App Lock',
+                title: l10n.appLock,
                 subtitle: _getAppLockTypeDisplayName(_settings!.appLockType),
                 onTap: () => _showAppLockSelector(),
               ),
               SettingsSwitch(
                 leading: Icons.fingerprint,
-                title: 'Biometric Authentication',
-                subtitle: 'Use fingerprint or face ID',
+                title: l10n.biometricAuth,
+                subtitle: l10n.useFingerprintFaceId,
                 value: _settings!.biometricEnabled,
                 onChanged: (value) => _updateSetting('biometricEnabled', value),
               ),
@@ -302,17 +306,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
 
           // Application Info
-          const SettingsSectionHeader(title: 'Application Info'),
+          SettingsSectionHeader(title: l10n.applicationInfo),
           SettingsSection(
             children: [
               SettingsTile(
                 leading: Icons.info,
-                title: 'Version',
+                title: l10n.version,
                 subtitle: AppConstants.appVersion,
               ),
               SettingsNavigationTile(
                 leading: Icons.description,
-                title: 'License Information',
+                title: l10n.licenseInformation,
                 onTap: () {
                   showLicensePage(
                     context: context,
@@ -323,23 +327,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               SettingsNavigationTile(
                 leading: Icons.privacy_tip,
-                title: 'Privacy Policy',
+                title: l10n.privacyPolicy,
                 onTap: () {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Privacy Policy coming soon')),
+                    SnackBar(content: Text(l10n.privacyPolicyComingSoon)),
                   );
                 },
               ),
               SettingsNavigationTile(
                 leading: Icons.help,
-                title: 'About',
+                title: l10n.about,
                 onTap: () {
                   showAboutDialog(
                     context: context,
                     applicationName: AppConstants.appName,
                     applicationVersion: AppConstants.appVersion,
                     children: [
-                      const Text('A Flutter app for reading and programming BambuLab filament spools.'),
+                      Text(l10n.aboutAppDescription),
                     ],
                   );
                 },
@@ -348,33 +352,33 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
 
           // Advanced Settings
-          const SettingsSectionHeader(title: 'Advanced'),
+          SettingsSectionHeader(title: l10n.advanced),
           SettingsSection(
             children: [
               SettingsNavigationTile(
                 leading: Icons.restore,
-                title: 'Reset to Defaults',
-                subtitle: 'Reset all settings to default values',
+                title: l10n.resetToDefaults,
+                subtitle: l10n.resetAllSettingsToDefault,
                 onTap: _resetSettings,
               ),
               SettingsNavigationTile(
                 leading: Icons.bug_report,
-                title: 'Export Diagnostics',
-                subtitle: 'Export settings for debugging',
+                title: l10n.exportDiagnostics,
+                subtitle: l10n.exportSettingsForDebugging,
                 onTap: _exportDiagnostics,
               ),
             ],
           ),
 
           // Account Actions
-          const SettingsSectionHeader(title: 'Account'),
+          SettingsSectionHeader(title: l10n.account),
           SettingsSection(
             children: [
               SettingsTile(
-                title: 'Sign Out',
+                title: l10n.signOut,
                 onTap: () {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Sign out functionality coming soon')),
+                    SnackBar(content: Text(l10n.signOutComingSoon)),
                   );
                 },
               ),
