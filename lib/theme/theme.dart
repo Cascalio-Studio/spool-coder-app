@@ -1,6 +1,6 @@
 /// Theme barrel file - exports all theme-related classes
 /// Use this file to import all theme components at once
-library theme;
+library;
 
 export 'app_theme.dart';
 export 'app_colors.dart';

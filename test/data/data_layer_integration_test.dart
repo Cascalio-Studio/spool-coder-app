@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
-import '../../lib/data/data_layer_factory.dart';
-import '../../lib/data/datasources/spool_data_source.dart';
+import 'package:spool_coder_app/data/data_layer_factory.dart';
+import 'package:spool_coder_app/data/datasources/spool_data_source.dart';
 
 void main() {
   group('Data Layer Integration Tests', () {

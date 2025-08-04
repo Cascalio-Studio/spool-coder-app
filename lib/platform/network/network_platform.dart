@@ -54,7 +54,7 @@ abstract class NetworkPlatformInterface {
 /// Platform-specific network implementation
 /// This would use platform channels or connectivity plugins for network operations
 class NetworkPlatformImpl implements NetworkPlatformInterface {
-  NetworkInfo _currentNetworkInfo = const NetworkInfo(
+  final NetworkInfo _currentNetworkInfo = const NetworkInfo(
     type: NetworkType.wifi,
     status: NetworkStatus.connected,
     ssid: 'MockWiFi',

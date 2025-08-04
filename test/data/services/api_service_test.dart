@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
-import '../../../lib/data/services/api_service.dart';
-import '../../../lib/core/config/app_config.dart';
+import 'package:spool_coder_app/data/services/api_service.dart';
+import 'package:spool_coder_app/core/config/app_config.dart';
 
 void main() {
   group('HttpApiService', () {

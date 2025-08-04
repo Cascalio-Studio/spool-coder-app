@@ -1,10 +1,10 @@
 import 'package:test/test.dart';
-import '../../lib/core/config/app_config.dart';
-import '../../lib/core/di/injector.dart';
-import '../../lib/data/services/api_service.dart';
-import '../../lib/data/services/sync_service.dart';
-import '../../lib/data/datasources/spool_data_source.dart';
-import '../../lib/domain/repositories/spool_repository.dart';
+import 'package:spool_coder_app/core/config/app_config.dart';
+import 'package:spool_coder_app/core/di/injector.dart';
+import 'package:spool_coder_app/data/services/api_service.dart';
+import 'package:spool_coder_app/data/services/sync_service.dart';
+import 'package:spool_coder_app/data/datasources/spool_data_source.dart';
+import 'package:spool_coder_app/domain/repositories/spool_repository.dart';
 
 /// Integration test demonstrating the backend architecture
 /// Tests the complete flow from configuration to data access

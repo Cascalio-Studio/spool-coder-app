@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import '../../../lib/core/config/app_config.dart';
+import 'package:spool_coder_app/core/config/app_config.dart';
 
 void main() {
   group('AppConfig', () {

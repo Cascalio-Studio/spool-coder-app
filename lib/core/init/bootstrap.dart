@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import '../di/injector.dart';
-import '../config/app_config.dart';
 
 /// Initializes app before runApp
 Future<void> bootstrap() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  // Load configuration from environment or use defaults
-  final config = ConfigFactory.fromEnvironment();
-  
-  // Set up dependency injection with configuration
-  setupLocator(config: config);
+  // Set up dependency injection
+  await setupLocator();
 
   // Global error handling
   FlutterError.onError = (details) {
@@ -18,10 +14,5 @@ Future<void> bootstrap() async {
     debugPrint('Flutter error: ${details.exceptionAsString()}');
   };
   
-  // Log configuration for debugging
-  debugPrint('App initialized with backend ${config.isBackendEnabled ? 'enabled' : 'disabled'}');
-  if (config.isBackendEnabled) {
-    debugPrint('Backend URL: ${config.backend.baseUrl}');
-    debugPrint('Auto-sync: ${config.enableAutoSync}');
-  }
+  debugPrint('App initialized successfully');
 }
