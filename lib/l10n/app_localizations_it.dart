@@ -259,7 +259,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get weekAgo => '1 week ago';
+  String get weekAgo => 'una settimana fa';
 
   @override
   String get failedToUpdateSetting => 'Impossibile aggiornare l\'impostazione';
