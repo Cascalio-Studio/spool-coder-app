@@ -1,5 +1,6 @@
 /// Device platform integration
 /// Part of the Platform Layer: handles device/platform-specific device information and capabilities
+library;
 import 'dart:math';
 enum DevicePlatform {
   android,
@@ -107,7 +108,7 @@ abstract class DevicePlatformInterface {
 /// This would use platform channels or device info plugins for device operations
 class DevicePlatformImpl implements DevicePlatformInterface {
   final DeviceInfo _deviceInfo;
-  BatteryInfo _batteryInfo;
+  final BatteryInfo _batteryInfo;
   final DeviceCapabilities _capabilities;
 
   DevicePlatformImpl({

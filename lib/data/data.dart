@@ -9,7 +9,7 @@
 /// - Manage data caching and persistence
 /// - Abstract external data sources
 /// - Handle network and hardware communication
-library data_layer;
+library;
 
 // Export repositories
 export 'repositories/repositories.dart';

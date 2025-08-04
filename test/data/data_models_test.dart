@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
-import '../../lib/data/models/data_models.dart';
-import '../../lib/data/mappers/entity_mappers.dart';
-import '../../lib/domain/value_objects/material_type.dart';
+import 'package:spool_coder_app/data/models/data_models.dart';
+import 'package:spool_coder_app/data/mappers/entity_mappers.dart';
+import 'package:spool_coder_app/domain/value_objects/material_type.dart';
 
 void main() {
   group('Data Models Tests', () {

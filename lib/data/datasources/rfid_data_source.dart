@@ -281,7 +281,7 @@ class MockRfidReaderDataSource implements RfidReaderDataSource {
     return ProductionInfo(
       productionDateTime: DateTime.now().subtract(const Duration(days: 30)),
       batchId: 'BATCH_${tagId}_2024',
-      materialId: 'MAT_${tagId}',
+      materialId: 'MAT_$tagId',
       trayInfoIndex: 'TRAY_${tagId}_INDEX',
     );
   }
