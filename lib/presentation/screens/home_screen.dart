@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:spool_coder_app/theme/theme.dart';
 import 'package:spool_coder_app/features/home/widgets/home_widgets.dart';
 
@@ -34,8 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
         return _buildReadContent();
       case 2: // Write
         return _buildWriteContent();
-      case 3: // Settings
-        return _buildSettingsContent();
+      case 3: // Settings - Navigate directly, so show home content
+        return _buildHomeContent();
       case 4: // Profile
         return _buildProfileContent();
       default:
@@ -138,32 +139,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildSettingsContent() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(
-            Icons.settings,
-            size: 64,
-            color: AppColors.accentGreen,
-          ),
-          const SizedBox(height: 24),
-          const Text(
-            'Settings',
-            style: AppTextStyles.displayMedium,
-          ),
-          const SizedBox(height: 16),
-          Text(
-            'Configure your app preferences',
-            style: AppTextStyles.bodyLargeSecondary,
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildProfileContent() {
     return Center(
       child: Column(
@@ -228,6 +203,13 @@ class _HomeScreenState extends State<HomeScreen> {
         highlightColor: isDark ? AppColors.accentGreen.withOpacity(0.1) : AppColors.backgroundGray.withOpacity(0.2),
         hoverColor: isDark ? AppColors.accentGreen.withOpacity(0.1) : AppColors.backgroundGray.withOpacity(0.2),
         onTap: () {
+          // Navigate to settings page when settings tab is tapped
+          if (index == 3) { // Settings tab
+            context.push('/settings');
+            // Don't update the bottom nav index for settings since it's a separate page
+            return;
+          }
+          
           setState(() {
             _currentBottomNavIndex = index;
           });
