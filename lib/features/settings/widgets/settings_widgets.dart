@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../theme/theme.dart';
 
 /// Custom settings tile that matches the app's design concept
 class SettingsTile extends StatelessWidget {
@@ -22,6 +21,8 @@ class SettingsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(12),
@@ -33,7 +34,7 @@ class SettingsTile extends StatelessWidget {
               Icon(
                 leading,
                 size: 24,
-                color: AppColors.primaryBlack,
+                color: theme.iconTheme.color,
               ),
               const SizedBox(width: 16),
             ],
@@ -43,13 +44,15 @@ class SettingsTile extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: AppTextStyles.bodyLarge,
+                    style: theme.textTheme.bodyLarge,
                   ),
                   if (subtitle != null) ...[
                     const SizedBox(height: 4),
                     Text(
                       subtitle!,
-                      style: AppTextStyles.bodyMediumSecondary,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: theme.colorScheme.onSurface.withOpacity(0.7),
+                      ),
                     ),
                   ],
                 ],
@@ -89,9 +92,6 @@ class SettingsSwitch extends StatelessWidget {
       trailing: Switch(
         value: value,
         onChanged: onChanged,
-        activeColor: AppColors.accentGreen,
-        inactiveThumbColor: AppColors.pureWhite,
-        inactiveTrackColor: AppColors.backgroundGray,
       ),
       onTap: () => onChanged(!value),
     );
@@ -109,12 +109,14 @@ class SettingsSectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
       child: Text(
         title,
-        style: AppTextStyles.bodyLarge.copyWith(
-          color: AppColors.primaryBlack.withOpacity(0.6),
+        style: theme.textTheme.bodyLarge?.copyWith(
+          color: theme.colorScheme.onSurface.withOpacity(0.6),
           fontWeight: FontWeight.w500,
         ),
       ),
@@ -133,10 +135,12 @@ class SettingsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: AppColors.backgroundGray,
+        color: theme.cardTheme.color,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -149,7 +153,7 @@ class SettingsSection extends StatelessWidget {
                 child: Divider(
                   height: 1,
                   thickness: 1,
-                  color: AppColors.backgroundGray,
+                  color: theme.dividerTheme.color,
                 ),
               ),
           ],
@@ -176,6 +180,8 @@ class SettingsNavigationTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    
     return SettingsTile(
       leading: leading,
       title: title,
@@ -183,7 +189,7 @@ class SettingsNavigationTile extends StatelessWidget {
       trailing: Icon(
         Icons.chevron_right,
         size: 16,
-        color: AppColors.primaryBlack.withOpacity(0.4),
+        color: theme.iconTheme.color?.withOpacity(0.4),
       ),
       onTap: onTap,
     );
@@ -224,10 +230,12 @@ class ProfileHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    
     return Container(
       padding: const EdgeInsets.all(24),
-      decoration: const BoxDecoration(
-        color: AppColors.pureWhite,
+      decoration: BoxDecoration(
+        color: theme.scaffoldBackgroundColor,
       ),
       child: Row(
         children: [
@@ -235,13 +243,13 @@ class ProfileHeader extends StatelessWidget {
             width: 80,
             height: 80,
             decoration: BoxDecoration(
-              color: AppColors.accentGreen,
+              color: theme.colorScheme.primary,
               shape: BoxShape.circle,
             ),
             child: Icon(
               Icons.person,
               size: 40,
-              color: AppColors.primaryBlack,
+              color: theme.colorScheme.onPrimary,
             ),
           ),
           const SizedBox(width: 20),
@@ -251,7 +259,7 @@ class ProfileHeader extends StatelessWidget {
               children: [
                 Text(
                   userName ?? 'User',
-                  style: AppTextStyles.displayMedium.copyWith(
+                  style: theme.textTheme.headlineSmall?.copyWith(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
@@ -260,8 +268,8 @@ class ProfileHeader extends StatelessWidget {
                 if (userEmail != null)
                   Text(
                     userEmail!,
-                    style: AppTextStyles.bodyMedium.copyWith(
-                      color: AppColors.primaryBlack.withOpacity(0.7),
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.onSurface.withOpacity(0.7),
                     ),
                   ),
               ],
@@ -274,13 +282,13 @@ class ProfileHeader extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 decoration: BoxDecoration(
-                  color: AppColors.primaryBlack,
+                  color: theme.colorScheme.secondary,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
                   'Edit Profile',
-                  style: AppTextStyles.labelMedium.copyWith(
-                    color: AppColors.pureWhite,
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    color: theme.colorScheme.onSecondary,
                   ),
                 ),
               ),

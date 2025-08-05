@@ -4,7 +4,6 @@ import '../../../core/constants/app_constants.dart';
 import '../../../core/providers/app_locale_provider.dart';
 import '../../../domain/entities/user_settings.dart';
 import '../../../domain/use_cases/settings_use_case.dart';
-import '../../../theme/theme.dart';
 import '../../../l10n/app_localizations.dart';
 import '../widgets/settings_widgets.dart';
 
@@ -50,10 +49,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (_settings == null) return;
 
     try {
-      await _settingsUseCase.updateSetting(
-        settingName: settingName,
-        value: value,
-      );
+      // Handle theme-related settings through AppLocaleProvider
+      if (settingName == 'themeMode' && value is AppThemeMode) {
+        await _localeProvider.changeTheme(value);
+      } else {
+        // Handle other settings through SettingsUseCase
+        await _settingsUseCase.updateSetting(
+          settingName: settingName,
+          value: value,
+        );
+      }
       await _loadSettings(); // Reload to update UI
     } catch (e) {
       // Show error snackbar
@@ -78,9 +83,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
       
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Settings reset to defaults'),
-            backgroundColor: AppColors.accentGreen,
+          SnackBar(
+            content: const Text('Settings reset to defaults'),
+            backgroundColor: Theme.of(context).colorScheme.primary,
           ),
         );
       }
@@ -159,15 +164,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
     
     return Scaffold(
-      backgroundColor: AppColors.pureWhite,
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
         title: Text(l10n.settings),
-        backgroundColor: AppColors.pureWhite,
-        foregroundColor: AppColors.primaryBlack,
+        backgroundColor: theme.appBarTheme.backgroundColor,
+        foregroundColor: theme.appBarTheme.foregroundColor,
         elevation: 0,
-        surfaceTintColor: AppColors.pureWhite,
+        surfaceTintColor: theme.appBarTheme.surfaceTintColor,
       ),
       body: _isLoading 
           ? const Center(child: CircularProgressIndicator())
@@ -213,13 +219,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
               SettingsNavigationTile(
                 leading: Icons.schedule,
                 title: l10n.dateTimeFormat,
-                subtitle: _settings!.dateTimeFormat,
+                subtitle: _getDateTimeFormatDisplayName(_settings!.dateTimeFormat),
                 onTap: () => _showDateTimeFormatSelector(),
               ),
               SettingsNavigationTile(
                 leading: Icons.location_on,
                 title: l10n.region,
-                subtitle: _settings!.regionSettings,
+                subtitle: _getRegionDisplayName(_settings!.regionSettings),
                 onTap: () => _showRegionSelector(),
               ),
             ],
@@ -444,6 +450,63 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
+  String _getDateTimeFormatDisplayName(String format) {
+    switch (format) {
+      case 'MM/dd/yyyy':
+        return 'MM/DD/YYYY (US)';
+      case 'dd/MM/yyyy':
+        return 'DD/MM/YYYY (EU)';
+      case 'yyyy-MM-dd':
+        return 'YYYY-MM-DD (ISO)';
+      case 'dd.MM.yyyy':
+        return 'DD.MM.YYYY (DE)';
+      default:
+        return format;
+    }
+  }
+
+  String _getRegionDisplayName(String region) {
+    switch (region) {
+      case 'US':
+        return 'United States';
+      case 'EU':
+        return 'Europe';
+      case 'UK':
+        return 'United Kingdom';
+      case 'DE':
+        return 'Germany';
+      case 'FR':
+        return 'France';
+      case 'ES':
+        return 'Spain';
+      case 'IT':
+        return 'Italy';
+      case 'JP':
+        return 'Japan';
+      case 'CN':
+        return 'China';
+      default:
+        return region;
+    }
+  }
+
+  String _formatExampleDate(String format) {
+    // Show example with today's date
+    final now = DateTime.now();
+    switch (format) {
+      case 'MM/dd/yyyy':
+        return '${now.month.toString().padLeft(2, '0')}/${now.day.toString().padLeft(2, '0')}/${now.year}';
+      case 'dd/MM/yyyy':
+        return '${now.day.toString().padLeft(2, '0')}/${now.month.toString().padLeft(2, '0')}/${now.year}';
+      case 'yyyy-MM-dd':
+        return '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
+      case 'dd.MM.yyyy':
+        return '${now.day.toString().padLeft(2, '0')}.${now.month.toString().padLeft(2, '0')}.${now.year}';
+      default:
+        return format;
+    }
+  }
+
   // Selector dialogs
   void _showLanguageSelector() {
     final l10n = AppLocalizations.of(context)!;
@@ -462,7 +525,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               return ListTile(
                 title: Text(languageName),
                 leading: isSelected 
-                  ? const Icon(Icons.check_circle, color: AppColors.accentGreen)
+                  ? Icon(Icons.check_circle, color: Theme.of(context).colorScheme.primary)
                   : const Icon(Icons.radio_button_unchecked),
                 onTap: () async {
                   await _localeProvider.changeLanguage(languageName);
@@ -485,24 +548,81 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void _showDateTimeFormatSelector() {
-    // TODO: Implement date/time format selector
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Date/time format selector coming soon')),
+    final availableFormats = [
+      'MM/dd/yyyy',  // US format
+      'dd/MM/yyyy',  // European format
+      'yyyy-MM-dd',  // ISO format
+      'dd.MM.yyyy',  // German format
+    ];
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(AppLocalizations.of(context)!.dateTimeFormat),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: availableFormats.map((format) {
+            return RadioListTile<String>(
+              title: Text(_getDateTimeFormatDisplayName(format)),
+              subtitle: Text(_formatExampleDate(format)),
+              value: format,
+              groupValue: _settings!.dateTimeFormat,
+              onChanged: (value) {
+                if (value != null) {
+                  _updateSetting('dateTimeFormat', value);
+                  Navigator.of(context).pop();
+                }
+              },
+            );
+          }).toList(),
+        ),
+      ),
     );
   }
 
   void _showRegionSelector() {
-    // TODO: Implement region selector
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Region selector coming soon')),
+    final availableRegions = [
+      'US',  // United States
+      'EU',  // Europe
+      'UK',  // United Kingdom
+      'DE',  // Germany
+      'FR',  // France
+      'ES',  // Spain
+      'IT',  // Italy
+      'JP',  // Japan
+      'CN',  // China
+    ];
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(AppLocalizations.of(context)!.region),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: availableRegions.map((region) {
+            return RadioListTile<String>(
+              title: Text(_getRegionDisplayName(region)),
+              value: region,
+              groupValue: _settings!.regionSettings,
+              onChanged: (value) {
+                if (value != null) {
+                  _updateSetting('regionSettings', value);
+                  Navigator.of(context).pop();
+                }
+              },
+            );
+          }).toList(),
+        ),
+      ),
     );
   }
 
   void _showThemeSelector() {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Choose Theme'),
+        title: Text(l10n.theme),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: AppThemeMode.values.map((mode) {
@@ -524,10 +644,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void _showFontSizeSelector() {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Choose Font Size'),
+        title: Text(l10n.fontSize),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: FontSize.values.map((size) {
@@ -549,10 +670,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void _showNotificationSoundSelector() {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Choose Notification Sound'),
+        title: Text(l10n.notificationSound),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: NotificationSound.values.map((sound) {
@@ -574,10 +696,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void _showAppLockSelector() {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Choose App Lock'),
+        title: Text(l10n.appLock),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: AppLockType.values.map((type) {

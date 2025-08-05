@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:spool_coder_app/theme/theme.dart';
 import 'package:spool_coder_app/features/home/widgets/home_widgets.dart';
 import 'package:spool_coder_app/l10n/app_localizations.dart';
 
@@ -18,8 +17,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    
     return Scaffold(
-      backgroundColor: AppColors.pureWhite,
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: SafeArea(
         child: _buildBody(),
       ),
@@ -92,25 +93,28 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildReadContent() {
     final l10n = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
     
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(
+          Icon(
             Icons.nfc,
             size: 64,
-            color: AppColors.accentGreen,
+            color: theme.colorScheme.primary,
           ),
           const SizedBox(height: 24),
           Text(
             l10n.readRfidCard,
-            style: AppTextStyles.displayMedium,
+            style: theme.textTheme.displayMedium,
           ),
           const SizedBox(height: 16),
           Text(
             l10n.holdCardNearReader,
-            style: AppTextStyles.bodyLargeSecondary,
+            style: theme.textTheme.bodyLarge?.copyWith(
+              color: theme.colorScheme.onSurface.withOpacity(0.7),
+            ),
             textAlign: TextAlign.center,
           ),
         ],
@@ -120,25 +124,28 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildWriteContent() {
     final l10n = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
     
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(
+          Icon(
             Icons.edit,
             size: 64,
-            color: AppColors.accentGreen,
+            color: theme.colorScheme.primary,
           ),
           const SizedBox(height: 24),
           Text(
             l10n.writeRfidCard,
-            style: AppTextStyles.displayMedium,
+            style: theme.textTheme.displayMedium,
           ),
           const SizedBox(height: 16),
           Text(
             l10n.writeDataToCard,
-            style: AppTextStyles.bodyLargeSecondary,
+            style: theme.textTheme.bodyLarge?.copyWith(
+              color: theme.colorScheme.onSurface.withOpacity(0.7),
+            ),
             textAlign: TextAlign.center,
           ),
         ],
@@ -148,25 +155,28 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildProfileContent() {
     final l10n = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
     
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(
+          Icon(
             Icons.person,
             size: 64,
-            color: AppColors.accentGreen,
+            color: theme.colorScheme.primary,
           ),
           const SizedBox(height: 24),
           Text(
             l10n.profile,
-            style: AppTextStyles.displayMedium,
+            style: theme.textTheme.displayMedium,
           ),
           const SizedBox(height: 16),
           Text(
             l10n.manageAccount,
-            style: AppTextStyles.bodyLargeSecondary,
+            style: theme.textTheme.bodyLarge?.copyWith(
+              color: theme.colorScheme.onSurface.withOpacity(0.7),
+            ),
             textAlign: TextAlign.center,
           ),
         ],
@@ -175,13 +185,15 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildBottomNavigation() {
+    final theme = Theme.of(context);
+    
     return Container(
       height: 80,
       decoration: BoxDecoration(
-        color: AppColors.pureWhite,
+        color: theme.bottomNavigationBarTheme.backgroundColor,
         border: Border(
           top: BorderSide(
-            color: AppColors.backgroundGray,
+            color: theme.dividerTheme.color ?? theme.colorScheme.outline,
             width: 1,
           ),
         ),
@@ -203,14 +215,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildNavItem(int index, IconData icon, String label) {
     final isActive = _currentBottomNavIndex == index;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final theme = Theme.of(context);
     
     return Expanded(
       child: InkWell(
         borderRadius: BorderRadius.circular(20),
-        splashColor: isDark ? AppColors.accentGreen.withOpacity(0.2) : AppColors.backgroundGray.withOpacity(0.4),
-        highlightColor: isDark ? AppColors.accentGreen.withOpacity(0.1) : AppColors.backgroundGray.withOpacity(0.2),
-        hoverColor: isDark ? AppColors.accentGreen.withOpacity(0.1) : AppColors.backgroundGray.withOpacity(0.2),
+        splashColor: theme.bottomNavigationBarTheme.selectedItemColor?.withOpacity(0.2),
+        highlightColor: theme.bottomNavigationBarTheme.selectedItemColor?.withOpacity(0.1),
+        hoverColor: theme.bottomNavigationBarTheme.selectedItemColor?.withOpacity(0.1),
         onTap: () {
           // Navigate to settings page when settings tab is tapped
           if (index == 3) { // Settings tab
@@ -232,14 +244,16 @@ class _HomeScreenState extends State<HomeScreen> {
               Icon(
                 icon,
                 size: 24,
-                color: isActive ? AppColors.accentGreen : AppColors.mutedBlack,
+                color: isActive 
+                    ? theme.bottomNavigationBarTheme.selectedItemColor 
+                    : theme.bottomNavigationBarTheme.unselectedItemColor,
               ),
               const SizedBox(height: 8),
               Text(
                 label,
-                style: AppTextStyles.navigationLabel.copyWith(
-                  color: isActive ? AppColors.accentGreen : AppColors.mutedBlack,
-                ),
+                style: isActive 
+                    ? theme.bottomNavigationBarTheme.selectedLabelStyle
+                    : theme.bottomNavigationBarTheme.unselectedLabelStyle,
               ),
             ],
           ),

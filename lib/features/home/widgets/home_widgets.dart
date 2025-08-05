@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
-import 'package:spool_coder_app/theme/theme.dart';
 import 'package:spool_coder_app/l10n/app_localizations.dart';
 
 /// Home screen widgets - Components for the main home screen
@@ -13,32 +12,37 @@ class WelcomeSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
     
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-      decoration: const BoxDecoration(color: AppColors.pureWhite),
+      decoration: BoxDecoration(color: theme.scaffoldBackgroundColor),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             l10n.appTitle,
-            style: AppTextStyles.displayLarge,
+            style: theme.textTheme.displayLarge,
           ),
           const SizedBox(height: 12),
           Text(
             l10n.goodMorning,
-            style: AppTextStyles.welcomeGreeting,
+            style: theme.textTheme.headlineMedium,
           ),
           const SizedBox(height: 8),
           Text(
             l10n.lastReadStatus,
-            style: AppTextStyles.welcomeSubtitle,
+            style: theme.textTheme.titleMedium?.copyWith(
+              color: theme.colorScheme.onSurface.withOpacity(0.7),
+            ),
           ),
           const SizedBox(height: 16),
           Text(
             l10n.readyToScan,
-            style: AppTextStyles.bodyLargeSecondary,
+            style: theme.textTheme.bodyLarge?.copyWith(
+              color: theme.colorScheme.onSurface.withOpacity(0.8),
+            ),
           ),
         ],
       ),
@@ -65,15 +69,17 @@ class ActionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.backgroundGray,
+        color: theme.cardTheme.color,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primaryBlack.withOpacity(0.08),
+            color: theme.shadowColor.withOpacity(0.08),
             offset: const Offset(0, 2),
             blurRadius: 8,
           ),
@@ -87,19 +93,21 @@ class ActionCard extends StatelessWidget {
               Icon(
                 icon,
                 size: 24,
-                color: AppColors.primaryBlack,
+                color: theme.iconTheme.color,
               ),
               const SizedBox(width: 12),
               Text(
                 title,
-                style: AppTextStyles.titleLarge,
+                style: theme.textTheme.titleLarge,
               ),
             ],
           ),
           const SizedBox(height: 8),
           Text(
             description,
-            style: AppTextStyles.bodyMediumSecondary,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: theme.colorScheme.onSurface.withOpacity(0.7),
+            ),
           ),
           const SizedBox(height: 16),
           SizedBox(
@@ -136,6 +144,7 @@ class _SpoolSelectionSectionState extends State<SpoolSelectionSection> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
     final spoolData = _getSpoolData(l10n);
     
     return Column(
@@ -145,7 +154,9 @@ class _SpoolSelectionSectionState extends State<SpoolSelectionSection> {
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           child: Text(
             l10n.recentSpools,
-            style: AppTextStyles.sectionHeader,
+            style: theme.textTheme.headlineSmall?.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
         SizedBox(
@@ -211,6 +222,7 @@ class SpoolCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
     final screenWidth = MediaQuery.of(context).size.width;
     // Responsive card width: fit 2.5 cards on screen, fallback to 280px for small screens
     final cardWidth = screenWidth > 700
@@ -222,15 +234,15 @@ class SpoolCard extends StatelessWidget {
         width: cardWidth,
         margin: const EdgeInsets.only(right: 12),
         decoration: BoxDecoration(
-          color: AppColors.pureWhite,
+          color: theme.cardTheme.color,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected ? AppColors.accentGreen : AppColors.backgroundGray,
+            color: isSelected ? theme.colorScheme.primary : theme.dividerTheme.color!,
             width: isSelected ? 2 : 1,
           ),
           boxShadow: [
             BoxShadow(
-              color: AppColors.primaryBlack.withOpacity(0.06),
+              color: theme.shadowColor.withOpacity(0.06),
               offset: const Offset(0, 1),
               blurRadius: 4,
             ),
@@ -255,7 +267,9 @@ class SpoolCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       spoolData.type,
-                      style: AppTextStyles.spoolCardTitle,
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ],
@@ -263,17 +277,23 @@ class SpoolCard extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 spoolData.brand,
-                style: AppTextStyles.spoolCardBrand,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.onSurface.withOpacity(0.7),
+                ),
               ),
               const Divider(height: 20),
               Text(
                 l10n.kgRemaining(spoolData.remaining.toStringAsFixed(1)),
-                style: AppTextStyles.spoolCardAmount,
+                style: theme.textTheme.bodyLarge?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               const SizedBox(height: 4),
               Text(
                 l10n.lastUsed(spoolData.lastUsed),
-                style: AppTextStyles.spoolCardLastUsed,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurface.withOpacity(0.6),
+                ),
               ),
             ],
           ),
@@ -308,21 +328,21 @@ List<SpoolData> _getSpoolData(AppLocalizations l10n) {
       brand: 'Prusament',
       remaining: 1.8,
       lastUsed: l10n.today,
-      color: AppColors.primaryBlack,
+      color: Colors.black87,
     ),
     SpoolData(
       type: 'PETG Clear',
       brand: 'Overture',
       remaining: 0.5,
       lastUsed: l10n.daysAgo('5'),
-      color: AppColors.backgroundGray,
+      color: Colors.grey,
     ),
     SpoolData(
       type: 'PLA Green',
       brand: 'eSUN',
       remaining: 2.3,
       lastUsed: l10n.daysAgo('7'),
-      color: AppColors.accentGreen,
+      color: Colors.green,
     ),
     SpoolData(
       type: 'ABS Red',
@@ -336,7 +356,7 @@ List<SpoolData> _getSpoolData(AppLocalizations l10n) {
       brand: 'eSUN',
       remaining: 1.2,
       lastUsed: l10n.daysAgo('3'),
-      color: AppColors.pureWhite,
+      color: Colors.white,
     ),
   ];
 }

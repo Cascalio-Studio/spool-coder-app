@@ -256,11 +256,270 @@ class AppTheme {
     );
   }
 
-  /// Dark theme configuration (for future implementation)
+  /// Dark theme configuration
   static ThemeData get darkTheme {
-    // For now, return light theme
-    // TODO: Implement dark theme based on user requirements
-    return lightTheme;
+    return ThemeData(
+      // Use Material 3 design system
+      useMaterial3: true,
+      
+      // Dark color scheme
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: AppColors.accentGreen,
+        brightness: Brightness.dark,
+        primary: AppColors.accentGreen,
+        onPrimary: AppColors.primaryBlack,
+        secondary: AppColors.accentGreen,
+        onSecondary: AppColors.primaryBlack,
+        surface: AppColors.primaryBlack,
+        onSurface: AppColors.pureWhite,
+        background: AppColors.primaryBlack,
+        onBackground: AppColors.pureWhite,
+        error: AppColors.errorRed,
+        onError: AppColors.pureWhite,
+      ),
+
+      // Custom color extensions for dark theme
+      extensions: <ThemeExtension<dynamic>>[
+        AppColorsExtension(
+          primaryBlack: AppColors.pureWhite, // Inverted for dark mode
+          accentGreen: AppColors.accentGreen,
+          backgroundGray: AppColors.mutedBlack,
+          pureWhite: AppColors.primaryBlack, // Inverted for dark mode
+          mutedBlack: AppColors.backgroundGray,
+          errorRed: AppColors.errorRed,
+        ),
+      ],
+
+      // Typography using Space Grotesk (same for both themes)
+      textTheme: AppTextStyles.textTheme.apply(
+        bodyColor: AppColors.pureWhite,
+        displayColor: AppColors.pureWhite,
+      ),
+      
+      // App bar theme for dark mode
+      appBarTheme: AppBarTheme(
+        backgroundColor: AppColors.primaryBlack,
+        foregroundColor: AppColors.pureWhite,
+        elevation: 0,
+        scrolledUnderElevation: 1,
+        surfaceTintColor: Colors.transparent,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
+        titleTextStyle: AppTextStyles.displayMedium.copyWith(
+          color: AppColors.pureWhite,
+        ),
+        toolbarTextStyle: AppTextStyles.bodyLarge.copyWith(
+          color: AppColors.pureWhite,
+        ),
+        iconTheme: IconThemeData(
+          color: AppColors.pureWhite,
+          size: 24,
+        ),
+      ),
+
+      // Bottom navigation bar theme for dark mode
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: AppColors.primaryBlack,
+        selectedItemColor: AppColors.accentGreen,
+        unselectedItemColor: AppColors.backgroundGray,
+        selectedLabelStyle: AppTextStyles.labelSmall.copyWith(
+          color: AppColors.accentGreen,
+        ),
+        unselectedLabelStyle: AppTextStyles.labelSmall.copyWith(
+          color: AppColors.backgroundGray,
+        ),
+        type: BottomNavigationBarType.fixed,
+        elevation: 0,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+      ),
+
+      // Card theme for dark mode
+      cardTheme: CardThemeData(
+        color: AppColors.mutedBlack,
+        surfaceTintColor: Colors.transparent,
+        shadowColor: Colors.black.withOpacity(0.3),
+        elevation: 2,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+          side: BorderSide(
+            color: AppColors.mutedBlack,
+            width: 1,
+          ),
+        ),
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      ),
+
+      // Elevated button theme for dark mode
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.accentGreen,
+          foregroundColor: AppColors.primaryBlack,
+          disabledBackgroundColor: AppColors.mutedBlack,
+          disabledForegroundColor: AppColors.backgroundGray,
+          textStyle: AppTextStyles.labelLarge,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          minimumSize: const Size(double.infinity, 48),
+          elevation: 0,
+          shadowColor: Colors.transparent,
+        ),
+      ),
+
+      // Outlined button theme for dark mode
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          foregroundColor: AppColors.pureWhite,
+          backgroundColor: AppColors.primaryBlack,
+          disabledForegroundColor: AppColors.backgroundGray,
+          textStyle: AppTextStyles.labelLarge,
+          side: BorderSide(
+            color: AppColors.pureWhite,
+            width: 1,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          minimumSize: const Size(double.infinity, 48),
+        ),
+      ),
+
+      // Text button theme for dark mode
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: AppColors.pureWhite,
+          textStyle: AppTextStyles.labelLarge,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        ),
+      ),
+
+      // Input decoration theme for dark mode
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: AppColors.mutedBlack,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide.none,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(
+            color: AppColors.mutedBlack,
+            width: 1,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(
+            color: AppColors.accentGreen,
+            width: 2,
+          ),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(
+            color: AppColors.errorRed,
+            width: 1,
+          ),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(
+            color: AppColors.errorRed,
+            width: 2,
+          ),
+        ),
+        labelStyle: AppTextStyles.bodyMedium.copyWith(
+          color: AppColors.pureWhite,
+        ),
+        hintStyle: AppTextStyles.bodyMedium.copyWith(
+          color: AppColors.backgroundGray,
+        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      ),
+
+      // Switch theme for dark mode
+      switchTheme: SwitchThemeData(
+        thumbColor: WidgetStateProperty.resolveWith<Color>(
+          (Set<WidgetState> states) {
+            return AppColors.pureWhite;
+          },
+        ),
+        trackColor: WidgetStateProperty.resolveWith<Color>(
+          (Set<WidgetState> states) {
+            if (states.contains(WidgetState.selected)) {
+              return AppColors.accentGreen;
+            }
+            return AppColors.mutedBlack;
+          },
+        ),
+        overlayColor: WidgetStateProperty.resolveWith<Color>(
+          (Set<WidgetState> states) {
+            if (states.contains(WidgetState.selected)) {
+              return AppColors.accentGreen.withOpacity(0.12);
+            }
+            return AppColors.backgroundGray.withOpacity(0.12);
+          },
+        ),
+      ),
+
+      // List tile theme for dark mode
+      listTileTheme: ListTileThemeData(
+        tileColor: AppColors.mutedBlack,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        titleTextStyle: AppTextStyles.bodyLarge.copyWith(
+          color: AppColors.pureWhite,
+        ),
+        subtitleTextStyle: AppTextStyles.bodyMedium.copyWith(
+          color: AppColors.backgroundGray,
+        ),
+        iconColor: AppColors.pureWhite,
+        dense: false,
+      ),
+
+      // Icon theme for dark mode
+      iconTheme: IconThemeData(
+        color: AppColors.pureWhite,
+        size: 24,
+      ),
+
+      // Divider theme for dark mode
+      dividerTheme: DividerThemeData(
+        color: AppColors.mutedBlack,
+        thickness: 1,
+        space: 1,
+      ),
+
+      // Dialog theme for dark mode
+      dialogTheme: DialogThemeData(
+        backgroundColor: AppColors.mutedBlack,
+        surfaceTintColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        titleTextStyle: AppTextStyles.titleLarge.copyWith(
+          color: AppColors.pureWhite,
+        ),
+        contentTextStyle: AppTextStyles.bodyLarge.copyWith(
+          color: AppColors.pureWhite,
+        ),
+      ),
+
+      // Scaffold background for dark mode
+      scaffoldBackgroundColor: AppColors.primaryBlack,
+
+      // Splash color for dark mode
+      splashColor: AppColors.accentGreen.withOpacity(0.12),
+      highlightColor: AppColors.accentGreen.withOpacity(0.08),
+
+      // Focus color for dark mode
+      focusColor: AppColors.accentGreen.withOpacity(0.12),
+    );
   }
 }
 

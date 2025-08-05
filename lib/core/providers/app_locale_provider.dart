@@ -49,10 +49,12 @@ class AppLocaleProvider extends ChangeNotifier {
 
   Future<void> changeLanguage(String language) async {
     try {
-      final updatedSettings = _currentSettings.copyWith(language: language);
-      await _settingsUseCase.updateSettings(updatedSettings);
-      _currentSettings = updatedSettings;
-      notifyListeners();
+      await _settingsUseCase.updateSetting(
+        settingName: 'language',
+        value: language,
+      );
+      // Reload settings to ensure consistency
+      await _loadSettings();
     } catch (e) {
       // Handle error
       print('Failed to change language: $e');
@@ -61,10 +63,12 @@ class AppLocaleProvider extends ChangeNotifier {
 
   Future<void> changeTheme(AppThemeMode themeMode) async {
     try {
-      final updatedSettings = _currentSettings.copyWith(themeMode: themeMode);
-      await _settingsUseCase.updateSettings(updatedSettings);
-      _currentSettings = updatedSettings;
-      notifyListeners();
+      await _settingsUseCase.updateSetting(
+        settingName: 'themeMode',
+        value: themeMode,
+      );
+      // Reload settings to ensure consistency
+      await _loadSettings();
     } catch (e) {
       // Handle error
       print('Failed to change theme: $e');
