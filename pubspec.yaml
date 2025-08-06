@@ -16,6 +16,8 @@ dependencies:
   go_router: ^16.0.0
   shared_preferences: ^2.3.2
   settings_ui: ^2.0.2
+  nfc_manager: ^4.0.2
+  nfc_manager_ndef: ^1.0.1
 
   # Add other dependencies here as needed
 
@@ -43,5 +45,5 @@ flutter:
           weight: 700
 
   # Add assets here if needed
-  # assets:
-  #   - images/
+  assets:
+    - assets/logo/

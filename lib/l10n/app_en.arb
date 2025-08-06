@@ -418,5 +418,50 @@
   "cancel": "Cancel",
   "@cancel": {
     "description": "Cancel button text"
+  },
+  
+  "tapScanButtonToStart": "Tap the scan button to start reading your NFC spool",
+  "@tapScanButtonToStart": {
+    "description": "Instruction to start NFC scanning"
+  },
+  
+  "scanSuccessful": "Scan Successful!",
+  "@scanSuccessful": {
+    "description": "NFC scan success message"
+  },
+  
+  "scanFailed": "Scan Failed",
+  "@scanFailed": {
+    "description": "NFC scan failure message"
+  },
+  
+  "nfcReady": "NFC Ready",
+  "@nfcReady": {
+    "description": "NFC ready status"
+  },
+  
+  "scanning": "Scanning...",
+  "@scanning": {
+    "description": "Currently scanning status"
+  },
+  
+  "scanComplete": "Scan Complete",
+  "@scanComplete": {
+    "description": "Scan completed status"
+  },
+  
+  "scanError": "Scan Error",
+  "@scanError": {
+    "description": "Scan error status"
+  },
+  
+  "startScan": "START SCAN",
+  "@startScan": {
+    "description": "Start scan button text"
+  },
+  
+  "scanAgain": "SCAN AGAIN",
+  "@scanAgain": {
+    "description": "Scan again button text"
   }
 }

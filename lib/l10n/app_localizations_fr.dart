@@ -273,4 +273,32 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get cancel => 'Annuler';
+
+  @override
+  String get tapScanButtonToStart =>
+      'Tap the scan button to start reading your NFC spool';
+
+  @override
+  String get scanSuccessful => 'Scan Successful!';
+
+  @override
+  String get scanFailed => 'Scan Failed';
+
+  @override
+  String get nfcReady => 'NFC Ready';
+
+  @override
+  String get scanning => 'Scanning...';
+
+  @override
+  String get scanComplete => 'Scan Complete';
+
+  @override
+  String get scanError => 'Scan Error';
+
+  @override
+  String get startScan => 'START SCAN';
+
+  @override
+  String get scanAgain => 'SCAN AGAIN';
 }

@@ -73,12 +73,13 @@ void main() {
       var appConfig = locator<AppConfig>();
       expect(appConfig.isBackendEnabled, false);
       
-      // Switch to backend-enabled
+      // Switch to backend-enabled by re-setting up locator
       final backendConfig = AppConfig.withBackend(
         baseUrl: 'https://api.example.com',
         apiKey: 'test-key',
       );
-      updateConfiguration(backendConfig);
+      await locator.reset();
+      await setupLocator(config: backendConfig);
       
       appConfig = locator<AppConfig>();
       expect(appConfig.isBackendEnabled, true);
