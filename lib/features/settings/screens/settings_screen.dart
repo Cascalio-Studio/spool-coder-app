@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/providers/app_locale_provider.dart';
+import '../../../core/providers/font_size_provider.dart';
+import '../../../core/providers/theme_provider.dart';
 import '../../../domain/entities/user_settings.dart';
 import '../../../domain/use_cases/settings_use_case.dart';
 import '../../../l10n/app_localizations.dart';
@@ -19,6 +21,8 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   late final SettingsUseCase _settingsUseCase;
   late final AppLocaleProvider _localeProvider;
+  late final FontSizeProvider _fontSizeProvider;
+  late final ThemeProvider _themeProvider;
   UserSettings? _settings;
   bool _isLoading = true;
 
@@ -27,6 +31,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     super.initState();
     _settingsUseCase = GetIt.instance<SettingsUseCase>();
     _localeProvider = GetIt.instance<AppLocaleProvider>();
+    _fontSizeProvider = GetIt.instance<FontSizeProvider>();
+    _themeProvider = GetIt.instance<ThemeProvider>();
     _loadSettings();
   }
 
@@ -49,9 +55,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (_settings == null) return;
 
     try {
-      // Handle theme-related settings through AppLocaleProvider
+      // Handle theme-related settings through providers
       if (settingName == 'themeMode' && value is AppThemeMode) {
         await _localeProvider.changeTheme(value);
+        await _themeProvider.updateThemeMode(value);
+      } else if (settingName == 'fontSize' && value is FontSize) {
+        await _fontSizeProvider.updateFontSize(value);
+      } else if (settingName == 'highContrastMode' && value is bool) {
+        await _themeProvider.updateHighContrastMode(value);
       } else {
         // Handle other settings through SettingsUseCase
         await _settingsUseCase.updateSetting(

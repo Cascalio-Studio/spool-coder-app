@@ -8,6 +8,8 @@ import '../../data/repositories/settings_repository_impl.dart';
 import '../../domain/repositories/settings_repository.dart';
 import '../../domain/use_cases/settings_use_case.dart';
 import '../providers/app_locale_provider.dart';
+import '../providers/font_size_provider.dart';
+import '../providers/theme_provider.dart';
 
 /// Global service locator
 final GetIt locator = GetIt.instance;
@@ -33,6 +35,12 @@ Future<void> setupLocator({dynamic config}) async {
   
   // Register app locale provider
   locator.registerSingleton<AppLocaleProvider>(AppLocaleProvider());
+  
+  // Register font size provider
+  locator.registerSingleton<FontSizeProvider>(FontSizeProvider());
+  
+  // Register theme provider
+  locator.registerSingleton<ThemeProvider>(ThemeProvider());
   
   // TODO: Register other services as needed
 }
