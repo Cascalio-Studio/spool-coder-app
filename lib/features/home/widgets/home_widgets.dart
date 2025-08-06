@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:spool_coder_app/l10n/app_localizations.dart';
+import 'package:spool_coder_app/core/widgets/app_logo.dart';
 
 /// Home screen widgets - Components for the main home screen
 /// Implements design concept components: welcome section, action cards, spool selection
@@ -21,6 +22,11 @@ class WelcomeSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // App logo at the top
+          Center(
+            child: AdaptiveAppLogo(width: 64, height: 64),
+          ),
+          const SizedBox(height: 24),
           Text(
             l10n.appTitle,
             style: theme.textTheme.displayLarge,

@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spool_coder_app/features/home/widgets/home_widgets.dart';
 import 'package:spool_coder_app/l10n/app_localizations.dart';
+import 'package:spool_coder_app/core/di/injector.dart';
+import 'package:spool_coder_app/domain/use_cases/nfc_scan_use_case.dart';
+import 'package:spool_coder_app/data/use_cases/nfc_scan_use_case_impl.dart';
+import 'package:spool_coder_app/domain/value_objects/rfid_data.dart';
+import 'dart:async';
 
 /// Home screen - main entry point for the app
 /// Implements the design concept with welcome section, action cards, spool selection, and bottom navigation
@@ -14,6 +19,79 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentBottomNavIndex = 0;
+  
+  // NFC scanning state
+  late final NfcScanUseCase _nfcScanUseCase;
+  StreamSubscription<NfcScanState>? _scanStateSubscription;
+  StreamSubscription<double>? _scanProgressSubscription;
+  StreamSubscription<String>? _errorSubscription;
+  StreamSubscription<RfidData>? _scannedDataSubscription;
+  
+  NfcScanState _scanState = NfcScanState.idle;
+  double _scanProgress = 0.0;
+  String? _errorMessage;
+  RfidData? _scannedData;
+
+  @override
+  void initState() {
+    super.initState();
+    _nfcScanUseCase = locator<NfcScanUseCase>();
+    _setupScanListeners();
+  }
+
+  @override
+  void dispose() {
+    _cancelScanListeners();
+    if (_nfcScanUseCase is NfcScanUseCaseImpl) {
+      (_nfcScanUseCase as NfcScanUseCaseImpl).dispose();
+    }
+    super.dispose();
+  }
+
+  void _setupScanListeners() {
+    _scanStateSubscription = _nfcScanUseCase.scanStateStream.listen((state) {
+      if (mounted) {
+        setState(() {
+          _scanState = state;
+        });
+      }
+    });
+
+    _scanProgressSubscription = _nfcScanUseCase.scanProgressStream.listen((progress) {
+      if (mounted) {
+        setState(() {
+          _scanProgress = progress;
+        });
+      }
+    });
+
+    _errorSubscription = _nfcScanUseCase.errorStream.listen((error) {
+      if (mounted) {
+        setState(() {
+          _errorMessage = error;
+        });
+      }
+    });
+
+    _scannedDataSubscription = _nfcScanUseCase.scannedDataStream.listen((data) {
+      if (mounted) {
+        setState(() {
+          _scannedData = data;
+        });
+      }
+    });
+  }
+
+  void _cancelScanListeners() {
+    _scanStateSubscription?.cancel();
+    _scanProgressSubscription?.cancel();
+    _errorSubscription?.cancel();
+    _scannedDataSubscription?.cancel();
+  }
+
+  void _startNfcScan() {
+    _nfcScanUseCase.startScanning();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +144,10 @@ class _HomeScreenState extends State<HomeScreen> {
               setState(() {
                 _currentBottomNavIndex = 1; // Switch to Read tab
               });
+              // Auto-start scanning when navigating to Read tab
+              Future.delayed(const Duration(milliseconds: 300), () {
+                _startNfcScan();
+              });
             },
           ),
           
@@ -99,10 +181,16 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.nfc,
-            size: 64,
-            color: theme.colorScheme.primary,
+          // NFC Icon with animation during scanning
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            child: Icon(
+              Icons.nfc,
+              size: 64,
+              color: _scanState == NfcScanState.scanning 
+                  ? theme.colorScheme.secondary 
+                  : theme.colorScheme.primary,
+            ),
           ),
           const SizedBox(height: 24),
           Text(
@@ -110,12 +198,122 @@ class _HomeScreenState extends State<HomeScreen> {
             style: theme.textTheme.displayMedium,
           ),
           const SizedBox(height: 16),
-          Text(
-            l10n.holdCardNearReader,
-            style: theme.textTheme.bodyLarge?.copyWith(
-              color: theme.colorScheme.onSurface.withOpacity(0.7),
+          
+          // Show different content based on scan state
+          if (_scanState == NfcScanState.idle) ...[
+            Text(
+              l10n.tapScanButtonToStart,
+              style: theme.textTheme.bodyLarge?.copyWith(
+                color: theme.colorScheme.onSurface.withOpacity(0.7),
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
+          ] else if (_scanState == NfcScanState.scanning) ...[
+            Text(
+              l10n.scanning,
+              style: theme.textTheme.bodyLarge?.copyWith(
+                color: theme.colorScheme.secondary,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: 200,
+              child: LinearProgressIndicator(
+                value: _scanProgress,
+                backgroundColor: theme.colorScheme.onSurface.withOpacity(0.1),
+                valueColor: AlwaysStoppedAnimation<Color>(theme.colorScheme.secondary),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              '${(_scanProgress * 100).toInt()}%',
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.onSurface.withOpacity(0.7),
+              ),
+            ),
+          ] else if (_scanState == NfcScanState.success) ...[
+            Icon(
+              Icons.check_circle,
+              size: 32,
+              color: Colors.green,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              l10n.scanSuccessful,
+              style: theme.textTheme.bodyLarge?.copyWith(
+                color: Colors.green,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            if (_scannedData != null) ...[
+              const SizedBox(height: 16),
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.surface,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: theme.colorScheme.outline.withOpacity(0.2)),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'UID: ${_scannedData!.uid}',
+                      style: theme.textTheme.bodySmall,
+                    ),
+                    Text(
+                      'Type: ${_scannedData!.detailedFilamentType}',
+                      style: theme.textTheme.bodySmall,
+                    ),
+                    Text(
+                      'Length: ${_scannedData!.filamentLength?.meters.toStringAsFixed(1) ?? 'Unknown'}m',
+                      style: theme.textTheme.bodySmall,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ] else if (_scanState == NfcScanState.error) ...[
+            Icon(
+              Icons.error,
+              size: 32,
+              color: Colors.red,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              l10n.scanFailed,
+              style: theme.textTheme.bodyLarge?.copyWith(
+                color: Colors.red,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            if (_errorMessage != null) ...[
+              const SizedBox(height: 8),
+              Text(
+                _errorMessage!,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: Colors.red.withOpacity(0.8),
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ],
+          
+          const SizedBox(height: 32),
+          
+          // Scan button
+          ElevatedButton.icon(
+            onPressed: _scanState == NfcScanState.scanning ? null : _startNfcScan,
+            icon: Icon(_scanState == NfcScanState.scanning ? Icons.hourglass_empty : Icons.nfc),
+            label: Text(
+              _scanState == NfcScanState.success 
+                  ? l10n.scanAgain 
+                  : l10n.startScan
+            ),
+            style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            ),
           ),
         ],
       ),

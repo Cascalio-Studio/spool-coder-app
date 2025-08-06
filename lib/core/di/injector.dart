@@ -7,6 +7,12 @@ import '../../data/datasources/settings_local_data_source_impl.dart';
 import '../../data/repositories/settings_repository_impl.dart';
 import '../../domain/repositories/settings_repository.dart';
 import '../../domain/use_cases/settings_use_case.dart';
+
+// Import NFC-related dependencies
+import '../../data/datasources/nfc_data_source.dart';
+import '../../data/use_cases/nfc_scan_use_case_impl.dart';
+import '../../domain/use_cases/nfc_scan_use_case.dart';
+
 import '../providers/app_locale_provider.dart';
 import '../providers/font_size_provider.dart';
 import '../providers/theme_provider.dart';
@@ -31,6 +37,15 @@ Future<void> setupLocator({dynamic config}) async {
   
   locator.registerLazySingleton<SettingsUseCase>(
     () => SettingsUseCase(locator<SettingsRepository>()),
+  );
+  
+  // Register NFC dependencies with mock implementation for testing
+  locator.registerLazySingleton<NfcDataSource>(
+    () => MockNfcDataSource(),
+  );
+  
+  locator.registerLazySingleton<NfcScanUseCase>(
+    () => NfcScanUseCaseImpl(nfcDataSource: locator<NfcDataSource>()),
   );
   
   // Register app locale provider

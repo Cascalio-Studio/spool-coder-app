@@ -601,6 +601,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancel'**
   String get cancel;
+
+  /// Instruction to start NFC scanning
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the scan button to start reading your NFC spool'**
+  String get tapScanButtonToStart;
+
+  /// NFC scan success message
+  ///
+  /// In en, this message translates to:
+  /// **'Scan Successful!'**
+  String get scanSuccessful;
+
+  /// NFC scan failure message
+  ///
+  /// In en, this message translates to:
+  /// **'Scan Failed'**
+  String get scanFailed;
+
+  /// NFC ready status
+  ///
+  /// In en, this message translates to:
+  /// **'NFC Ready'**
+  String get nfcReady;
+
+  /// Currently scanning status
+  ///
+  /// In en, this message translates to:
+  /// **'Scanning...'**
+  String get scanning;
+
+  /// Scan completed status
+  ///
+  /// In en, this message translates to:
+  /// **'Scan Complete'**
+  String get scanComplete;
+
+  /// Scan error status
+  ///
+  /// In en, this message translates to:
+  /// **'Scan Error'**
+  String get scanError;
+
+  /// Start scan button text
+  ///
+  /// In en, this message translates to:
+  /// **'START SCAN'**
+  String get startScan;
+
+  /// Scan again button text
+  ///
+  /// In en, this message translates to:
+  /// **'SCAN AGAIN'**
+  String get scanAgain;
 }
 
 class _AppLocalizationsDelegate
