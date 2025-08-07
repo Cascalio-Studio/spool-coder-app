@@ -54,6 +54,19 @@ class _HomeScreenState extends State<HomeScreen> {
         setState(() {
           _scanState = state;
         });
+        
+        // Debug: Print state changes
+        print('NFC State changed to: $state');
+        
+        // If scan is successful, ensure we stay on the read tab
+        if (state == NfcScanState.success) {
+          print('Success state - ensuring we stay on read tab (index 1)');
+          if (_currentBottomNavIndex != 1) {
+            setState(() {
+              _currentBottomNavIndex = 1;
+            });
+          }
+        }
       }
     });
 
@@ -78,6 +91,17 @@ class _HomeScreenState extends State<HomeScreen> {
         setState(() {
           _scannedData = data;
         });
+        
+        // Debug: Print scanned data
+        print('Scanned data received: ${data.uid}');
+        
+        // Ensure we stay on the read tab when data is received
+        if (_currentBottomNavIndex != 1) {
+          print('Navigation was not on read tab, correcting to index 1');
+          setState(() {
+            _currentBottomNavIndex = 1;
+          });
+        }
       }
     });
   }
@@ -91,6 +115,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _startNfcScan() {
     _nfcScanUseCase.startScanning();
+  }
+  
+  void _resetScanState() {
+    print('Manually resetting scan state');
+    setState(() {
+      _scanState = NfcScanState.idle;
+      _scannedData = null;
+      _errorMessage = null;
+      _scanProgress = 0.0;
+    });
   }
 
   @override
@@ -302,19 +336,41 @@ class _HomeScreenState extends State<HomeScreen> {
           
           const SizedBox(height: 32),
           
-          // Scan button
-          ElevatedButton.icon(
-            onPressed: _scanState == NfcScanState.scanning ? null : _startNfcScan,
-            icon: Icon(_scanState == NfcScanState.scanning ? Icons.hourglass_empty : Icons.nfc),
-            label: Text(
-              _scanState == NfcScanState.success 
-                  ? l10n.scanAgain 
-                  : l10n.startScan
+          // Action buttons based on scan state
+          if (_scanState == NfcScanState.success) ...[
+            // Success state - show both scan again and reset buttons
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton.icon(
+                  onPressed: _startNfcScan,
+                  icon: const Icon(Icons.refresh),
+                  label: Text(l10n.scanAgain),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  ),
+                ),
+                OutlinedButton.icon(
+                  onPressed: _resetScanState,
+                  icon: const Icon(Icons.clear),
+                  label: const Text('Reset'),
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  ),
+                ),
+              ],
             ),
-            style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          ] else ...[
+            // Non-success state - show regular scan button
+            ElevatedButton.icon(
+              onPressed: _scanState == NfcScanState.scanning ? null : _startNfcScan,
+              icon: Icon(_scanState == NfcScanState.scanning ? Icons.hourglass_empty : Icons.nfc),
+              label: Text(l10n.startScan),
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              ),
             ),
-          ),
+          ],
         ],
       ),
     );

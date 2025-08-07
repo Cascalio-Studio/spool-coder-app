@@ -1,214 +1,250 @@
-# Flutter App Architecture for BambuLab Spool Coder (Spool-Coder Mobile)
+# Spool Coder App Architecture
 
-## 1. Overview
+## Overview
 
-A cross-platform mobile application (Flutter/Dart) to:
-- Read, analyze, and reprogram BambuLab 3D printer filament spools
-- Interface with NFC/USB/Bluetooth hardware for physical spool access
-- Provide user-friendly interfaces for spool management, error handling, and activity logging
+The Spool Coder App is a Flutter application designed to read, analyze, and program BambuLab 3D printer filament spools using NFC, USB, and Bluetooth technologies. The application follows a clean architecture pattern with clear separation of concerns across four distinct layers.
 
----
+## Architecture Principles
 
-## 2. Layered Architecture
+- **Local-First**: The app works fully offline by default
+- **Optional Backend**: Backend integration can be enabled/disabled at runtime
+- **Clean Architecture**: Clear separation of concerns with dependency inversion
+- **Platform Independence**: Core business logic is reusable across platforms
+- **Type Safety**: Strong typing prevents invalid data at compile time
 
-### 2.1. Presentation Layer (UI/UX)
+## Architecture Layers
 
-**Responsibilities:**
-- User interaction, data visualization, and feedback
-- Navigation, input validation, theme, and accessibility
+### 1. Presentation Layer (`lib/presentation/`)
 
-**Components:**
-- **Screens**
-  - `SplashScreen`: App init, permission checks
-  - `HomeScreen`: Scan options, spool list/history, quick actions
-  - `SpoolScanScreen`: NFC/USB/BLE scan, progress, and status
-  - `SpoolDetailScreen`: Spool metadata, raw/decoded fields, edit buttons
-  - `SpoolEditScreen`: Form for changing fields (material, length, vendor, UID, etc.)
-  - `ProgramConfirmScreen`: Summary, confirmation dialog for programming
-  - `ProgrammingStatusScreen`: Live log, progress bar, error/result
-  - `SettingsScreen`: Preferences, hardware settings, developer/debug info
-  - `AboutScreen`: App info, legal, open source licenses
+**Responsibility**: User interface and interaction logic
 
-- **Widgets**
-  - Custom dialogs (alerts, confirmations, errors)
-  - List tiles for spools, logs, and actions
-  - Progress/status indicators (spinners, bars)
-  - Input controls (dropdowns, sliders, toggles)
+**Components**:
+- **Screens** (`screens/`): Full-page UI components
+  - `HomeScreen`: Dashboard with spool overview and quick actions
+  - `ScanScreen`: NFC/USB/BLE scanning interface with real-time feedback
+  - `SpoolDetailScreen`: Detailed spool metadata and editing capabilities
+  - `SettingsScreen`: User preferences and app configuration
+  
+- **Widgets** (`widgets/`): Reusable UI components
+  - Custom dialogs, progress indicators, themed buttons
+  - Spool cards, action cards, navigation components
+  
+- **Navigation** (`routes/`): App routing using GoRouter
+  - Declarative routing with type-safe navigation
+  - Deep linking support for shared spool data
 
-- **Navigation**
-  - Declarative (GoRouter/auto_route)
-  - Deep linking (optionally for shared spool links)
+**Key Principles**:
+- Handles user input and displays data
+- Communicates with Domain layer through use cases
+- Contains no business logic
+- Platform-agnostic UI code
 
-- **State Management**
-  - Provider/Riverpod/Bloc: app-wide state, spool data, session, hardware status
+**State Management**: Provider/Riverpod for reactive state updates
 
----
+### 2. Domain Layer (`lib/domain/`)
 
-### 2.2. Domain Layer (Business Logic)
+**Responsibility**: Business logic, use cases, and core entities
 
-**Responsibilities:**
-- Core logic, validation, data transformation, and service orchestration
+**Components**:
+- **Entities** (`entities/`): Core business objects
+  - `Spool`: Complete spool information with validation
+  - `ScanSession`: Scanning operation metadata
+  - `NfcScanResult`: Type-safe scanning state management
+  
+- **Use Cases** (`use_cases/`): Application-specific business rules
+  - `NfcScanUseCase`: NFC scanning orchestration
+  - `SpoolManagementUseCase`: Spool CRUD operations
+  - `SettingsUseCase`: User preference management
+  
+- **Value Objects** (`value_objects/`): Domain-specific types
+  - `RfidData`: Parsed RFID tag information
+  - `MaterialType`: Filament material specifications
+  - `TemperatureProfile`: Printing temperature settings
+  
+- **Repositories** (interfaces): Data access contracts
+  - `SpoolRepository`: Spool data persistence
+  - `SettingsRepository`: User preferences storage
 
-**Components:**
-- **Entities/Models**
-  - `Spool`: Material, color, length, UID, vendor, checksum, write-protection, etc.
-  - `ScanSession`: Timestamp, device, type (NFC/USB), status, error
-  - `ProgrammingJob`: Data to write, progress, result
+**Key Principles**:
+- Pure Dart implementation (no external dependencies)
+- Immutable design with comprehensive validation
+- Rich domain model with embedded business logic
+- Dependency inversion with repository interfaces
 
-- **Services**
-  - `SpoolService`: Data parsing/validation (bytes <-> model), checksums, UID generation
-  - `ProgrammingService`: Handles write logic, dry-run, error handling, rollback
-  - `HistoryService`: Maintains scan/program history, logs, undo stack
-  - `BackupService`: Local/optional cloud backup of spool data
+### 3. Data Layer (`lib/data/`)
 
-- **Validators**
-  - Data integrity: Field length, allowed values, checksums
-  - Protocol compliance: NFC tag type, USB/BLE device profile, etc.
+**Responsibility**: Data access, caching, and external service integration
 
----
+**Components**:
+- **Repositories** (`repositories/`): Repository implementations
+  - Local storage using Hive/SQLite
+  - Optional cloud synchronization
+  - Caching strategies for performance
+  
+- **Data Sources** (`datasources/`): External data access
+  - `NfcDataSource`: Hardware NFC integration
+  - `LocalDataSource`: Device storage access
+  - `RemoteDataSource`: Optional backend API
+  
+- **Models** (`models/`): Data transfer objects
+  - JSON serialization/deserialization
+  - Database entity mappings
 
-### 2.3. Data Layer (Hardware/IO, Storage, Platform Integration)
+**Key Principles**:
+- Implements domain repository interfaces
+- Handles data transformation between external formats and domain entities
+- Manages caching and data persistence
+- Abstracts external data sources
 
-**Responsibilities:**
-- Hardware abstraction, protocol implementation, persistent storage
+### 4. Platform Layer (`lib/platform/`)
 
-**Components:**
+**Responsibility**: Device and platform-specific integrations
 
-- **Hardware Interfaces**
-  - `NfcAdapter`: Scan/read/write, permission management, tag type decoding
-    - Plugins: `nfc_manager`, `flutter_nfc_kit`, platform channels for advanced features
-    - Handles tag presence, loss, and error scenarios
-  - `UsbAdapter`: Device enumeration, connect/read/write
-    - Plugins: `usb_serial`, custom channels for protocol-specific IO
-    - Handles vendor/product ID, serial protocol, hotplug events
-  - `BleAdapter` (optional): BLE discovery, connect, read/write for future-proofing
+**Components**:
+- **NFC** (`nfc/`): NFC hardware integration
+  - MIFARE/NTAG compatibility using `nfc_manager`
+  - Tag detection, read/write operations
+  - Authentication and security handling
+  
+- **USB** (`usb/`): USB device communication
+  - Serial protocol implementation
+  - Device discovery and permission handling
+  
+- **Bluetooth** (`bluetooth/`): BLE integration (future)
+  - Service/characteristic discovery
+  - Connection management
 
-- **Repository Pattern**
-  - `SpoolRepository`: Abstracts hardware (NFC/USB/BLE), provides mock/test sources
-  - `HistoryRepository`: Local DB (Hive/SQLite) for scan/program logs
-  - `SettingsRepository`: App settings, preferences, cache
+**Key Principles**:
+- Provides platform-specific implementations
+- Uses platform channels and FFI for native code integration
+- Handles hardware permissions and capabilities
+- Abstracts platform differences
 
-- **Platform Channels**
-  - Used for advanced or unsupported device features (e.g., low-level NFC/USB)
-  - FFI/native code for performance-critical routines (e.g., CRC, parsing)
+### 5. Core Layer (`lib/core/`)
 
----
+**Responsibility**: Shared utilities and cross-cutting concerns
 
-### 2.4. Cross-Cutting Concerns
+**Components**:
+- **Configuration** (`config/`): App configuration and feature flags
+- **Constants** (`constants/`): Application-wide constants
+- **Dependency Injection** (`di/`): Service locator setup
+- **Errors** (`errors/`): Common exception and failure classes
+- **Utils** (`utils/`): Shared utility functions
+- **Widgets** (`widgets/`): Common UI components
 
-- **Error Handling**
-  - Centralized error classes (hardware, protocol, permission, logic)
-  - UI hooks for displaying errors, logs, and actionable suggestions
-
-- **Logging/Telemetry**
-  - Local log storage (rotating buffer), export/share feature
-  - Analytics (opt-in): Usage, error trends, anonymized
-
-- **Security**
-  - Confirm before overwriting/writing spools
-  - Data validation before hardware operations
-  - Permissions handling with user education
-
-- **Testing**
-  - Unit: Services, models, validators
-  - Integration: Hardware mocks, protocol simulations, UI flows
-  - E2E/manual: Real hardware, all supported platforms
-
----
-
-## 3. Protocol and Data Mapping
-
-### 3.1. Spool Data Structure
-
-- **Fields:** (based on BambuLab ecosystem)
-  - UID
-  - Material type
-  - Manufacturer
-  - Color
-  - Net/gross length
-  - Remaining length
-  - Checksum/CRC
-  - Write-protection flag
-
-- **Encoding/Decoding:**
-  - Byte buffer <-> Dart model
-  - Python logic ported to Dart, using unit-tested parsing/packing routines
-  - CRC/checksum validation as per protocol (may use Dart/FFI for performance)
-
-### 3.2. Hardware Protocols
-
-- **NFC**
-  - MIFARE/NTAG compatibility
-  - Tag detection, sector/block read/write, authentication if needed
-  - Tag loss, collision, and retry management
-
-- **USB**
-  - Serial protocol (if used), baud rate, framing, vendor/product ID
-  - Hotplug, permission, and error handling
-
-- **BLE (optional)**
-  - Service/characteristic discovery, connection management
-
----
-
-## 4. Example Directory Structure
+## Data Flow
 
 ```
-/lib
-  /core                 # Logging, error handling, utilities
-  /models               # Spool, scan session, programming job, errors
-  /services             # SpoolService, ProgrammingService, HistoryService
-  /adapters             # NfcAdapter, UsbAdapter, BleAdapter
-  /repositories         # SpoolRepository, HistoryRepository, SettingsRepository
-  /screens              # UI pages (Home, Scan, Detail, Edit, Settings)
-  /widgets              # Reusable UI components
-  /platform_channels    # Native/FFI integrations
-  main.dart
-
-/assets                 # Images, icons, translations, legal
-/test                   # Unit, integration, hardware mock tests
+┌─────────────────────────────────────────────────────────────┐
+│                    PRESENTATION LAYER                       │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
+│  │   Screens   │  │   Widgets   │  │     Navigation      │  │
+│  │             │  │             │  │                     │  │
+│  │ • HomeScreen│  │ • Dialogs   │  │ • App Router        │  │
+│  │ • ScanScreen│  │ • Cards     │  │ • Route Guards      │  │
+│  │ • Settings  │  │ • Buttons   │  │ • Deep Linking      │  │
+│  └─────────────┘  └─────────────┘  └─────────────────────┘  │
+└─────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────┐
+│                      DOMAIN LAYER                          │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
+│  │  Entities   │  │ Use Cases   │  │   Value Objects     │  │
+│  │             │  │             │  │                     │  │
+│  │ • Spool     │  │ • NfcScan   │  │ • RfidData          │  │
+│  │ • Session   │  │ • Settings  │  │ • MaterialType      │  │
+│  │ • Result    │  │ • Spool Mgmt│  │ • Temperature       │  │
+│  └─────────────┘  └─────────────┘  └─────────────────────┘  │
+└─────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────┐
+│                      DATA LAYER                            │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
+│  │Repositories │  │Data Sources │  │      Models         │  │
+│  │             │  │             │  │                     │  │
+│  │ • SpoolRepo │  │ • NfcSource │  │ • DTOs              │  │
+│  │ • Settings  │  │ • LocalDB   │  │ • JSON Models       │  │
+│  │ • History   │  │ • RemoteAPI │  │ • DB Entities       │  │
+│  └─────────────┘  └─────────────┘  └─────────────────────┘  │
+└─────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    PLATFORM LAYER                          │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
+│  │     NFC     │  │     USB     │  │     Bluetooth       │  │
+│  │             │  │             │  │                     │  │
+│  │ • MIFARE    │  │ • Serial    │  │ • BLE Services      │  │
+│  │ • NTAG      │  │ • Permissions│  │ • Characteristics   │  │
+│  │ • Security  │  │ • Discovery │  │ • Connection Mgmt   │  │
+│  └─────────────┘  └─────────────┘  └─────────────────────┘  │
+└─────────────────────────────────────────────────────────────┘
 ```
 
----
+## Dependency Direction
 
-## 5. Technology Stack
+Dependencies flow inward toward the domain layer:
+- **Presentation** → **Domain**
+- **Data** → **Domain**  
+- **Platform** → **Data**
+- **Core** ← **All layers**
 
-- **Flutter (Dart 3.x)**
-- **nfc_manager / flutter_nfc_kit**: NFC read/write
-- **usb_serial / custom FFI**: USB access
-- **provider / riverpod / bloc**: State management
-- **hive / sqflite**: Local storage
-- **go_router / auto_route**: Navigation
-- **logger / crashlytics**: Logging, error reporting
+This ensures the domain layer remains pure and testable.
 
----
+## Key Features
 
-## 6. Migration Notes (Python → Dart)
+### RFID Integration
+- **Complete Bambu Lab RFID Support**: Parse all standard fields
+- **Material Recognition**: PLA, PETG, ABS, etc. with properties
+- **Temperature Profiles**: Optimal printing temperatures
+- **Production Metadata**: Manufacturing date, batch info
+- **Security**: RSA signature verification for authenticity
 
-- Port all data structures and protocol logic
-  - Use tests to validate exact behavior (parsing, checksums, edge cases)
-- Replace blocking IO with async/await patterns
-- Implement detailed error mapping (Python exceptions → Dart errors)
-- UI/UX: Design for mobile/desktop, with feedback for all hardware operations
+### Hardware Support
+- **NFC**: Optimized for Samsung Galaxy S20 Ultra and Bambu Lab tags
+- **USB**: Serial communication for direct device access
+- **Bluetooth**: BLE integration for wireless connectivity
+- **Multi-platform**: Consistent behavior across Android/iOS
 
----
+### User Experience
+- **Offline-First**: Full functionality without internet
+- **Real-time Scanning**: Live feedback during NFC operations
+- **Material Database**: Comprehensive filament specifications
+- **Internationalization**: 5 languages (EN, DE, FR, ES, IT)
+- **Accessibility**: High contrast themes and font scaling
 
-## 7. Safety Precautions
+## Technology Stack
 
-- All write/program actions require confirmation dialogs
-- Data is validated before any hardware operation
-- Robust error handling: Tag loss, bad data, permission errors
-- Visual status for all operations, with logs for diagnostics
+- **Flutter SDK**: Cross-platform UI framework
+- **Dart 3.x**: Programming language with null safety
+- **nfc_manager**: NFC hardware integration
+- **GetIt**: Dependency injection
+- **GoRouter**: Type-safe navigation
+- **Hive/SQLite**: Local data persistence
+- **SharedPreferences**: Settings storage
 
----
+## Security & Safety
 
-## 8. Future Extensions
+- **Data Validation**: All inputs validated before hardware operations
+- **Confirmation Dialogs**: Required for all write/program actions
+- **Permission Handling**: Proper NFC and storage permissions
+- **Error Recovery**: Graceful handling of hardware failures
+- **Logging**: Comprehensive logging for debugging
 
-- Cloud sync for spool history (optional)
-- Advanced analytics/reporting (e.g., filament usage over time)
-- Cross-platform desktop support (Flutter Desktop)
-- Support for additional spool/chip types
+## Testing Strategy
 
----
+- **Unit Tests**: Domain logic, value objects, use cases
+- **Integration Tests**: Repository implementations, data flow
+- **Widget Tests**: UI components and user interactions
+- **Platform Tests**: Hardware mocking and protocol simulation
 
-**This architecture ensures maintainable, scalable, and reliable porting of Python spool-coder to a production-grade Flutter app, supporting robust hardware integration and user experience.**
+## Future Extensions
+
+- **Cloud Synchronization**: Optional backend for data sync
+- **Advanced Analytics**: Usage patterns and material tracking
+- **Desktop Support**: Flutter Desktop for larger screens
+- **Additional Protocols**: Support for more spool types
+
+This architecture ensures a maintainable, scalable, and reliable application that provides excellent user experience while maintaining code quality and testability.
