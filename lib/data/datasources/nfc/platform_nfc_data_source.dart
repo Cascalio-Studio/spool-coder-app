@@ -92,7 +92,7 @@ class PlatformNfcDataSource implements NfcDataSource {
       await NfcManager.instance.stopSession();
     } catch (e) {
       // Log error but don't throw as we're stopping anyway
-      _logger.warning('Error stopping NFC session: $e');
+      print('Error stopping NFC session: $e');
     }
   }
 
