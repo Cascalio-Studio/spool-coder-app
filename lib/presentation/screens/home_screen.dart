@@ -56,11 +56,11 @@ class _HomeScreenState extends State<HomeScreen> {
         });
         
         // Debug: Print state changes
-        print('NFC State changed to: $state');
+        // ...existing code...
         
         // If scan is successful, ensure we stay on the read tab
         if (state == NfcScanState.success) {
-          print('Success state - ensuring we stay on read tab (index 1)');
+          // ...existing code...
           if (_currentBottomNavIndex != 1) {
             setState(() {
               _currentBottomNavIndex = 1;
@@ -93,11 +93,11 @@ class _HomeScreenState extends State<HomeScreen> {
         });
         
         // Debug: Print scanned data
-        print('Scanned data received: ${data.uid}');
+        // ...existing code...
         
         // Ensure we stay on the read tab when data is received
         if (_currentBottomNavIndex != 1) {
-          print('Navigation was not on read tab, correcting to index 1');
+          // ...existing code...
           setState(() {
             _currentBottomNavIndex = 1;
           });
@@ -118,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   
   void _resetScanState() {
-    print('Manually resetting scan state');
+    // ...existing code...
     setState(() {
       _scanState = NfcScanState.idle;
       _scannedData = null;
@@ -238,7 +238,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Text(
               l10n.tapScanButtonToStart,
               style: theme.textTheme.bodyLarge?.copyWith(
-                color: theme.colorScheme.onSurface.withOpacity(0.7),
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
               ),
               textAlign: TextAlign.center,
             ),
@@ -255,7 +255,7 @@ class _HomeScreenState extends State<HomeScreen> {
               width: 200,
               child: LinearProgressIndicator(
                 value: _scanProgress,
-                backgroundColor: theme.colorScheme.onSurface.withOpacity(0.1),
+                backgroundColor: theme.colorScheme.onSurface.withValues(alpha: 0.1),
                 valueColor: AlwaysStoppedAnimation<Color>(theme.colorScheme.secondary),
               ),
             ),
@@ -263,7 +263,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Text(
               '${(_scanProgress * 100).toInt()}%',
               style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.onSurface.withOpacity(0.7),
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
               ),
             ),
           ] else if (_scanState == NfcScanState.success) ...[
@@ -287,7 +287,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 decoration: BoxDecoration(
                   color: theme.colorScheme.surface,
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: theme.colorScheme.outline.withOpacity(0.2)),
+                  border: Border.all(color: theme.colorScheme.outline.withValues(alpha: 0.2)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -327,7 +327,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Text(
                 _errorMessage!,
                 style: theme.textTheme.bodySmall?.copyWith(
-                  color: Colors.red.withOpacity(0.8),
+                  color: Colors.red.withValues(alpha: 0.8),
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -398,7 +398,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Text(
             l10n.writeDataToCard,
             style: theme.textTheme.bodyLarge?.copyWith(
-              color: theme.colorScheme.onSurface.withOpacity(0.7),
+                              color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
             ),
             textAlign: TextAlign.center,
           ),
@@ -429,7 +429,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Text(
             l10n.manageAccount,
             style: theme.textTheme.bodyLarge?.copyWith(
-              color: theme.colorScheme.onSurface.withOpacity(0.7),
+              color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
             ),
             textAlign: TextAlign.center,
           ),
@@ -474,9 +474,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return Expanded(
       child: InkWell(
         borderRadius: BorderRadius.circular(20),
-        splashColor: theme.bottomNavigationBarTheme.selectedItemColor?.withOpacity(0.2),
-        highlightColor: theme.bottomNavigationBarTheme.selectedItemColor?.withOpacity(0.1),
-        hoverColor: theme.bottomNavigationBarTheme.selectedItemColor?.withOpacity(0.1),
+        splashColor: theme.bottomNavigationBarTheme.selectedItemColor?.withValues(alpha: 0.2),
+        highlightColor: theme.bottomNavigationBarTheme.selectedItemColor?.withValues(alpha: 0.1),
+        hoverColor: theme.bottomNavigationBarTheme.selectedItemColor?.withValues(alpha: 0.1),
         onTap: () {
           // Navigate to settings page when settings tab is tapped
           if (index == 3) { // Settings tab

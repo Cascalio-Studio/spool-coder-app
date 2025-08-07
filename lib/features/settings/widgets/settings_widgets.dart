@@ -51,7 +51,7 @@ class SettingsTile extends StatelessWidget {
                     Text(
                       subtitle!,
                       style: theme.textTheme.bodyMedium?.copyWith(
-                        color: theme.colorScheme.onSurface.withOpacity(0.7),
+                        color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                       ),
                     ),
                   ],
@@ -116,7 +116,7 @@ class SettingsSectionHeader extends StatelessWidget {
       child: Text(
         title,
         style: theme.textTheme.bodyLarge?.copyWith(
-          color: theme.colorScheme.onSurface.withOpacity(0.6),
+          color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
           fontWeight: FontWeight.w500,
         ),
       ),
@@ -189,7 +189,7 @@ class SettingsNavigationTile extends StatelessWidget {
       trailing: Icon(
         Icons.chevron_right,
         size: 16,
-        color: theme.iconTheme.color?.withOpacity(0.4),
+        color: theme.iconTheme.color?.withValues(alpha: 0.4),
       ),
       onTap: onTap,
     );
@@ -269,7 +269,7 @@ class ProfileHeader extends StatelessWidget {
                   Text(
                     userEmail!,
                     style: theme.textTheme.bodyMedium?.copyWith(
-                      color: theme.colorScheme.onSurface.withOpacity(0.7),
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                     ),
                   ),
               ],

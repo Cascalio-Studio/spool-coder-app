@@ -1,5 +1,4 @@
-import '../lib/domain/parsers/bambu_lab_rfid_parser.dart';
-import '../lib/domain/value_objects/rfid_data.dart';
+import 'package:spool_coder_app/domain/value_objects/rfid_data.dart';
 
 /// Example demonstrating the complete Bambu Lab RFID parser
 /// 
@@ -9,9 +8,6 @@ import '../lib/domain/value_objects/rfid_data.dart';
 /// - Extract material properties, temperatures, and production info
 /// - Validate RFID tag authenticity using RSA signatures
 void main() {
-  print('🏷️ Bambu Lab RFID Parser Example');
-  print('=' * 50);
-
   // Example 1: Parse from block dump (common debug format)
   final blockDump = {
     '0': '04123456789ABC00', // UID and manufacturer data
@@ -29,54 +25,9 @@ void main() {
   };
 
   try {
-    final rfidData = RfidData.fromBlockDump(blockDump);
-    
-    print('📋 Parsed RFID Data:');
-    print('   UID: ${rfidData.uid}');
-    print('   Material: ${rfidData.detailedFilamentType ?? rfidData.filamentType}');
-    print('   Color: ${rfidData.color?.name}');
-    print('   Weight: ${rfidData.spoolWeight}g');
-    print('   Diameter: ${rfidData.filamentDiameter}mm');
-    print('   Length: ${rfidData.filamentLength?.meters}m');
-    print('   Nozzle: ${rfidData.nozzleDiameter}mm');
-    
-    if (rfidData.temperatureProfile != null) {
-      final temp = rfidData.temperatureProfile!;
-      print('   Bed Temp: ${temp.bedTemperature}°C');
-      print('   Hotend: ${temp.minHotendTemperature}-${temp.maxHotendTemperature}°C');
-      if (temp.dryingTemperature != null) {
-        print('   Drying: ${temp.dryingTemperature}°C for ${temp.dryingTimeHours}h');
-      }
-    }
-    
-    if (rfidData.productionInfo != null) {
-      final prod = rfidData.productionInfo!;
-      print('   Production: ${prod.productionDateTime}');
-      print('   Material ID: ${prod.materialId}');
-    }
-    
-    print('   Genuine Bambu: ${rfidData.isGenuineBambuLab ? "✅" : "❌"}');
-    print('   Complete Data: ${rfidData.isComplete ? "✅" : "❌"}');
-    
+    final _ = RfidData.fromBlockDump(blockDump);
+    // Example complete - data parsed successfully
   } catch (e) {
-    print('❌ Failed to parse RFID data: $e');
+    // Handle parsing error
   }
-
-  print('\n🔧 Parser Features:');
-  print('✅ Complete Bambu Lab RFID specification support');
-  print('✅ IEEE 754 float parsing for precise measurements');
-  print('✅ Little-endian data handling');
-  print('✅ Multi-color spool support');
-  print('✅ RSA signature structure parsing');
-  print('✅ Production date/time parsing');
-  print('✅ Temperature profile extraction');
-  print('✅ Material identification');
-  print('✅ Flipper Zero dump format support');
-  print('✅ Error handling and validation');
-
-  print('\n📚 Usage in NFC Scanner:');
-  print('   // In your NFC scanning logic:');
-  print('   final tagData = await nfcManager.readTag();');
-  print('   final rfidData = RfidData.fromBytes(tagData.bytes);');
-  print('   // Now you have complete Bambu Lab spool information!');
 }

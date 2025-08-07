@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../theme/app_colors.dart';
 
 /// App logo widget that displays the Spool Coder logo
 /// Supports different sizes and adapts to different contexts
@@ -61,7 +62,7 @@ class AppLogo extends StatelessWidget {
               width: width ?? 80,
               height: height ?? 80,
               decoration: BoxDecoration(
-                color: theme.colorScheme.primary.withOpacity(0.1),
+                color: theme.colorScheme.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(
@@ -79,7 +80,7 @@ class AppLogo extends StatelessWidget {
           Text(
             'Spool Coder',
             style: theme.textTheme.titleMedium?.copyWith(
-              color: color ?? theme.colorScheme.onSurface,
+              color: AppColors.primaryBlack.withValues(alpha: 0.7),
               fontWeight: FontWeight.w600,
             ),
           ),

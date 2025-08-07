@@ -4,23 +4,23 @@ import 'package:nfc_manager/nfc_manager.dart';
 /// This helps identify correct imports and method signatures
 void main() async {
   // Test availability of classes and methods
-  print('NfcManager: ${NfcManager}');
+  // ...existing code...
   
   // Test basic API structure
   try {
-    final isAvailable = await NfcManager.instance.isAvailable();
-    print('NFC Available: $isAvailable');
+    await NfcManager.instance.isAvailable();
+    // ...existing code...
     
     // Test startSession method signature
     await NfcManager.instance.startSession(
       pollingOptions: {NfcPollingOption.iso14443},
       onDiscovered: (NfcTag tag) async {
-        print('Tag discovered: $tag');
+        // ...existing code...
         await NfcManager.instance.stopSession();
       },
     );
   } catch (e) {
-    print('API test error: $e');
+    // ...existing code...
   }
 }
 

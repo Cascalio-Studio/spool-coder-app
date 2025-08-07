@@ -99,8 +99,6 @@ class ThemeProvider extends ChangeNotifier {
       colorScheme: AppTheme.lightTheme.colorScheme.copyWith(
         surface: Colors.white,
         onSurface: Colors.black,
-        background: Colors.white,
-        onBackground: Colors.black,
         primary: Colors.black,
         onPrimary: Colors.white,
       ),
@@ -135,8 +133,6 @@ class ThemeProvider extends ChangeNotifier {
       colorScheme: AppTheme.darkTheme.colorScheme.copyWith(
         surface: Colors.black,
         onSurface: Colors.white,
-        background: Colors.black,
-        onBackground: Colors.white,
         primary: Colors.white,
         onPrimary: Colors.black,
       ),

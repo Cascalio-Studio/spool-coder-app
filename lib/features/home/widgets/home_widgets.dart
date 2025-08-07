@@ -40,14 +40,14 @@ class WelcomeSection extends StatelessWidget {
           Text(
             l10n.lastReadStatus,
             style: theme.textTheme.titleMedium?.copyWith(
-              color: theme.colorScheme.onSurface.withOpacity(0.7),
+              color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
             ),
           ),
           const SizedBox(height: 16),
           Text(
             l10n.readyToScan,
             style: theme.textTheme.bodyLarge?.copyWith(
-              color: theme.colorScheme.onSurface.withOpacity(0.8),
+              color: theme.colorScheme.onSurface.withValues(alpha: 0.8),
             ),
           ),
         ],
@@ -85,7 +85,7 @@ class ActionCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: theme.shadowColor.withOpacity(0.08),
+            color: theme.shadowColor.withValues(alpha: 0.08),
             offset: const Offset(0, 2),
             blurRadius: 8,
           ),
@@ -112,7 +112,7 @@ class ActionCard extends StatelessWidget {
           Text(
             description,
             style: theme.textTheme.bodyMedium?.copyWith(
-              color: theme.colorScheme.onSurface.withOpacity(0.7),
+              color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
             ),
           ),
           const SizedBox(height: 16),
@@ -248,7 +248,7 @@ class SpoolCard extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: theme.shadowColor.withOpacity(0.06),
+              color: theme.shadowColor.withValues(alpha: 0.06),
               offset: const Offset(0, 1),
               blurRadius: 4,
             ),
@@ -284,7 +284,7 @@ class SpoolCard extends StatelessWidget {
               Text(
                 spoolData.brand,
                 style: theme.textTheme.bodyMedium?.copyWith(
-                  color: theme.colorScheme.onSurface.withOpacity(0.7),
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                 ),
               ),
               const Divider(height: 20),
@@ -298,7 +298,7 @@ class SpoolCard extends StatelessWidget {
               Text(
                 l10n.lastUsed(spoolData.lastUsed),
                 style: theme.textTheme.bodySmall?.copyWith(
-                  color: theme.colorScheme.onSurface.withOpacity(0.6),
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                 ),
               ),
             ],

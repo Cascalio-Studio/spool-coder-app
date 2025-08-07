@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spool_coder_app/theme/theme.dart';
 
 /// Example home screen showcasing the theme implementation
-/// This demonstrates the design concept with proper styling
+/// This demonstrates the design concept             color: AppColors.primaryBlack.withValues(alpha: 0.06),ith proper styling
 class ThemeShowcaseScreen extends StatelessWidget {
   const ThemeShowcaseScreen({super.key});
 
@@ -88,7 +88,7 @@ class ThemeShowcaseScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primaryBlack.withOpacity(0.08),
+            color: AppColors.primaryBlack.withValues(alpha: 0.08 ),
             offset: const Offset(0, 2),
             blurRadius: 8,
           ),
@@ -195,7 +195,7 @@ class ThemeShowcaseScreen extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primaryBlack.withOpacity(0.06),
+            color: AppColors.primaryBlack.withValues(alpha: 0.06 ),
             offset: const Offset(0, 1),
             blurRadius: 4,
           ),
