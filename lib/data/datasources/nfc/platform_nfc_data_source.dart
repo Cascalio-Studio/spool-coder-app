@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:nfc_manager/nfc_manager.dart';
+import 'package:nfc_manager_ndef/nfc_manager_ndef.dart';
 
 import '../../../core/errors/failures.dart';
 import '../../../domain/entities/nfc_scan_result.dart';
 import '../../../domain/value_objects/rfid_data.dart';
+import '../../../domain/parsers/bambu_ndef_parser.dart';
 import 'nfc_data_source.dart';
 
 /// Platform-specific NFC data source implementation using nfc_manager
@@ -120,17 +122,39 @@ class PlatformNfcDataSource implements NfcDataSource {
 
   Future<RfidData?> _readRfidData(NfcTag tag) async {
     try {
-      // Create a simplified RFID data structure using available tag information
+      // Try NDEF first (Bambu Lab writes NDEF MIME record)
+      final ndef = Ndef.from(tag);
+      if (ndef != null) {
+        final message = await ndef.read();
+        if (message != null && message.records.isNotEmpty) {
+          for (final record in message.records) {
+            // Decode type (may be MIME like 'application/bambulab')
+            final typeStr = record.type.isNotEmpty
+                ? String.fromCharCodes(record.type)
+                : '';
+
+            // Prefer explicit Bambu MIME types when present
+            if (typeStr == 'application/bambulab' || typeStr == 'application/x-bambu' || typeStr.contains('bambu')) {
+              final uid = await _extractUid(tag);
+              final parsed = BambuNdefParser.parsePayload(record.payload, uidHint: uid);
+              return parsed;
+            }
+
+            // Otherwise, try to parse heuristically from payload
+            if (record.payload.isNotEmpty) {
+              final uid = await _extractUid(tag);
+              final parsed = BambuNdefParser.parsePayload(record.payload, uidHint: uid);
+              return parsed;
+            }
+          }
+        }
+      }
+
+      // As a fallback, build minimal RfidData with UID only
       final uid = await _extractUid(tag);
-      
-      // For now, create a basic RFID data structure
-      // In production, this would implement the full Bambu Lab RFID parsing
       return RfidData(
         uid: uid,
         scanTime: DateTime.now(),
-        filamentType: 'PLA', // Default, would be parsed from actual data
-        detailedFilamentType: 'PLA Basic', // Default, would be parsed from actual data
-        // Other fields can be added as the parsing logic is implemented
       );
       
     } catch (e) {
@@ -141,77 +165,49 @@ class PlatformNfcDataSource implements NfcDataSource {
 
   Future<String> _extractUid(NfcTag tag) async {
     try {
-      String uid = '';
-      
-      // Debug: Log the tag structure to understand what's available
-      final tagStr = tag.toString();
-      print('=== DEBUG: NFC Tag Structure ===');
-      print('Tag toString(): $tagStr');
-      print('Tag runtime type: ${tag.runtimeType}');
-      print('=====================================');
-      
-      // Method 1: Look for identifier pattern in the tag string representation
-      final identifierRegex = RegExp(r'identifier:\s*\[([^\]]+)\]', caseSensitive: false);
-      final match = identifierRegex.firstMatch(tagStr);
-      
-      if (match != null) {
-        final identifierStr = match.group(1)!;
-        print('DEBUG: Found identifier string: $identifierStr');
-        // Parse the identifier bytes and format as hex
-        final bytes = identifierStr.split(',').map((s) => int.tryParse(s.trim()) ?? 0).toList();
-        uid = bytes.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join(':').toUpperCase();
-        print('DEBUG: UID from identifier: $uid');
-        return uid;
-      } else {
-        print('DEBUG: No identifier pattern found in tag string');
-      }
-      
-      // Method 2: Try to find hex patterns that could be UIDs
-      final hexPatterns = [
-        RegExp(r'([0-9a-fA-F]{2}[:\s,]){3,7}[0-9a-fA-F]{2}'), // Standard hex with separators
-        RegExp(r'[0-9a-fA-F]{6,16}'), // Continuous hex string
-        RegExp(r'uid[:\s]*([0-9a-fA-F\s:,]+)', caseSensitive: false), // UID field
-      ];
-      
-      for (final pattern in hexPatterns) {
-        final hexMatch = pattern.firstMatch(tagStr);
-        if (hexMatch != null) {
-          String hexStr = hexMatch.group(1) ?? hexMatch.group(0)!;
-          print('DEBUG: Found hex pattern: $hexStr');
-          
-          // Clean up and format
-          hexStr = hexStr.replaceAll(RegExp(r'[^0-9a-fA-F]'), '');
-          if (hexStr.length >= 6 && hexStr.length <= 20) {
-            // Format as standard UID
-            final pairs = <String>[];
-            for (int i = 0; i < hexStr.length && pairs.length < 10; i += 2) {
-              if (i + 1 < hexStr.length) {
-                pairs.add(hexStr.substring(i, i + 2));
-              }
-            }
-            uid = pairs.join(':').toUpperCase();
-            print('DEBUG: UID from hex pattern: $uid');
-            return uid;
+      // If possible, derive a stable UID from NDEF content (type + payload)
+      final ndef = Ndef.from(tag);
+      if (ndef != null) {
+        final msg = await ndef.read();
+        if (msg != null && msg.records.isNotEmpty) {
+          final bytes = <int>[];
+          for (final r in msg.records) {
+            if (r.type.isNotEmpty) bytes.addAll(r.type);
+            if (r.payload.isNotEmpty) bytes.addAll(r.payload);
+          }
+          if (bytes.isNotEmpty) {
+            final fp = _fnv1a64(bytes);
+            return fp;
           }
         }
       }
-      
-      // Method 3: Create a deterministic UID based on the full tag string
-      // This should be consistent for the same tag but different for different tags
+
+      // If identifier is not accessible, generate deterministic hash of tag string
+      final tagStr = tag.toString();
       final tagHash = tagStr.hashCode.abs();
-      final tagLength = tagStr.length;
-      final combinedHash = (tagHash * 31 + tagLength * 17).abs();
-      uid = 'TAG_${combinedHash.toRadixString(16).toUpperCase().padLeft(8, '0')}';
-      print('DEBUG: Using fallback UID from tag hash: $uid (hash: $tagHash, length: $tagLength)');
-      
-      return uid;
+      return 'TAG_${tagHash.toRadixString(16).toUpperCase().padLeft(8, '0')}';
       
     } catch (e) {
-      print('DEBUG: Error in _extractUid: $e');
-      // Error extracting UID - create a fallback
-      final timestamp = DateTime.now().millisecondsSinceEpoch;
-      return 'ERROR_${timestamp.toRadixString(16).toUpperCase()}';
+  // Fallback on errors
+  final tagStr = tag.toString();
+  final tagHash = tagStr.hashCode.abs();
+  return 'TAG_${tagHash.toRadixString(16).toUpperCase().padLeft(8, '0')}';
     }
+  }
+
+  // 64-bit FNV-1a hash, returned as 16-char upper hex
+  String _fnv1a64(List<int> data) {
+    // 64-bit constants
+    const int fnv64Prime = 0x00000100000001B3; // 1099511628211
+    const int fnv64Offset = 0xcbf29ce484222325; // 14695981039346656037
+    int hash = fnv64Offset;
+    for (final b in data) {
+      hash ^= (b & 0xff);
+      // 64-bit multiply with wrap-around
+      hash = (hash * fnv64Prime) & 0xFFFFFFFFFFFFFFFF;
+    }
+    final hex = hash.toRadixString(16).toUpperCase().padLeft(16, '0');
+    return hex;
   }
 
   @override
