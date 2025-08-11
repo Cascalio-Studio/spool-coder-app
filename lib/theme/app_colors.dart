@@ -14,7 +14,7 @@ class AppColors {
 
   /// Derived Colors
   /// Muted black for inactive elements (primaryBlack with 40% opacity)
-  static final Color mutedBlack = primaryBlack.withOpacity(0.4);
+  static final Color mutedBlack = primaryBlack.withValues(alpha: 0.4);
   
   /// Error color (not in design concept but needed for forms/validation)
   static const Color errorRed = Color(0xFFFF3B30);
@@ -22,7 +22,7 @@ class AppColors {
   /// Color variations for different states
   static final Color accentGreenPressed = _darkenColor(accentGreen, 0.1);
   static final Color backgroundGrayLight = _lightenColor(backgroundGray, 0.05);
-  static final Color primaryBlackLight = primaryBlack.withOpacity(0.7);
+  static final Color primaryBlackLight = primaryBlack.withValues(alpha: 0.7);
 
   /// Helper method to darken a color
   static Color _darkenColor(Color color, double amount) {
@@ -61,12 +61,12 @@ class AppColors {
   );
 
   /// Shadow colors for elevation
-  static final Color shadowColor = primaryBlack.withOpacity(0.08);
-  static final Color shadowColorDark = primaryBlack.withOpacity(0.16);
+  static final Color shadowColor = primaryBlack.withValues(alpha: 0.08);
+  static final Color shadowColorDark = primaryBlack.withValues(alpha: 0.16);
 
   /// Overlay colors for modal backgrounds
-  static final Color overlayColor = primaryBlack.withOpacity(0.5);
-  static final Color overlayColorLight = primaryBlack.withOpacity(0.3);
+  static final Color overlayColor = primaryBlack.withValues(alpha: 0.5);
+  static final Color overlayColorLight = primaryBlack.withValues(alpha: 0.3);
 
   /// Border colors
   static final Color borderColor = backgroundGray;
@@ -74,9 +74,9 @@ class AppColors {
   static final Color borderColorError = errorRed;
 
   /// Text colors with opacity variations
-  static final Color textSecondary = primaryBlack.withOpacity(0.7);
-  static final Color textTertiary = primaryBlack.withOpacity(0.5);
-  static final Color textQuaternary = primaryBlack.withOpacity(0.3);
+  static final Color textSecondary = primaryBlack.withValues(alpha: 0.7);
+  static final Color textTertiary = primaryBlack.withValues(alpha: 0.5);
+  static final Color textQuaternary = primaryBlack.withValues(alpha: 0.3);
 
   /// Status colors
   static const Color successGreen = accentGreen;
@@ -116,9 +116,9 @@ class AppColors {
   /// Get contrasting text color for a given background color
   static Color getContrastingTextColor(Color backgroundColor) {
     // Calculate relative luminance
-    final luminance = (0.299 * backgroundColor.red + 
-                     0.587 * backgroundColor.green + 
-                     0.114 * backgroundColor.blue) / 255;
+    final luminance = (0.299 * (backgroundColor.r * 255.0).round() + 
+                     0.587 * (backgroundColor.g * 255.0).round() + 
+                     0.114 * (backgroundColor.b * 255.0).round()) / 255;
     
     // Return white for dark backgrounds, black for light backgrounds
     return luminance > 0.5 ? primaryBlack : pureWhite;

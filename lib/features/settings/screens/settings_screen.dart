@@ -539,8 +539,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ? Icon(Icons.check_circle, color: Theme.of(context).colorScheme.primary)
                   : const Icon(Icons.radio_button_unchecked),
                 onTap: () async {
+                  final navigator = Navigator.of(context);
                   await _localeProvider.changeLanguage(languageName);
-                  Navigator.of(context).pop();
+                  navigator.pop();
                   // Reload settings to reflect the change
                   _loadSettings();
                 },

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'dart:async';
 import '../../domain/use_cases/nfc_scan_use_case.dart';
-import '../../domain/entities/spool.dart';
 import '../../domain/value_objects/rfid_data.dart';
 import '../../l10n/app_localizations.dart';
+import '../widgets/rfid_spool_data_display.dart';
 
 /// NFC Reading Screen Widget
 /// Provides UI for NFC scanning with progress, states, and results
@@ -25,7 +25,6 @@ class _NfcReadingScreenState extends State<NfcReadingScreen>
   double _scanProgress = 0.0;
   String? _errorMessage;
   RfidData? _scannedData;
-  Spool? _createdSpool;
   
   StreamSubscription<NfcScanState>? _stateSubscription;
   StreamSubscription<double>? _progressSubscription;
@@ -91,17 +90,8 @@ class _NfcReadingScreenState extends State<NfcReadingScreen>
         _scannedData = rfidData;
       });
       
-      // Create spool from scanned data
-      try {
-        final spool = await _nfcScanUseCase.createSpoolFromScan(rfidData);
-        setState(() {
-          _createdSpool = spool;
-        });
-      } catch (e) {
-        setState(() {
-          _errorMessage = 'Failed to create spool: $e';
-        });
-      }
+      // Data successfully scanned - no need to create spool here
+      // The detailed view will handle all the data display
     });
   }
 
@@ -120,7 +110,6 @@ class _NfcReadingScreenState extends State<NfcReadingScreen>
     setState(() {
       _errorMessage = null;
       _scannedData = null;
-      _createdSpool = null;
     });
     
     try {
@@ -179,7 +168,7 @@ class _NfcReadingScreenState extends State<NfcReadingScreen>
         Text(
           _getStatusText(l10n),
           style: theme.textTheme.bodyLarge?.copyWith(
-            color: theme.colorScheme.onSurface.withOpacity(0.7),
+            color: theme.colorScheme.onSurface.withValues(alpha: 0.7 ),
           ),
           textAlign: TextAlign.center,
         ),
@@ -221,7 +210,7 @@ class _NfcReadingScreenState extends State<NfcReadingScreen>
             shape: BoxShape.circle,
             color: _getIconBackgroundColor(theme),
             border: Border.all(
-              color: theme.colorScheme.primary.withOpacity(
+              color: theme.colorScheme.primary.withValues(alpha: 
                 _currentState == NfcScanState.scanning 
                   ? 0.3 + (0.4 * _pulseController.value)
                   : 0.3
@@ -246,7 +235,7 @@ class _NfcReadingScreenState extends State<NfcReadingScreen>
           width: 200,
           child: LinearProgressIndicator(
             value: _scanProgress,
-            backgroundColor: theme.colorScheme.primary.withOpacity(0.2),
+            backgroundColor: theme.colorScheme.primary.withValues(alpha: 0.1),
             valueColor: AlwaysStoppedAnimation<Color>(theme.colorScheme.primary),
           ),
         ),
@@ -254,7 +243,7 @@ class _NfcReadingScreenState extends State<NfcReadingScreen>
         Text(
           '${(_scanProgress * 100).toInt()}%',
           style: theme.textTheme.bodySmall?.copyWith(
-            color: theme.colorScheme.onSurface.withOpacity(0.6),
+            color: theme.colorScheme.onSurface.withValues(alpha: 0.1),
           ),
         ),
       ],
@@ -304,9 +293,70 @@ class _NfcReadingScreenState extends State<NfcReadingScreen>
         ),
         if (_scannedData != null) ...[
           const SizedBox(height: 16),
-          _buildScannedDataSummary(context, l10n, theme),
+          _buildQuickSummary(context, l10n, theme),
+          const SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () => _showDetailedView(context),
+            child: Text(l10n.showDetails),
+          ),
         ],
       ],
+    );
+  }
+
+  Widget _buildQuickSummary(BuildContext context, AppLocalizations l10n, ThemeData theme) {
+    if (_scannedData == null) return const SizedBox.shrink();
+    
+    final data = _scannedData!;
+    
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: theme.cardColor,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: theme.dividerColor),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            l10n.successfullyRead,
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 8),
+          if (data.detailedFilamentType != null || data.filamentType != null)
+            Text('${l10n.type}: ${data.detailedFilamentType ?? data.filamentType}'),
+          if (data.color != null)
+            Text('${l10n.color}: ${data.color!.name}'),
+          if (data.filamentLength != null)
+            Text('${l10n.length}: ${data.filamentLength!.meters.toStringAsFixed(1)} m'),
+          if (data.spoolWeight != null)
+            Text('${l10n.weight}: ${data.spoolWeight!.toStringAsFixed(1)} g'),
+          const SizedBox(height: 8),
+          Text(
+            l10n.bambuLabSpoolDetected,
+            style: TextStyle(
+              color: Colors.green,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showDetailedView(BuildContext context) {
+    if (_scannedData == null) return;
+    
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => RfidSpoolDataDisplay(
+          rfidData: _scannedData!,
+          onBack: () => Navigator.of(context).pop(),
+        ),
+      ),
     );
   }
 
@@ -337,37 +387,6 @@ class _NfcReadingScreenState extends State<NfcReadingScreen>
           ),
         ],
       ],
-    );
-  }
-
-  Widget _buildScannedDataSummary(BuildContext context, AppLocalizations l10n, ThemeData theme) {
-    if (_createdSpool == null) return const SizedBox.shrink();
-    
-    final spool = _createdSpool!;
-    
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: theme.cardColor,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: theme.dividerColor),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Scanned Spool:',
-            style: theme.textTheme.titleMedium,
-          ),
-          const SizedBox(height: 8),
-          Text('Material: ${spool.materialType.displayName}'),
-          Text('Manufacturer: ${spool.manufacturer}'),
-          Text('Color: ${spool.color.name}'),
-          Text('Length: ${spool.netLength.format()}'),
-          if (spool.temperatureProfile != null)
-            Text('Print Temp: ${spool.temperatureProfile!.maxHotendTemperature}°C'),
-        ],
-      ),
     );
   }
 
@@ -415,11 +434,11 @@ class _NfcReadingScreenState extends State<NfcReadingScreen>
   Color _getIconBackgroundColor(ThemeData theme) {
     switch (_currentState) {
       case NfcScanState.success:
-        return Colors.green.withOpacity(0.1);
+        return Colors.green.withValues(alpha: 0.1);
       case NfcScanState.error:
-        return theme.colorScheme.error.withOpacity(0.1);
+        return theme.colorScheme.error.withValues(alpha: 0.1);
       default:
-        return theme.colorScheme.primary.withOpacity(0.1);
+        return theme.colorScheme.primary.withValues(alpha: 0.1);
     }
   }
 

@@ -164,6 +164,276 @@ abstract class AppLocalizations {
   /// **'Write data to your RFID card'**
   String get writeDataToCard;
 
+  /// Ready message for scanning
+  ///
+  /// In en, this message translates to:
+  /// **'Ready to scan and program filament spools'**
+  String get readyToScan;
+
+  /// Instruction to start NFC scanning
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the scan button to start reading your NFC spool'**
+  String get tapScanButtonToStart;
+
+  /// NFC ready status
+  ///
+  /// In en, this message translates to:
+  /// **'NFC Ready'**
+  String get nfcReady;
+
+  /// Currently scanning status
+  ///
+  /// In en, this message translates to:
+  /// **'Scanning...'**
+  String get scanning;
+
+  /// Scan completed status
+  ///
+  /// In en, this message translates to:
+  /// **'Scan Complete'**
+  String get scanComplete;
+
+  /// Scan error status
+  ///
+  /// In en, this message translates to:
+  /// **'Scan Error'**
+  String get scanError;
+
+  /// Start scan button text
+  ///
+  /// In en, this message translates to:
+  /// **'START SCAN'**
+  String get startScan;
+
+  /// Scan again button text
+  ///
+  /// In en, this message translates to:
+  /// **'SCAN AGAIN'**
+  String get scanAgain;
+
+  /// Cancel button text
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// NFC scan success message
+  ///
+  /// In en, this message translates to:
+  /// **'Scan Successful!'**
+  String get scanSuccessful;
+
+  /// NFC scan failure message
+  ///
+  /// In en, this message translates to:
+  /// **'Scan Failed'**
+  String get scanFailed;
+
+  /// Title for spool data display
+  ///
+  /// In en, this message translates to:
+  /// **'Read Spool'**
+  String get spoolDataTitle;
+
+  /// Subtitle for spool data display
+  ///
+  /// In en, this message translates to:
+  /// **'First connect the NFC reader, then hold the Bambu Lab filament spool to the device.'**
+  String get spoolDataSubtitle;
+
+  /// Connect NFC device button
+  ///
+  /// In en, this message translates to:
+  /// **'Connect NFC Device'**
+  String get nfcDeviceConnect;
+
+  /// Read Bambu Lab spool button
+  ///
+  /// In en, this message translates to:
+  /// **'Read Bambu Lab Spool'**
+  String get bambuLabRead;
+
+  /// Successful reading message
+  ///
+  /// In en, this message translates to:
+  /// **'Reading Successful!'**
+  String get readSuccessful;
+
+  /// Show details button
+  ///
+  /// In en, this message translates to:
+  /// **'Show Details'**
+  String get showDetails;
+
+  /// Successfully read label
+  ///
+  /// In en, this message translates to:
+  /// **'Successfully Read:'**
+  String get successfullyRead;
+
+  /// Bambu Lab spool detected message
+  ///
+  /// In en, this message translates to:
+  /// **'✅ Bambu Lab Spool Detected'**
+  String get bambuLabSpoolDetected;
+
+  /// Back button text
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get backButton;
+
+  /// Basic information section title
+  ///
+  /// In en, this message translates to:
+  /// **'Basic Information'**
+  String get basicInformation;
+
+  /// Technical data section title
+  ///
+  /// In en, this message translates to:
+  /// **'Technical Data'**
+  String get technicalData;
+
+  /// Remaining amount section title
+  ///
+  /// In en, this message translates to:
+  /// **'Remaining Amount'**
+  String get remainingAmount;
+
+  /// Advanced information section title
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced Information'**
+  String get advancedInformation;
+
+  /// Name field label
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get name;
+
+  /// Type field label
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get type;
+
+  /// Color field label
+  ///
+  /// In en, this message translates to:
+  /// **'Color'**
+  String get color;
+
+  /// Manufacturer field label
+  ///
+  /// In en, this message translates to:
+  /// **'Manufacturer'**
+  String get manufacturer;
+
+  /// Density field label
+  ///
+  /// In en, this message translates to:
+  /// **'Density'**
+  String get density;
+
+  /// Diameter field label
+  ///
+  /// In en, this message translates to:
+  /// **'Diameter'**
+  String get diameter;
+
+  /// Nozzle temperature field label
+  ///
+  /// In en, this message translates to:
+  /// **'Nozzle Temperature'**
+  String get nozzleTemperature;
+
+  /// Bed temperature field label
+  ///
+  /// In en, this message translates to:
+  /// **'Bed Temperature'**
+  String get bedTemperature;
+
+  /// Length field label
+  ///
+  /// In en, this message translates to:
+  /// **'Length'**
+  String get length;
+
+  /// Weight field label
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get weight;
+
+  /// UID field label
+  ///
+  /// In en, this message translates to:
+  /// **'UID'**
+  String get uid;
+
+  /// Tray UID field label
+  ///
+  /// In en, this message translates to:
+  /// **'Tray UID'**
+  String get trayUid;
+
+  /// Nozzle diameter field label
+  ///
+  /// In en, this message translates to:
+  /// **'Nozzle Diameter'**
+  String get nozzleDiameter;
+
+  /// Spool width field label
+  ///
+  /// In en, this message translates to:
+  /// **'Spool Width'**
+  String get spoolWidth;
+
+  /// Production date field label
+  ///
+  /// In en, this message translates to:
+  /// **'Production Date'**
+  String get productionDate;
+
+  /// Drying temperature field label
+  ///
+  /// In en, this message translates to:
+  /// **'Drying Temperature'**
+  String get dryingTemperature;
+
+  /// Drying time field label
+  ///
+  /// In en, this message translates to:
+  /// **'Drying Time'**
+  String get dryingTime;
+
+  /// Authentic field label
+  ///
+  /// In en, this message translates to:
+  /// **'Authentic'**
+  String get authentic;
+
+  /// Scan time field label
+  ///
+  /// In en, this message translates to:
+  /// **'Scan Time'**
+  String get scanTime;
+
+  /// Yes text
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yes;
+
+  /// No text
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get no;
+
   /// General settings section
   ///
   /// In en, this message translates to:
@@ -392,12 +662,6 @@ abstract class AppLocalizations {
   /// **'Last read: PLA Blue (Prusament) • 3 spools managed'**
   String get lastReadStatus;
 
-  /// Ready message for scanning
-  ///
-  /// In en, this message translates to:
-  /// **'Ready to scan and program filament spools'**
-  String get readyToScan;
-
   /// Spool selection section title
   ///
   /// In en, this message translates to:
@@ -595,66 +859,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Settings reset to defaults'**
   String get settingsResetToDefaults;
-
-  /// Cancel button text
-  ///
-  /// In en, this message translates to:
-  /// **'Cancel'**
-  String get cancel;
-
-  /// Instruction to start NFC scanning
-  ///
-  /// In en, this message translates to:
-  /// **'Tap the scan button to start reading your NFC spool'**
-  String get tapScanButtonToStart;
-
-  /// NFC scan success message
-  ///
-  /// In en, this message translates to:
-  /// **'Scan Successful!'**
-  String get scanSuccessful;
-
-  /// NFC scan failure message
-  ///
-  /// In en, this message translates to:
-  /// **'Scan Failed'**
-  String get scanFailed;
-
-  /// NFC ready status
-  ///
-  /// In en, this message translates to:
-  /// **'NFC Ready'**
-  String get nfcReady;
-
-  /// Currently scanning status
-  ///
-  /// In en, this message translates to:
-  /// **'Scanning...'**
-  String get scanning;
-
-  /// Scan completed status
-  ///
-  /// In en, this message translates to:
-  /// **'Scan Complete'**
-  String get scanComplete;
-
-  /// Scan error status
-  ///
-  /// In en, this message translates to:
-  /// **'Scan Error'**
-  String get scanError;
-
-  /// Start scan button text
-  ///
-  /// In en, this message translates to:
-  /// **'START SCAN'**
-  String get startScan;
-
-  /// Scan again button text
-  ///
-  /// In en, this message translates to:
-  /// **'SCAN AGAIN'**
-  String get scanAgain;
 }
 
 class _AppLocalizationsDelegate

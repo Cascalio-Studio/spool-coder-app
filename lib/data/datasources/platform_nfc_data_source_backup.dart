@@ -1,3 +1,8 @@
+// BACKUP FILE - COMMENTED OUT TO PREVENT COMPILATION ERRORS
+// This file contains an old implementation that's incompatible with current APIs
+// The active implementation is in lib/data/datasources/nfc/platform_nfc_data_source.dart
+
+/*
 import 'dart:async';
 import 'dart:typed_data';
 import 'package:nfc_manager/nfc_manager.dart';
@@ -278,3 +283,4 @@ class PlatformNfcDataSource implements NfcDataSource {
     return Uint8List.fromList(dataString.codeUnits);
   }
 }
+*/

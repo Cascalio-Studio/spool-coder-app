@@ -25,8 +25,6 @@ class AppTheme {
         onSecondary: AppColors.pureWhite,
         surface: AppColors.pureWhite,
         onSurface: AppColors.primaryBlack,
-        background: AppColors.pureWhite,
-        onBackground: AppColors.primaryBlack,
         error: AppColors.errorRed,
         onError: AppColors.pureWhite,
       ),
@@ -79,7 +77,7 @@ class AppTheme {
       cardTheme: CardThemeData(
         color: AppColors.pureWhite,
         surfaceTintColor: Colors.transparent,
-        shadowColor: AppColors.primaryBlack.withOpacity(0.08),
+        shadowColor: AppColors.primaryBlack.withValues(alpha: 0.08),
         elevation: 2,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
@@ -198,9 +196,9 @@ class AppTheme {
         overlayColor: WidgetStateProperty.resolveWith<Color>(
           (Set<WidgetState> states) {
             if (states.contains(WidgetState.selected)) {
-              return AppColors.accentGreen.withOpacity(0.12);
+              return AppColors.accentGreen.withValues(alpha: 0.12);
             }
-            return AppColors.mutedBlack.withOpacity(0.12);
+            return AppColors.mutedBlack.withValues(alpha: 0.12);
           },
         ),
       ),
@@ -248,11 +246,11 @@ class AppTheme {
       scaffoldBackgroundColor: AppColors.pureWhite,
 
       // Splash color (touch feedback)
-      splashColor: AppColors.accentGreen.withOpacity(0.12),
-      highlightColor: AppColors.accentGreen.withOpacity(0.08),
+      splashColor: AppColors.accentGreen.withValues(alpha: 0.12),
+      highlightColor: AppColors.accentGreen.withValues(alpha: 0.08),
 
       // Focus color
-      focusColor: AppColors.accentGreen.withOpacity(0.12),
+      focusColor: AppColors.accentGreen.withValues(alpha: 0.12),
     );
   }
 
@@ -272,8 +270,6 @@ class AppTheme {
         onSecondary: AppColors.primaryBlack,
         surface: AppColors.primaryBlack,
         onSurface: AppColors.pureWhite,
-        background: AppColors.primaryBlack,
-        onBackground: AppColors.pureWhite,
         error: AppColors.errorRed,
         onError: AppColors.pureWhite,
       ),
@@ -337,7 +333,7 @@ class AppTheme {
       cardTheme: CardThemeData(
         color: AppColors.mutedBlack,
         surfaceTintColor: Colors.transparent,
-        shadowColor: Colors.black.withOpacity(0.3),
+        shadowColor: Colors.black.withValues(alpha: 0.3),
         elevation: 2,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
@@ -458,9 +454,9 @@ class AppTheme {
         overlayColor: WidgetStateProperty.resolveWith<Color>(
           (Set<WidgetState> states) {
             if (states.contains(WidgetState.selected)) {
-              return AppColors.accentGreen.withOpacity(0.12);
+              return AppColors.accentGreen.withValues(alpha: 0.12);
             }
-            return AppColors.backgroundGray.withOpacity(0.12);
+            return AppColors.backgroundGray.withValues(alpha: 0.12);
           },
         ),
       ),
@@ -514,11 +510,11 @@ class AppTheme {
       scaffoldBackgroundColor: AppColors.primaryBlack,
 
       // Splash color for dark mode
-      splashColor: AppColors.accentGreen.withOpacity(0.12),
-      highlightColor: AppColors.accentGreen.withOpacity(0.08),
+      splashColor: AppColors.accentGreen.withValues(alpha: 0.12),
+      highlightColor: AppColors.accentGreen.withValues(alpha: 0.08),
 
       // Focus color for dark mode
-      focusColor: AppColors.accentGreen.withOpacity(0.12),
+      focusColor: AppColors.accentGreen.withValues(alpha: 0.12),
     );
   }
 }

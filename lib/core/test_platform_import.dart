@@ -1,6 +1,4 @@
-import '../datasources/platform_nfc_data_source.dart';
-
+/// Test file for platform import functionality
 void testImport() {
-  final nfc = PlatformNfcDataSource();
-  print('NFC implementation: $nfc');
+  // Test import functionality
 }

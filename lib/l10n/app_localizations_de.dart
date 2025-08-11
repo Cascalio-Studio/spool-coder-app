@@ -40,6 +40,143 @@ class AppLocalizationsDe extends AppLocalizations {
   String get writeDataToCard => 'Daten auf Ihre RFID-Karte schreiben';
 
   @override
+  String get readyToScan => 'Bereit zum Scannen von RFID-Filamentspulen';
+
+  @override
+  String get tapScanButtonToStart =>
+      'Tippen Sie auf \'Scannen starten\', um zu beginnen';
+
+  @override
+  String get nfcReady => 'NFC bereit';
+
+  @override
+  String get scanning => 'Scannen...';
+
+  @override
+  String get scanComplete => 'Scan abgeschlossen';
+
+  @override
+  String get scanError => 'Scan-Fehler';
+
+  @override
+  String get startScan => 'Scannen starten';
+
+  @override
+  String get scanAgain => 'Erneut scannen';
+
+  @override
+  String get cancel => 'Abbrechen';
+
+  @override
+  String get scanSuccessful => 'Scan erfolgreich!';
+
+  @override
+  String get scanFailed => 'Scan fehlgeschlagen';
+
+  @override
+  String get spoolDataTitle => 'Spule auslesen';
+
+  @override
+  String get spoolDataSubtitle =>
+      'Verbinden Sie zuerst das NFC-Lesegerät, dann halten Sie die Bambu Lab Filamentspule an das Gerät.';
+
+  @override
+  String get nfcDeviceConnect => 'NFC-Gerät verbinden';
+
+  @override
+  String get bambuLabRead => 'Bambu Lab Spule auslesen';
+
+  @override
+  String get readSuccessful => 'Auslesen erfolgreich!';
+
+  @override
+  String get showDetails => 'Details anzeigen';
+
+  @override
+  String get successfullyRead => 'Erfolgreich gelesen:';
+
+  @override
+  String get bambuLabSpoolDetected => '✅ Bambu Lab Spule erkannt';
+
+  @override
+  String get backButton => 'Zurück';
+
+  @override
+  String get basicInformation => 'Basisinformationen';
+
+  @override
+  String get technicalData => 'Technische Daten';
+
+  @override
+  String get remainingAmount => 'Verbleibende Menge';
+
+  @override
+  String get advancedInformation => 'Erweiterte Informationen';
+
+  @override
+  String get name => 'Name';
+
+  @override
+  String get type => 'Typ';
+
+  @override
+  String get color => 'Farbe';
+
+  @override
+  String get manufacturer => 'Hersteller';
+
+  @override
+  String get density => 'Dichte';
+
+  @override
+  String get diameter => 'Durchmesser';
+
+  @override
+  String get nozzleTemperature => 'Düsentemperatur';
+
+  @override
+  String get bedTemperature => 'Betttemperatur';
+
+  @override
+  String get length => 'Länge';
+
+  @override
+  String get weight => 'Gewicht';
+
+  @override
+  String get uid => 'UID';
+
+  @override
+  String get trayUid => 'Tray UID';
+
+  @override
+  String get nozzleDiameter => 'Düsendurchmesser';
+
+  @override
+  String get spoolWidth => 'Spulenbreite';
+
+  @override
+  String get productionDate => 'Produktionsdatum';
+
+  @override
+  String get dryingTemperature => 'Trocknungstemperatur';
+
+  @override
+  String get dryingTime => 'Trocknungszeit';
+
+  @override
+  String get authentic => 'Authentisch';
+
+  @override
+  String get scanTime => 'Scan-Zeit';
+
+  @override
+  String get yes => 'Ja';
+
+  @override
+  String get no => 'Nein';
+
+  @override
   String get general => 'Allgemein';
 
   @override
@@ -156,10 +293,6 @@ class AppLocalizationsDe extends AppLocalizations {
       'Zuletzt gelesen: PLA Blau (Prusament) • 3 Spulen verwaltet';
 
   @override
-  String get readyToScan =>
-      'Bereit zum Scannen und Programmieren von Filamentspulen';
-
-  @override
   String get spoolSelection => 'Spulenauswahl';
 
   @override
@@ -268,35 +401,4 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingsResetToDefaults =>
       'Einstellungen auf Standard zurückgesetzt';
-
-  @override
-  String get cancel => 'Abbrechen';
-
-  @override
-  String get tapScanButtonToStart =>
-      'Tap the scan button to start reading your NFC spool';
-
-  @override
-  String get scanSuccessful => 'Scan Successful!';
-
-  @override
-  String get scanFailed => 'Scan Failed';
-
-  @override
-  String get nfcReady => 'NFC Ready';
-
-  @override
-  String get scanning => 'Scanning...';
-
-  @override
-  String get scanComplete => 'Scan Complete';
-
-  @override
-  String get scanError => 'Scan Error';
-
-  @override
-  String get startScan => 'START SCAN';
-
-  @override
-  String get scanAgain => 'SCAN AGAIN';
 }

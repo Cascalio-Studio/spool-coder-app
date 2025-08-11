@@ -50,6 +50,231 @@
     "description": "Instruction for RFID writing"
   },
   
+  "readyToScan": "Ready to scan RFID filament spools",
+  "@readyToScan": {
+    "description": "Ready state message for NFC scanning"
+  },
+
+  "tapScanButtonToStart": "Tap 'Start Scan' to begin",
+  "@tapScanButtonToStart": {
+    "description": "Instruction to start scanning"
+  },
+
+  "nfcReady": "NFC Ready",
+  "@nfcReady": {
+    "description": "NFC ready status"
+  },
+
+  "scanning": "Scanning...",
+  "@scanning": {
+    "description": "Scanning status"
+  },
+
+  "scanComplete": "Scan Complete",
+  "@scanComplete": {
+    "description": "Scan completed status"
+  },
+
+  "scanError": "Scan Error",
+  "@scanError": {
+    "description": "Scan error status"
+  },
+
+  "startScan": "Start Scan",
+  "@startScan": {
+    "description": "Start scan button text"
+  },
+
+  "scanAgain": "Scan Again",
+  "@scanAgain": {
+    "description": "Scan again button text"
+  },
+
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+
+  "scanSuccessful": "Scan Successful!",
+  "@scanSuccessful": {
+    "description": "Successful scan message"
+  },
+
+  "scanFailed": "Scan Failed",
+  "@scanFailed": {
+    "description": "Failed scan message"
+  },
+
+  "spoolDataTitle": "Read Spool",
+  "@spoolDataTitle": {
+    "description": "Title for spool data display"
+  },
+
+  "spoolDataSubtitle": "First connect the NFC reader, then hold the Bambu Lab filament spool to the device.",
+  "@spoolDataSubtitle": {
+    "description": "Subtitle for spool data display"
+  },
+
+  "nfcDeviceConnect": "Connect NFC Device",
+  "@nfcDeviceConnect": {
+    "description": "Connect NFC device button"
+  },
+
+  "bambuLabRead": "Read Bambu Lab Spool",
+  "@bambuLabRead": {
+    "description": "Read Bambu Lab spool button"
+  },
+
+  "readSuccessful": "Reading Successful!",
+  "@readSuccessful": {
+    "description": "Successful reading message"
+  },
+
+  "showDetails": "Show Details",
+  "@showDetails": {
+    "description": "Show details button"
+  },
+
+  "successfullyRead": "Successfully Read:",
+  "@successfullyRead": {
+    "description": "Successfully read label"
+  },
+
+  "bambuLabSpoolDetected": "✅ Bambu Lab Spool Detected",
+  "@bambuLabSpoolDetected": {
+    "description": "Bambu Lab spool detected message"
+  },
+
+  "backButton": "Back",
+  "@backButton": {
+    "description": "Back button text"
+  },
+
+  "basicInformation": "Basic Information",
+  "@basicInformation": {
+    "description": "Basic information section title"
+  },
+
+  "technicalData": "Technical Data",
+  "@technicalData": {
+    "description": "Technical data section title"
+  },
+
+  "remainingAmount": "Remaining Amount",
+  "@remainingAmount": {
+    "description": "Remaining amount section title"
+  },
+
+  "advancedInformation": "Advanced Information",
+  "@advancedInformation": {
+    "description": "Advanced information section title"
+  },
+
+  "name": "Name",
+  "@name": {
+    "description": "Name field label"
+  },
+
+  "type": "Type",
+  "@type": {
+    "description": "Type field label"
+  },
+
+  "color": "Color",
+  "@color": {
+    "description": "Color field label"
+  },
+
+  "manufacturer": "Manufacturer",
+  "@manufacturer": {
+    "description": "Manufacturer field label"
+  },
+
+  "density": "Density",
+  "@density": {
+    "description": "Density field label"
+  },
+
+  "diameter": "Diameter",
+  "@diameter": {
+    "description": "Diameter field label"
+  },
+
+  "nozzleTemperature": "Nozzle Temperature",
+  "@nozzleTemperature": {
+    "description": "Nozzle temperature field label"
+  },
+
+  "bedTemperature": "Bed Temperature",
+  "@bedTemperature": {
+    "description": "Bed temperature field label"
+  },
+
+  "length": "Length",
+  "@length": {
+    "description": "Length field label"
+  },
+
+  "weight": "Weight",
+  "@weight": {
+    "description": "Weight field label"
+  },
+
+  "uid": "UID",
+  "@uid": {
+    "description": "UID field label"
+  },
+
+  "trayUid": "Tray UID",
+  "@trayUid": {
+    "description": "Tray UID field label"
+  },
+
+  "nozzleDiameter": "Nozzle Diameter",
+  "@nozzleDiameter": {
+    "description": "Nozzle diameter field label"
+  },
+
+  "spoolWidth": "Spool Width",
+  "@spoolWidth": {
+    "description": "Spool width field label"
+  },
+
+  "productionDate": "Production Date",
+  "@productionDate": {
+    "description": "Production date field label"
+  },
+
+  "dryingTemperature": "Drying Temperature",
+  "@dryingTemperature": {
+    "description": "Drying temperature field label"
+  },
+
+  "dryingTime": "Drying Time",
+  "@dryingTime": {
+    "description": "Drying time field label"
+  },
+
+  "authentic": "Authentic",
+  "@authentic": {
+    "description": "Authentic field label"
+  },
+
+  "scanTime": "Scan Time",
+  "@scanTime": {
+    "description": "Scan time field label"
+  },
+
+  "yes": "Yes",
+  "@yes": {
+    "description": "Yes text"
+  },
+
+  "no": "No",
+  "@no": {
+    "description": "No text"
+  },
+
   "general": "General",
   "@general": {
     "description": "General settings section"

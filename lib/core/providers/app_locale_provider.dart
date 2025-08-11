@@ -57,7 +57,7 @@ class AppLocaleProvider extends ChangeNotifier {
       await _loadSettings();
     } catch (e) {
       // Handle error
-      print('Failed to change language: $e');
+      // Failed to change language
     }
   }
 
@@ -71,7 +71,7 @@ class AppLocaleProvider extends ChangeNotifier {
       await _loadSettings();
     } catch (e) {
       // Handle error
-      print('Failed to change theme: $e');
+      // Failed to change theme
     }
   }
 

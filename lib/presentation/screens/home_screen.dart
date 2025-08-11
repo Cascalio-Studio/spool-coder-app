@@ -54,6 +54,19 @@ class _HomeScreenState extends State<HomeScreen> {
         setState(() {
           _scanState = state;
         });
+        
+        // Debug: Print state changes
+        // ...existing code...
+        
+        // If scan is successful, ensure we stay on the read tab
+        if (state == NfcScanState.success) {
+          // ...existing code...
+          if (_currentBottomNavIndex != 1) {
+            setState(() {
+              _currentBottomNavIndex = 1;
+            });
+          }
+        }
       }
     });
 
@@ -78,6 +91,17 @@ class _HomeScreenState extends State<HomeScreen> {
         setState(() {
           _scannedData = data;
         });
+        
+        // Debug: Print scanned data
+        // ...existing code...
+        
+        // Ensure we stay on the read tab when data is received
+        if (_currentBottomNavIndex != 1) {
+          // ...existing code...
+          setState(() {
+            _currentBottomNavIndex = 1;
+          });
+        }
       }
     });
   }
@@ -91,6 +115,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _startNfcScan() {
     _nfcScanUseCase.startScanning();
+  }
+  
+  void _resetScanState() {
+    // ...existing code...
+    setState(() {
+      _scanState = NfcScanState.idle;
+      _scannedData = null;
+      _errorMessage = null;
+      _scanProgress = 0.0;
+    });
   }
 
   @override
@@ -204,7 +238,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Text(
               l10n.tapScanButtonToStart,
               style: theme.textTheme.bodyLarge?.copyWith(
-                color: theme.colorScheme.onSurface.withOpacity(0.7),
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
               ),
               textAlign: TextAlign.center,
             ),
@@ -221,7 +255,7 @@ class _HomeScreenState extends State<HomeScreen> {
               width: 200,
               child: LinearProgressIndicator(
                 value: _scanProgress,
-                backgroundColor: theme.colorScheme.onSurface.withOpacity(0.1),
+                backgroundColor: theme.colorScheme.onSurface.withValues(alpha: 0.1),
                 valueColor: AlwaysStoppedAnimation<Color>(theme.colorScheme.secondary),
               ),
             ),
@@ -229,7 +263,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Text(
               '${(_scanProgress * 100).toInt()}%',
               style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.onSurface.withOpacity(0.7),
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
               ),
             ),
           ] else if (_scanState == NfcScanState.success) ...[
@@ -253,7 +287,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 decoration: BoxDecoration(
                   color: theme.colorScheme.surface,
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: theme.colorScheme.outline.withOpacity(0.2)),
+                  border: Border.all(color: theme.colorScheme.outline.withValues(alpha: 0.2)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -293,7 +327,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Text(
                 _errorMessage!,
                 style: theme.textTheme.bodySmall?.copyWith(
-                  color: Colors.red.withOpacity(0.8),
+                  color: Colors.red.withValues(alpha: 0.8),
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -302,19 +336,41 @@ class _HomeScreenState extends State<HomeScreen> {
           
           const SizedBox(height: 32),
           
-          // Scan button
-          ElevatedButton.icon(
-            onPressed: _scanState == NfcScanState.scanning ? null : _startNfcScan,
-            icon: Icon(_scanState == NfcScanState.scanning ? Icons.hourglass_empty : Icons.nfc),
-            label: Text(
-              _scanState == NfcScanState.success 
-                  ? l10n.scanAgain 
-                  : l10n.startScan
+          // Action buttons based on scan state
+          if (_scanState == NfcScanState.success) ...[
+            // Success state - show both scan again and reset buttons
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton.icon(
+                  onPressed: _startNfcScan,
+                  icon: const Icon(Icons.refresh),
+                  label: Text(l10n.scanAgain),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  ),
+                ),
+                OutlinedButton.icon(
+                  onPressed: _resetScanState,
+                  icon: const Icon(Icons.clear),
+                  label: const Text('Reset'),
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  ),
+                ),
+              ],
             ),
-            style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          ] else ...[
+            // Non-success state - show regular scan button
+            ElevatedButton.icon(
+              onPressed: _scanState == NfcScanState.scanning ? null : _startNfcScan,
+              icon: Icon(_scanState == NfcScanState.scanning ? Icons.hourglass_empty : Icons.nfc),
+              label: Text(l10n.startScan),
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              ),
             ),
-          ),
+          ],
         ],
       ),
     );
@@ -342,7 +398,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Text(
             l10n.writeDataToCard,
             style: theme.textTheme.bodyLarge?.copyWith(
-              color: theme.colorScheme.onSurface.withOpacity(0.7),
+                              color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
             ),
             textAlign: TextAlign.center,
           ),
@@ -373,7 +429,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Text(
             l10n.manageAccount,
             style: theme.textTheme.bodyLarge?.copyWith(
-              color: theme.colorScheme.onSurface.withOpacity(0.7),
+              color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
             ),
             textAlign: TextAlign.center,
           ),
@@ -418,9 +474,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return Expanded(
       child: InkWell(
         borderRadius: BorderRadius.circular(20),
-        splashColor: theme.bottomNavigationBarTheme.selectedItemColor?.withOpacity(0.2),
-        highlightColor: theme.bottomNavigationBarTheme.selectedItemColor?.withOpacity(0.1),
-        hoverColor: theme.bottomNavigationBarTheme.selectedItemColor?.withOpacity(0.1),
+        splashColor: theme.bottomNavigationBarTheme.selectedItemColor?.withValues(alpha: 0.2),
+        highlightColor: theme.bottomNavigationBarTheme.selectedItemColor?.withValues(alpha: 0.1),
+        hoverColor: theme.bottomNavigationBarTheme.selectedItemColor?.withValues(alpha: 0.1),
         onTap: () {
           // Navigate to settings page when settings tab is tapped
           if (index == 3) { // Settings tab
